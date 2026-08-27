@@ -13,7 +13,7 @@ Hands-on workshop สำหรับเรียนรู้การใช้�
 ```mermaid
 graph LR
     A[Kiro IDE<br/>Local Machine] -->|Remote SSH| B[Kiro-LAB<br/>EC2 Instance]
-    B --> C[AWS Services<br/>RDS, Secrets Manager, etc.]
+    B -->|Lab Deploy| C[AWS Services<br/>EC2, RDS, ALB, Secrets Manager<br> etc.]
 ```
 
 Kiro IDE จะเชื่อมต่อไปยัง EC2 instance ชื่อ **Kiro-LAB** ผ่าน Remote SSH extension ทำให้สามารถพัฒนาโค้ดบน cloud instance ได้โดยตรง พร้อมใช้งาน MCP servers และ AI features ของ Kiro ได้เต็มรูปแบบ
