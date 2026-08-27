@@ -1,8 +1,11 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 exec > /var/log/userdata-kiro-lab.log 2>&1
 
 echo "=== Kiro-LAB Instance Setup ==="
 echo "Started at: $(date)"
+
+# Ensure HOME is set (cloud-init sometimes doesn't set it)
+export HOME="${HOME:-/root}"
 
 # Update system
 apt update -y
@@ -23,76 +26,62 @@ apt install -y \
   software-properties-common
 
 # ----------------------------
-# Node.js (LTS via NodeSource)
+# Node.js 22 LTS (via NodeSource)
 # ----------------------------
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 npm install -g npm@latest || true  # May fail if npm version requires newer Node.js
 
 # ----------------------------
-# Bun
+# Bun (install for ubuntu user, then symlink to /usr/local/bin)
 # ----------------------------
-curl -fsSL https://bun.sh/install | bash
-ln -sf /root/.bun/bin/bun /usr/local/bin/bun
-ln -sf /root/.bun/bin/bunx /usr/local/bin/bunx
-# Also install for ubuntu user
-su - ubuntu -c "curl -fsSL https://bun.sh/install | bash"
+su - ubuntu -c "export BUN_INSTALL=/home/ubuntu/.bun && curl -fsSL https://bun.sh/install | bash" || true
+# Make bun available system-wide by symlinking from ubuntu's install
+ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bun 2>/dev/null || true
+ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bunx 2>/dev/null || true
 
 # ----------------------------
 # uv + uvx (Python package manager)
 # ----------------------------
-curl -LsSf https://astral.sh/uv/install.sh | sh
-ln -sf /root/.local/bin/uv /usr/local/bin/uv
-ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
+curl -LsSf https://astral.sh/uv/install.sh | sh || true
+ln -sf /root/.local/bin/uv /usr/local/bin/uv 2>/dev/null || true
+ln -sf /root/.local/bin/uvx /usr/local/bin/uvx 2>/dev/null || true
 # Also install for ubuntu user
-su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
+su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh" || true
 
 # ----------------------------
-# graphifyy (via uv tool)
+# graphify (via uv tool — package name is "graphifyy")
 # ----------------------------
-su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy"
+su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy" || true
 
 # ----------------------------
 # AWS CLI v2
 # ----------------------------
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
-unzip -q /tmp/awscliv2.zip -d /tmp
-/tmp/aws/install
-rm -rf /tmp/aws /tmp/awscliv2.zip
+if ! command -v aws &> /dev/null; then
+    curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+    unzip -q /tmp/awscliv2.zip -d /tmp
+    /tmp/aws/install
+    rm -rf /tmp/aws /tmp/awscliv2.zip
+fi
 
 # ----------------------------
 # Clone workshop repository
 # ----------------------------
-git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop
-chown -R ubuntu:ubuntu /home/ubuntu/workshop
+if [[ ! -d /home/ubuntu/workshop ]]; then
+    git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop
+    chown -R ubuntu:ubuntu /home/ubuntu/workshop
+fi
 
 # ----------------------------
 # Setup Kiro MCP support
 # ----------------------------
-# Create .kiro directory structure for ubuntu user
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
-
-# Create global MCP config with aws-docs server
-# cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
-# {
-#   "mcpServers": {
-#     "aws-docs": {
-#       "command": "uvx",
-#       "args": ["awslabs.aws-documentation-mcp-server@latest"],
-#       "env": {
-#         "FASTMCP_LOG_LEVEL": "ERROR"
-#       },
-#       "disabled": false
-#     }
-#   }
-# }
-# EOF
-# chown -R ubuntu:ubuntu /home/ubuntu/.kiro
 
 # ----------------------------
 # Configure shell environment for ubuntu user
 # ----------------------------
-cat >> /home/ubuntu/.bashrc << 'EOF'
+if ! grep -q "Kiro-LAB environment" /home/ubuntu/.bashrc 2>/dev/null; then
+    cat >> /home/ubuntu/.bashrc << 'EOF'
 
 # Kiro-LAB environment
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
@@ -100,6 +89,7 @@ export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
 # uv/uvx completions
 eval "$(uv generate-shell-completion bash 2>/dev/null || true)"
 EOF
+fi
 
 # ----------------------------
 # Set hostname

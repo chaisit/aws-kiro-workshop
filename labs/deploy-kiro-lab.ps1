@@ -6,6 +6,7 @@
 #   irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 #   -- or --
 #   .\deploy-kiro-lab.ps1
+#   .\deploy-kiro-lab.ps1 -Action cleanup
 #
 # Prerequisites:
 #   - AWS CLI (will be installed automatically if missing)
@@ -14,6 +15,11 @@
 # =============================================================================
 
 #Requires -Version 5.1
+param(
+    [ValidateSet("deploy", "cleanup", "clean", "destroy", "teardown")]
+    [string]$Action = "deploy"
+)
+
 $ErrorActionPreference = "Stop"
 
 # ─── Configuration ───────────────────────────────────────────────────────────
@@ -24,6 +30,7 @@ $VOLUME_SIZE = 30
 $REGION = if ($env:AWS_DEFAULT_REGION) { $env:AWS_DEFAULT_REGION } else { "us-east-1" }
 $SSH_CONFIG_HOST = "kiro-lab"
 $USERDATA_URL = "https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab.sh"
+$AWS_PROFILE_NAME = "kiro-lab-deploy"
 
 # ─── Functions ───────────────────────────────────────────────────────────────
 
@@ -40,10 +47,10 @@ function Collect-AWSCredentials {
     Write-Host "  (Click 'AWS Details' -> 'Show' next to AWS CLI credentials)"
     Write-Host ""
 
-    # Check if credentials are already valid
-    $null = aws sts get-caller-identity --output json 2>$null
+    # Check if profile credentials are already valid
+    $null = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --output json 2>$null
     if ($LASTEXITCODE -eq 0) {
-        Write-Ok "AWS credentials already configured and valid."
+        Write-Ok "AWS credentials already configured and valid (profile: $AWS_PROFILE_NAME)."
         $reconfigure = Read-Host "  Do you want to reconfigure? [y/N]"
         if ($reconfigure -notmatch '^[Yy]$') {
             return
@@ -60,21 +67,21 @@ function Collect-AWSCredentials {
         exit 1
     }
 
-    # Export as environment variables for this session
-    $env:AWS_ACCESS_KEY_ID = $awsKeyId
-    $env:AWS_SECRET_ACCESS_KEY = $awsSecretKey
-    $env:AWS_SESSION_TOKEN = $awsSessionToken
-    $env:AWS_DEFAULT_REGION = $REGION
+    # Configure dedicated profile
+    aws configure set aws_access_key_id $awsKeyId --profile $AWS_PROFILE_NAME
+    aws configure set aws_secret_access_key $awsSecretKey --profile $AWS_PROFILE_NAME
+    aws configure set aws_session_token $awsSessionToken --profile $AWS_PROFILE_NAME
+    aws configure set region $REGION --profile $AWS_PROFILE_NAME
 
     # Verify credentials work
-    $null = aws sts get-caller-identity --output json 2>$null
+    $null = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --output json 2>$null
     if ($LASTEXITCODE -ne 0) {
         Write-Err "Credentials are invalid or expired. Please check and try again."
         exit 1
     }
 
-    $account = aws sts get-caller-identity --query "Account" --output text
-    Write-Ok "AWS credentials configured. Account: $account"
+    $account = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --query "Account" --output text
+    Write-Ok "AWS credentials configured (profile: $AWS_PROFILE_NAME). Account: $account"
 }
 
 function Collect-SSHKey {
@@ -195,11 +202,46 @@ function Test-Prerequisites {
     }
 }
 
+function Test-ExistingInstance {
+    $existingId = aws ec2 describe-instances `
+        --profile $AWS_PROFILE_NAME `
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" "Name=instance-state-name,Values=running,stopped,pending" `
+        --query "Reservations[].Instances[0].InstanceId" `
+        --region $REGION `
+        --output text 2>$null
+
+    if ($existingId -and $existingId -ne "None") {
+        Write-Host ""
+        Write-Warn "An existing Kiro-LAB instance was found: $existingId"
+        Write-Host ""
+        Write-Host "  Deploying again will TERMINATE the existing instance and create a new one." -ForegroundColor Yellow
+        Write-Host ""
+        $confirm = Read-Host "  Do you want to continue? (The old instance will be deleted) [y/N]"
+        if ($confirm -notmatch '^[Yy]$') {
+            Write-Info "Deployment cancelled."
+            exit 0
+        }
+
+        # Terminate existing instance
+        Write-Info "Terminating existing instance: $existingId ..."
+        aws ec2 terminate-instances `
+            --profile $AWS_PROFILE_NAME `
+            --instance-ids $existingId `
+            --region $REGION | Out-Null
+        aws ec2 wait instance-terminated `
+            --profile $AWS_PROFILE_NAME `
+            --instance-ids $existingId `
+            --region $REGION 2>$null
+        Write-Ok "Existing instance terminated."
+    }
+}
+
 function Get-UbuntuAMI {
     Write-Info "Finding latest Ubuntu 26.04 AMI in $REGION..."
 
     # Try SSM parameter for Ubuntu 26.04
     $script:AMI_ID = aws ssm get-parameters `
+        --profile $AWS_PROFILE_NAME `
         --names "/aws/service/canonical/ubuntu/server/26.04/stable/current/amd64/hvm/ebs-gp3/ami-id" `
         --region $REGION `
         --query "Parameters[0].Value" `
@@ -208,6 +250,7 @@ function Get-UbuntuAMI {
     if (-not $script:AMI_ID -or $script:AMI_ID -eq "None") {
         # Fallback: search by name pattern
         $script:AMI_ID = aws ec2 describe-images `
+            --profile $AWS_PROFILE_NAME `
             --owners 099720109477 `
             --filters "Name=name,Values=ubuntu/images/hvm-ssd-gp3/ubuntu-*-26.04-amd64-server-*" `
             --query "Images | sort_by(@, &CreationDate) | [-1].ImageId" `
@@ -219,6 +262,7 @@ function Get-UbuntuAMI {
         # Fallback: Ubuntu 24.04 if 26.04 not available yet
         Write-Warn "Ubuntu 26.04 not found, falling back to 24.04..."
         $script:AMI_ID = aws ssm get-parameters `
+            --profile $AWS_PROFILE_NAME `
             --names "/aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id" `
             --region $REGION `
             --query "Parameters[0].Value" `
@@ -226,6 +270,7 @@ function Get-UbuntuAMI {
 
         if (-not $script:AMI_ID -or $script:AMI_ID -eq "None") {
             $script:AMI_ID = aws ec2 describe-images `
+                --profile $AWS_PROFILE_NAME `
                 --owners 099720109477 `
                 --filters "Name=name,Values=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*" `
                 --query "Images | sort_by(@, &CreationDate) | [-1].ImageId" `
@@ -249,6 +294,7 @@ function New-SecurityGroup {
 
     # Check if already exists
     $script:SG_ID = aws ec2 describe-security-groups `
+        --profile $AWS_PROFILE_NAME `
         --filters "Name=group-name,Values=$sgName" `
         --query "SecurityGroups[0].GroupId" `
         --region $REGION `
@@ -261,6 +307,7 @@ function New-SecurityGroup {
 
     # Create security group
     $script:SG_ID = aws ec2 create-security-group `
+        --profile $AWS_PROFILE_NAME `
         --group-name $sgName `
         --description "Security group for Kiro-LAB SSH development instance" `
         --region $REGION `
@@ -268,6 +315,7 @@ function New-SecurityGroup {
 
     # Allow SSH only
     aws ec2 authorize-security-group-ingress `
+        --profile $AWS_PROFILE_NAME `
         --group-id $script:SG_ID `
         --protocol tcp --port 22 --cidr "0.0.0.0/0" `
         --region $REGION | Out-Null
@@ -296,30 +344,26 @@ function Get-Userdata {
             # Write embedded userdata
             Write-Warn "Could not fetch userdata, using embedded version"
             $embeddedUserdata = @'
-#!/bin/bash -xe
+#!/bin/bash -x
+export HOME="${HOME:-/root}"
 exec > /var/log/userdata-kiro-lab.log 2>&1
 apt update -y && apt upgrade -y
 apt install -y build-essential curl wget unzip git python3 python3-pip python3-venv
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 npm install -g npm@latest || true
-curl -fsSL https://bun.sh/install | bash
-ln -sf /root/.bun/bin/bun /usr/local/bin/bun
-ln -sf /root/.bun/bin/bunx /usr/local/bin/bunx
-su - ubuntu -c "curl -fsSL https://bun.sh/install | bash"
-curl -LsSf https://astral.sh/uv/install.sh | sh
-ln -sf /root/.local/bin/uv /usr/local/bin/uv
-ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
-su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
-su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphify"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+su - ubuntu -c "export BUN_INSTALL=/home/ubuntu/.bun && curl -fsSL https://bun.sh/install | bash" || true
+ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bun 2>/dev/null || true
+ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bunx 2>/dev/null || true
+curl -LsSf https://astral.sh/uv/install.sh | sh || true
+ln -sf /root/.local/bin/uv /usr/local/bin/uv 2>/dev/null || true
+ln -sf /root/.local/bin/uvx /usr/local/bin/uvx 2>/dev/null || true
+su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh" || true
+su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy" || true
+curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
 unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
 su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
-cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
-{"mcpServers":{"aws-docs":{"command":"uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false}}}
-EOF
-chown -R ubuntu:ubuntu /home/ubuntu/.kiro
 cat >> /home/ubuntu/.bashrc << 'EOF'
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
 EOF
@@ -336,6 +380,7 @@ function Start-Instance {
     Write-Info "Launching EC2 instance ($INSTANCE_TYPE)..."
 
     $script:INSTANCE_ID = aws ec2 run-instances `
+        --profile $AWS_PROFILE_NAME `
         --image-id $script:AMI_ID `
         --instance-type $INSTANCE_TYPE `
         --key-name $KEY_NAME `
@@ -351,7 +396,7 @@ function Start-Instance {
     Write-Ok "Instance launched: $script:INSTANCE_ID"
 
     Write-Info "Waiting for instance to enter running state..."
-    aws ec2 wait instance-running --instance-ids $script:INSTANCE_ID --region $REGION
+    aws ec2 wait instance-running --profile $AWS_PROFILE_NAME --instance-ids $script:INSTANCE_ID --region $REGION
     Write-Ok "Instance is running!"
 }
 
@@ -361,12 +406,14 @@ function Get-InstanceDNS {
     Start-Sleep -Seconds 5
 
     $script:PUBLIC_DNS = aws ec2 describe-instances `
+        --profile $AWS_PROFILE_NAME `
         --instance-ids $script:INSTANCE_ID `
         --query "Reservations[0].Instances[0].PublicDnsName" `
         --region $REGION `
         --output text
 
     $script:PUBLIC_IP = aws ec2 describe-instances `
+        --profile $AWS_PROFILE_NAME `
         --instance-ids $script:INSTANCE_ID `
         --query "Reservations[0].Instances[0].PublicIpAddress" `
         --region $REGION `
@@ -437,6 +484,7 @@ function Show-Summary {
     Write-Host "  Public IP:     $($script:PUBLIC_IP)"
     Write-Host "  Instance Type: $INSTANCE_TYPE"
     Write-Host "  Region:        $REGION"
+    Write-Host "  AWS Profile:   $AWS_PROFILE_NAME"
     Write-Host ""
     Write-Host "  SSH Command:   " -NoNewline; Write-Host "ssh $SSH_CONFIG_HOST" -ForegroundColor Cyan
     Write-Host "  SSH Config:    " -NoNewline; Write-Host "Host '$SSH_CONFIG_HOST' added to ~/.ssh/config" -ForegroundColor Cyan
@@ -452,7 +500,186 @@ function Show-Summary {
     Write-Host "  4. Select '$SSH_CONFIG_HOST'"
     Write-Host "  5. Open folder: /home/ubuntu/workshop"
     Write-Host ""
+    Write-Host "  To clean up all resources later:" -ForegroundColor Cyan
+    Write-Host "    .\deploy-kiro-lab.ps1 -Action cleanup"
+    Write-Host ""
     Write-Host "==============================================================" -ForegroundColor Green
+}
+
+# ─── Cleanup ─────────────────────────────────────────────────────────────────
+
+function Invoke-Cleanup {
+    Write-Host ""
+    Write-Host "+===========================================+" -ForegroundColor Yellow
+    Write-Host "|   Kiro-LAB Cleanup                        |" -ForegroundColor Yellow
+    Write-Host "+===========================================+" -ForegroundColor Yellow
+    Write-Host ""
+
+    # Check prerequisites
+    if (-not (Get-Command aws -ErrorAction SilentlyContinue)) {
+        Write-Err "AWS CLI not found. Cannot perform cleanup."
+        exit 1
+    }
+
+    # Check profile exists and is valid
+    $null = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --output json 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err "AWS profile '$AWS_PROFILE_NAME' is not configured or credentials are expired."
+        Write-Host "  Please run the deploy script first to configure credentials,"
+        Write-Host "  or manually configure the profile:"
+        Write-Host "    aws configure --profile $AWS_PROFILE_NAME"
+        exit 1
+    }
+
+    Write-Info "This will remove the following resources:"
+    Write-Host ""
+
+    # Find instances
+    $instanceIds = aws ec2 describe-instances `
+        --profile $AWS_PROFILE_NAME `
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" "Name=instance-state-name,Values=running,stopped,pending" `
+        --query "Reservations[].Instances[].InstanceId" `
+        --region $REGION `
+        --output text 2>$null
+
+    if ($instanceIds -and $instanceIds -ne "None") {
+        Write-Host "  * EC2 Instance(s): $instanceIds"
+    } else {
+        Write-Host "  * EC2 Instance(s): (none found)"
+        $instanceIds = $null
+    }
+
+    # Find security group
+    $sgId = aws ec2 describe-security-groups `
+        --profile $AWS_PROFILE_NAME `
+        --filters "Name=group-name,Values=kiro-lab-sg" `
+        --query "SecurityGroups[0].GroupId" `
+        --region $REGION `
+        --output text 2>$null
+
+    if ($sgId -and $sgId -ne "None") {
+        Write-Host "  * Security Group: $sgId (kiro-lab-sg)"
+    } else {
+        Write-Host "  * Security Group: (none found)"
+        $sgId = $null
+    }
+
+    $sshConfig = Join-Path $env:USERPROFILE ".ssh\config"
+    Write-Host "  * SSH Config: 'kiro-lab' entry in $sshConfig"
+    Write-Host "  * AWS Profile: '$AWS_PROFILE_NAME' from ~/.aws/credentials and ~/.aws/config"
+    Write-Host ""
+
+    $confirm = Read-Host "  Are you sure you want to delete all these resources? [y/N]"
+    if ($confirm -notmatch '^[Yy]$') {
+        Write-Info "Cleanup cancelled."
+        exit 0
+    }
+
+    Write-Host ""
+
+    # Terminate instances
+    if ($instanceIds) {
+        Write-Info "Terminating EC2 instance(s): $instanceIds ..."
+        aws ec2 terminate-instances `
+            --profile $AWS_PROFILE_NAME `
+            --instance-ids $instanceIds `
+            --region $REGION | Out-Null
+        Write-Info "Waiting for instance(s) to terminate..."
+        aws ec2 wait instance-terminated `
+            --profile $AWS_PROFILE_NAME `
+            --instance-ids $instanceIds `
+            --region $REGION 2>$null
+        Write-Ok "Instance(s) terminated."
+    }
+
+    # Delete security group (may need retry as ENIs detach)
+    if ($sgId) {
+        Write-Info "Deleting security group: $sgId ..."
+        $retries = 0
+        $deleted = $false
+        while ($retries -lt 5) {
+            $null = aws ec2 delete-security-group `
+                --profile $AWS_PROFILE_NAME `
+                --group-id $sgId `
+                --region $REGION 2>$null
+            if ($LASTEXITCODE -eq 0) {
+                Write-Ok "Security group deleted."
+                $deleted = $true
+                break
+            }
+            $retries++
+            if ($retries -lt 5) {
+                Write-Warn "Security group still in use, retrying in 10s... ($retries/5)"
+                Start-Sleep -Seconds 10
+            }
+        }
+        if (-not $deleted) {
+            Write-Warn "Could not delete security group. It may still be attached to a network interface."
+            Write-Warn "You can delete it manually: aws ec2 delete-security-group --group-id $sgId --region $REGION --profile $AWS_PROFILE_NAME"
+        }
+    }
+
+    # Remove SSH config entry
+    if (Test-Path $sshConfig) {
+        $content = Get-Content $sshConfig -Raw
+        if ($content -match '# >>> Kiro-LAB >>>') {
+            $content = $content -replace '(?s)\r?\n?# >>> Kiro-LAB >>>.*?# <<< Kiro-LAB <<<\r?\n?', ''
+            Set-Content -Path $sshConfig -Value $content.TrimEnd() -Encoding UTF8 -NoNewline
+            Write-Ok "SSH config entry removed."
+        }
+    }
+
+    # Remove AWS profile
+    Write-Info "Removing AWS profile '$AWS_PROFILE_NAME'..."
+    $credFile = Join-Path $env:USERPROFILE ".aws\credentials"
+    $configFile = Join-Path $env:USERPROFILE ".aws\config"
+
+    if (Test-Path $credFile) {
+        $lines = Get-Content $credFile
+        $newLines = @()
+        $skip = $false
+        foreach ($line in $lines) {
+            if ($line -match "^\[$AWS_PROFILE_NAME\]") {
+                $skip = $true
+                continue
+            }
+            if ($skip -and $line -match '^\[') {
+                $skip = $false
+            }
+            if (-not $skip) {
+                $newLines += $line
+            }
+        }
+        Set-Content -Path $credFile -Value ($newLines -join "`n") -Encoding UTF8 -NoNewline
+    }
+
+    if (Test-Path $configFile) {
+        $lines = Get-Content $configFile
+        $newLines = @()
+        $skip = $false
+        foreach ($line in $lines) {
+            if ($line -match "^\[profile $AWS_PROFILE_NAME\]") {
+                $skip = $true
+                continue
+            }
+            if ($skip -and $line -match '^\[') {
+                $skip = $false
+            }
+            if (-not $skip) {
+                $newLines += $line
+            }
+        }
+        Set-Content -Path $configFile -Value ($newLines -join "`n") -Encoding UTF8 -NoNewline
+    }
+    Write-Ok "AWS profile removed."
+
+    Write-Host ""
+    Write-Host "==============================================================" -ForegroundColor Green
+    Write-Host "  Kiro-LAB Cleanup Complete!" -ForegroundColor Green
+    Write-Host "==============================================================" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "  All Kiro-LAB resources have been removed."
+    Write-Host ""
 }
 
 # ─── Main ────────────────────────────────────────────────────────────────────
@@ -466,6 +693,7 @@ function Main {
 
     Test-Prerequisites
     Collect-AWSCredentials
+    Test-ExistingInstance
     Collect-SSHKey
     Get-UbuntuAMI
     New-SecurityGroup
@@ -476,4 +704,14 @@ function Main {
     Show-Summary
 }
 
-Main
+# ─── Entry Point ─────────────────────────────────────────────────────────────
+
+switch ($Action) {
+    { $_ -in "cleanup", "clean", "destroy", "teardown" } {
+        Test-Prerequisites
+        Invoke-Cleanup
+    }
+    default {
+        Main
+    }
+}

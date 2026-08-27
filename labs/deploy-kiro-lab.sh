@@ -7,6 +7,7 @@
 #   curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
 #   -- or --
 #   bash deploy-kiro-lab.sh
+#   bash deploy-kiro-lab.sh cleanup
 #
 # Prerequisites:
 #   - AWS CLI configured with valid credentials
@@ -24,6 +25,7 @@ VOLUME_SIZE=30
 REGION="${AWS_DEFAULT_REGION:-us-east-1}"
 SSH_CONFIG_HOST="kiro-lab"
 USERDATA_URL="https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab.sh"
+AWS_PROFILE_NAME="kiro-lab-deploy"
 
 # Colors
 RED='\033[0;31m'
@@ -47,9 +49,9 @@ collect_aws_credentials() {
     echo "  (Click 'AWS Details' → 'Show' next to AWS CLI credentials)"
     echo ""
 
-    # Check if credentials are already valid
-    if aws sts get-caller-identity &> /dev/null; then
-        ok "AWS credentials already configured and valid."
+    # Check if profile credentials are already valid
+    if aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" &> /dev/null; then
+        ok "AWS credentials already configured and valid (profile: $AWS_PROFILE_NAME)."
         read -rp "  Do you want to reconfigure? [y/N]: " reconfigure
         if [[ ! "$reconfigure" =~ ^[Yy]$ ]]; then
             return 0
@@ -66,19 +68,19 @@ collect_aws_credentials() {
         exit 1
     fi
 
-    # Export as environment variables for this session
-    export AWS_ACCESS_KEY_ID="$aws_key_id"
-    export AWS_SECRET_ACCESS_KEY="$aws_secret_key"
-    export AWS_SESSION_TOKEN="$aws_session_token"
-    export AWS_DEFAULT_REGION="${REGION}"
+    # Configure dedicated profile
+    aws configure set aws_access_key_id "$aws_key_id" --profile "$AWS_PROFILE_NAME"
+    aws configure set aws_secret_access_key "$aws_secret_key" --profile "$AWS_PROFILE_NAME"
+    aws configure set aws_session_token "$aws_session_token" --profile "$AWS_PROFILE_NAME"
+    aws configure set region "$REGION" --profile "$AWS_PROFILE_NAME"
 
     # Verify credentials work
-    if ! aws sts get-caller-identity &> /dev/null; then
+    if ! aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" &> /dev/null; then
         error "Credentials are invalid or expired. Please check and try again."
         exit 1
     fi
 
-    ok "AWS credentials configured. Account: $(aws sts get-caller-identity --query Account --output text)"
+    ok "AWS credentials configured (profile: $AWS_PROFILE_NAME). Account: $(aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" --query Account --output text)"
 }
 
 collect_ssh_key() {
@@ -201,11 +203,49 @@ check_prerequisites() {
     fi
 }
 
+# Check if a Kiro-LAB instance already exists (running or stopped)
+check_existing_instance() {
+    local existing_id
+    existing_id=$(aws ec2 describe-instances \
+        --profile "$AWS_PROFILE_NAME" \
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" \
+                  "Name=instance-state-name,Values=running,stopped,pending" \
+        --query 'Reservations[].Instances[0].InstanceId' \
+        --region "$REGION" \
+        --output text 2>/dev/null || echo "")
+
+    if [[ -n "$existing_id" && "$existing_id" != "None" ]]; then
+        echo ""
+        warn "An existing Kiro-LAB instance was found: $existing_id"
+        echo ""
+        echo -e "  ${YELLOW}Deploying again will TERMINATE the existing instance and create a new one.${NC}"
+        echo ""
+        read -rp "  Do you want to continue? (The old instance will be deleted) [y/N]: " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            info "Deployment cancelled."
+            exit 0
+        fi
+
+        # Terminate existing instance
+        info "Terminating existing instance: $existing_id ..."
+        aws ec2 terminate-instances \
+            --profile "$AWS_PROFILE_NAME" \
+            --instance-ids "$existing_id" \
+            --region "$REGION" > /dev/null
+        aws ec2 wait instance-terminated \
+            --profile "$AWS_PROFILE_NAME" \
+            --instance-ids "$existing_id" \
+            --region "$REGION" 2>/dev/null || true
+        ok "Existing instance terminated."
+    fi
+}
+
 get_ubuntu_ami() {
     info "Finding latest Ubuntu 26.04 AMI in $REGION..."
 
     # Try SSM parameter for Ubuntu 26.04
     AMI_ID=$(aws ssm get-parameters \
+        --profile "$AWS_PROFILE_NAME" \
         --names /aws/service/canonical/ubuntu/server/26.04/stable/current/amd64/hvm/ebs-gp3/ami-id \
         --region "$REGION" \
         --query 'Parameters[0].Value' \
@@ -214,6 +254,7 @@ get_ubuntu_ami() {
     if [[ -z "$AMI_ID" || "$AMI_ID" == "None" ]]; then
         # Fallback: search for Ubuntu 26.04 by name pattern
         AMI_ID=$(aws ec2 describe-images \
+            --profile "$AWS_PROFILE_NAME" \
             --owners 099720109477 \
             --filters "Name=name,Values=ubuntu/images/hvm-ssd-gp3/ubuntu-*-26.04-amd64-server-*" \
             --query 'Images | sort_by(@, &CreationDate) | [-1].ImageId' \
@@ -225,6 +266,7 @@ get_ubuntu_ami() {
         # Fallback: Ubuntu 24.04 if 26.04 not available yet
         warn "Ubuntu 26.04 not found, falling back to 24.04..."
         AMI_ID=$(aws ssm get-parameters \
+            --profile "$AWS_PROFILE_NAME" \
             --names /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id \
             --region "$REGION" \
             --query 'Parameters[0].Value' \
@@ -232,6 +274,7 @@ get_ubuntu_ami() {
 
         if [[ -z "$AMI_ID" || "$AMI_ID" == "None" ]]; then
             AMI_ID=$(aws ec2 describe-images \
+                --profile "$AWS_PROFILE_NAME" \
                 --owners 099720109477 \
                 --filters "Name=name,Values=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*" \
                 --query 'Images | sort_by(@, &CreationDate) | [-1].ImageId' \
@@ -255,6 +298,7 @@ create_security_group() {
 
     # Check if security group already exists
     SG_ID=$(aws ec2 describe-security-groups \
+        --profile "$AWS_PROFILE_NAME" \
         --filters "Name=group-name,Values=$sg_name" \
         --query 'SecurityGroups[0].GroupId' \
         --region "$REGION" \
@@ -267,6 +311,7 @@ create_security_group() {
 
     # Create security group in default VPC
     SG_ID=$(aws ec2 create-security-group \
+        --profile "$AWS_PROFILE_NAME" \
         --group-name "$sg_name" \
         --description "Security group for Kiro-LAB SSH development instance" \
         --region "$REGION" \
@@ -274,6 +319,7 @@ create_security_group() {
 
     # Allow SSH from anywhere (for lab purposes)
     aws ec2 authorize-security-group-ingress \
+        --profile "$AWS_PROFILE_NAME" \
         --group-id "$SG_ID" \
         --protocol tcp \
         --port 22 \
@@ -296,23 +342,23 @@ get_userdata() {
         # Inline minimal userdata
         warn "Could not fetch userdata script, using embedded version"
         cat > "$userdata_file" << 'USERDATA'
-#!/bin/bash -xe
+#!/bin/bash -x
+export HOME="${HOME:-/root}"
 exec > /var/log/userdata-kiro-lab.log 2>&1
 apt update -y && apt upgrade -y
 apt install -y build-essential curl wget unzip git python3 python3-pip python3-venv
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
-npm install -g npm@latest
-curl -fsSL https://bun.sh/install | bash
-ln -sf /root/.bun/bin/bun /usr/local/bin/bun
-ln -sf /root/.bun/bin/bunx /usr/local/bin/bunx
-su - ubuntu -c "curl -fsSL https://bun.sh/install | bash"
-curl -LsSf https://astral.sh/uv/install.sh | sh
-ln -sf /root/.local/bin/uv /usr/local/bin/uv
-ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
-su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
-su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphify"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+npm install -g npm@latest || true
+su - ubuntu -c "export BUN_INSTALL=/home/ubuntu/.bun && curl -fsSL https://bun.sh/install | bash" || true
+ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bun 2>/dev/null || true
+ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bunx 2>/dev/null || true
+curl -LsSf https://astral.sh/uv/install.sh | sh || true
+ln -sf /root/.local/bin/uv /usr/local/bin/uv 2>/dev/null || true
+ln -sf /root/.local/bin/uvx /usr/local/bin/uvx 2>/dev/null || true
+su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh" || true
+su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy" || true
+curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
 unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
 su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
@@ -335,6 +381,7 @@ launch_instance() {
     info "Launching EC2 instance ($INSTANCE_TYPE)..."
 
     INSTANCE_ID=$(aws ec2 run-instances \
+        --profile "$AWS_PROFILE_NAME" \
         --image-id "$AMI_ID" \
         --instance-type "$INSTANCE_TYPE" \
         --key-name "$KEY_NAME" \
@@ -350,7 +397,10 @@ launch_instance() {
     ok "Instance launched: $INSTANCE_ID"
 
     info "Waiting for instance to enter running state..."
-    aws ec2 wait instance-running --instance-ids "$INSTANCE_ID" --region "$REGION"
+    aws ec2 wait instance-running \
+        --profile "$AWS_PROFILE_NAME" \
+        --instance-ids "$INSTANCE_ID" \
+        --region "$REGION"
     ok "Instance is running!"
 }
 
@@ -361,12 +411,14 @@ get_instance_dns() {
     sleep 5
 
     PUBLIC_DNS=$(aws ec2 describe-instances \
+        --profile "$AWS_PROFILE_NAME" \
         --instance-ids "$INSTANCE_ID" \
         --query 'Reservations[0].Instances[0].PublicDnsName' \
         --region "$REGION" \
         --output text)
 
     PUBLIC_IP=$(aws ec2 describe-instances \
+        --profile "$AWS_PROFILE_NAME" \
         --instance-ids "$INSTANCE_ID" \
         --query 'Reservations[0].Instances[0].PublicIpAddress' \
         --region "$REGION" \
@@ -433,6 +485,7 @@ print_summary() {
     echo "  Public IP:     $PUBLIC_IP"
     echo "  Instance Type: $INSTANCE_TYPE"
     echo "  Region:        $REGION"
+    echo "  AWS Profile:   $AWS_PROFILE_NAME"
     echo ""
     echo -e "${BLUE}  SSH Command:${NC}    ssh $SSH_CONFIG_HOST"
     echo -e "${BLUE}  SSH Config:${NC}     Host '$SSH_CONFIG_HOST' added to ~/.ssh/config"
@@ -448,7 +501,153 @@ print_summary() {
     echo "  4. Select '$SSH_CONFIG_HOST'"
     echo "  5. Open folder: /home/ubuntu/workshop"
     echo ""
+    echo -e "  ${BLUE}To clean up all resources later:${NC}"
+    echo "    bash deploy-kiro-lab.sh cleanup"
+    echo ""
     echo -e "${GREEN}══════════════════════════════════════════════════════════════${NC}"
+}
+
+# ─── Cleanup ─────────────────────────────────────────────────────────────────
+
+do_cleanup() {
+    echo ""
+    echo -e "${YELLOW}╔══════════════════════════════════════════╗${NC}"
+    echo -e "${YELLOW}║   Kiro-LAB Cleanup                       ║${NC}"
+    echo -e "${YELLOW}╚══════════════════════════════════════════╝${NC}"
+    echo ""
+
+    # Check prerequisites
+    if ! command -v aws &> /dev/null; then
+        error "AWS CLI not found. Cannot perform cleanup."
+        exit 1
+    fi
+
+    # Check profile exists and is valid
+    if ! aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" &> /dev/null; then
+        error "AWS profile '$AWS_PROFILE_NAME' is not configured or credentials are expired."
+        echo "  Please run the deploy script first to configure credentials,"
+        echo "  or manually configure the profile:"
+        echo "    aws configure --profile $AWS_PROFILE_NAME"
+        exit 1
+    fi
+
+    info "This will remove the following resources:"
+    echo ""
+
+    # Find instances
+    local instance_ids
+    instance_ids=$(aws ec2 describe-instances \
+        --profile "$AWS_PROFILE_NAME" \
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" \
+                  "Name=instance-state-name,Values=running,stopped,pending" \
+        --query 'Reservations[].Instances[].InstanceId' \
+        --region "$REGION" \
+        --output text 2>/dev/null || echo "")
+
+    if [[ -n "$instance_ids" && "$instance_ids" != "None" ]]; then
+        echo "  • EC2 Instance(s): $instance_ids"
+    else
+        echo "  • EC2 Instance(s): (none found)"
+    fi
+
+    # Find security group
+    local sg_id
+    sg_id=$(aws ec2 describe-security-groups \
+        --profile "$AWS_PROFILE_NAME" \
+        --filters "Name=group-name,Values=kiro-lab-sg" \
+        --query 'SecurityGroups[0].GroupId' \
+        --region "$REGION" \
+        --output text 2>/dev/null || echo "None")
+
+    if [[ "$sg_id" != "None" && -n "$sg_id" ]]; then
+        echo "  • Security Group: $sg_id (kiro-lab-sg)"
+    else
+        echo "  • Security Group: (none found)"
+    fi
+
+    echo "  • SSH Config: 'kiro-lab' entry in ~/.ssh/config"
+    echo "  • AWS Profile: '$AWS_PROFILE_NAME' from ~/.aws/credentials and ~/.aws/config"
+    echo ""
+
+    read -rp "  Are you sure you want to delete all these resources? [y/N]: " confirm
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        info "Cleanup cancelled."
+        exit 0
+    fi
+
+    echo ""
+
+    # Terminate instances
+    if [[ -n "$instance_ids" && "$instance_ids" != "None" ]]; then
+        info "Terminating EC2 instance(s): $instance_ids ..."
+        aws ec2 terminate-instances \
+            --profile "$AWS_PROFILE_NAME" \
+            --instance-ids $instance_ids \
+            --region "$REGION" > /dev/null
+        info "Waiting for instance(s) to terminate..."
+        aws ec2 wait instance-terminated \
+            --profile "$AWS_PROFILE_NAME" \
+            --instance-ids $instance_ids \
+            --region "$REGION" 2>/dev/null || true
+        ok "Instance(s) terminated."
+    fi
+
+    # Delete security group (may need retry as ENIs detach)
+    if [[ "$sg_id" != "None" && -n "$sg_id" ]]; then
+        info "Deleting security group: $sg_id ..."
+        local retries=0
+        while [[ $retries -lt 5 ]]; do
+            if aws ec2 delete-security-group \
+                --profile "$AWS_PROFILE_NAME" \
+                --group-id "$sg_id" \
+                --region "$REGION" 2>/dev/null; then
+                ok "Security group deleted."
+                break
+            fi
+            retries=$((retries + 1))
+            if [[ $retries -lt 5 ]]; then
+                warn "Security group still in use, retrying in 10s... ($retries/5)"
+                sleep 10
+            else
+                warn "Could not delete security group. It may still be attached to a network interface."
+                warn "You can delete it manually: aws ec2 delete-security-group --group-id $sg_id --region $REGION --profile $AWS_PROFILE_NAME"
+            fi
+        done
+    fi
+
+    # Remove SSH config entry
+    local ssh_config="$HOME/.ssh/config"
+    if [[ -f "$ssh_config" ]]; then
+        if grep -q '# >>> Kiro-LAB >>>' "$ssh_config"; then
+            sed -i.bak '/^# >>> Kiro-LAB >>>/,/^# <<< Kiro-LAB <<</d' "$ssh_config"
+            ok "SSH config entry removed."
+        fi
+    fi
+
+    # Remove AWS profile
+    info "Removing AWS profile '$AWS_PROFILE_NAME'..."
+    # Remove from credentials file
+    local creds_file="$HOME/.aws/credentials"
+    if [[ -f "$creds_file" ]] && grep -q "\[$AWS_PROFILE_NAME\]" "$creds_file"; then
+        sed -i.bak "/^\[$AWS_PROFILE_NAME\]/,/^\[/{ /^\[${AWS_PROFILE_NAME}\]/d; /^\[/!d; }" "$creds_file"
+        # Clean up empty lines
+        sed -i '/^$/N;/^\n$/d' "$creds_file"
+    fi
+    # Remove from config file
+    local config_file="$HOME/.aws/config"
+    if [[ -f "$config_file" ]] && grep -q "\[profile $AWS_PROFILE_NAME\]" "$config_file"; then
+        sed -i.bak "/^\[profile $AWS_PROFILE_NAME\]/,/^\[/{ /^\[profile ${AWS_PROFILE_NAME}\]/d; /^\[/!d; }" "$config_file"
+        sed -i '/^$/N;/^\n$/d' "$config_file"
+    fi
+    ok "AWS profile removed."
+
+    echo ""
+    echo -e "${GREEN}══════════════════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}  Kiro-LAB Cleanup Complete!${NC}"
+    echo -e "${GREEN}══════════════════════════════════════════════════════════════${NC}"
+    echo ""
+    echo "  All Kiro-LAB resources have been removed."
+    echo ""
 }
 
 # ─── Main ────────────────────────────────────────────────────────────────────
@@ -462,6 +661,7 @@ main() {
 
     check_prerequisites
     collect_aws_credentials
+    check_existing_instance
     collect_ssh_key
     get_ubuntu_ami
     create_security_group
@@ -472,4 +672,14 @@ main() {
     print_summary
 }
 
-main "$@"
+# ─── Entry Point ─────────────────────────────────────────────────────────────
+
+case "${1:-}" in
+    cleanup|clean|destroy|teardown)
+        check_prerequisites
+        do_cleanup
+        ;;
+    *)
+        main "$@"
+        ;;
+esac
