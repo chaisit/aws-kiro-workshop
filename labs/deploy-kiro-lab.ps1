@@ -376,24 +376,28 @@ function New-SecurityGroup {
 function Get-Userdata {
     Write-Info "Preparing userdata script..."
 
-    $localPath = Join-Path $PSScriptRoot "userdata-kiro-lab.sh"
     $tempPath = Join-Path $env:TEMP "kiro-lab-userdata.sh"
 
-    if (Test-Path $localPath) {
-        $script:USERDATA_PATH = $localPath
-        Write-Info "Using local userdata script"
-    }
-    else {
-        # Try download
-        try {
-            Invoke-WebRequest -Uri $USERDATA_URL -OutFile $tempPath -UseBasicParsing
-            $script:USERDATA_PATH = $tempPath
-            Write-Info "Downloaded userdata from remote"
+    # Check for local file (only when running as a script file, not via irm | iex)
+    if ($PSScriptRoot) {
+        $localPath = Join-Path $PSScriptRoot "userdata-kiro-lab.sh"
+        if (Test-Path $localPath) {
+            $script:USERDATA_PATH = $localPath
+            Write-Info "Using local userdata script"
+            return
         }
-        catch {
-            # Write embedded userdata
-            Write-Warn "Could not fetch userdata, using embedded version"
-            $embeddedUserdata = @'
+    }
+
+    # Try download from remote
+    try {
+        Invoke-WebRequest -Uri $USERDATA_URL -OutFile $tempPath -UseBasicParsing -ErrorAction Stop
+        $script:USERDATA_PATH = $tempPath
+        Write-Info "Downloaded userdata from remote"
+    }
+    catch {
+        # Write embedded userdata
+        Write-Warn "Could not fetch userdata, using embedded version"
+        $embeddedUserdata = @'
 #!/bin/bash -x
 export HOME="${HOME:-/root}"
 exec > /var/log/userdata-kiro-lab.log 2>&1
@@ -422,8 +426,14 @@ touch /home/ubuntu/.kiro-lab-ready && chown ubuntu:ubuntu /home/ubuntu/.kiro-lab
 '@
             Set-Content -Path $tempPath -Value $embeddedUserdata -Encoding UTF8 -NoNewline
             $script:USERDATA_PATH = $tempPath
-        }
     }
+
+    # Final validation
+    if (-not $script:USERDATA_PATH -or -not (Test-Path $script:USERDATA_PATH)) {
+        Write-Err "Failed to prepare userdata script. Cannot proceed with deployment."
+        exit 1
+    }
+    Write-Ok "Userdata ready: $($script:USERDATA_PATH)"
 }
 
 function Start-Instance {
@@ -443,10 +453,20 @@ function Start-Instance {
         --query "Instances[0].InstanceId" `
         --output text
 
+    if ($LASTEXITCODE -ne 0 -or -not $script:INSTANCE_ID -or $script:INSTANCE_ID -eq "None") {
+        Write-Err "Failed to launch EC2 instance. Check your credentials and configuration."
+        exit 1
+    }
+
     Write-Ok "Instance launched: $script:INSTANCE_ID"
 
     Write-Info "Waiting for instance to enter running state..."
     aws ec2 wait instance-running --profile $AWS_PROFILE_NAME --instance-ids $script:INSTANCE_ID --region $REGION
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err "Instance failed to reach running state. Check the AWS console for details."
+        Write-Err "Instance ID: $script:INSTANCE_ID"
+        exit 1
+    }
     Write-Ok "Instance is running!"
 }
 
