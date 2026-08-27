@@ -68,6 +68,65 @@ Kiro IDE ต้องใช้ extension [Open Remote - SSH](https://open-vsx.or
 
 > รายละเอียดเพิ่มเติม: [labs/README.md](./labs/README.md)
 
+## ทางเลือก: ทำ Lab บนเครื่องตนเอง (Local Machine)
+
+หากไม่ต้องการใช้ EC2 instance สามารถทำ Lab บนเครื่องตนเองได้โดยติดตั้ง dev tools ตามนี้:
+
+### Linux / macOS
+
+```bash
+# Node.js 22 LTS
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+sudo apt install -y nodejs        # Ubuntu/Debian
+# brew install node@22            # macOS (via Homebrew)
+
+# Bun
+curl -fsSL https://bun.sh/install | bash
+
+# uv / uvx (Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# graphify
+uv tool install graphifyy
+
+# AWS CLI v2
+curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
+unzip -q /tmp/awscliv2.zip -d /tmp && sudo /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
+# macOS: brew install awscli
+
+# Clone workshop repo
+git clone https://github.com/chaisit/aws-kiro-workshop.git ~/workshop
+```
+
+### Windows (WSL)
+
+1. ติดตั้ง [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (Ubuntu recommended):
+
+```powershell
+wsl --install
+```
+
+2. เปิด WSL terminal แล้วรันคำสั่งเดียวกับ Linux ด้านบน
+
+3. เชื่อมต่อ Kiro IDE ไปยัง WSL:
+   - ติดตั้ง extension [Open Remote - SSH](https://open-vsx.org/vscode/item?itemName=jeanp413.open-remote-ssh) (ดูวิธี activate ในหัวข้อด้านบน)
+   - `Ctrl+Shift+P` → `Remote-SSH: Connect to Host...` → เลือก WSL instance
+   - หรือเปิดโฟลเดอร์ workshop ตรงจาก Kiro IDE ได้เลยถ้าใช้ Linux/macOS
+
+### ตั้งค่า AWS Credentials
+
+```bash
+aws configure
+# aws_access_key_id: (จาก AWS Academy Lab)
+# aws_secret_access_key: (จาก AWS Academy Lab)
+# aws_session_token: (จาก AWS Academy Lab)
+# region: us-east-1
+```
+
+> **หมายเหตุ:** การทำ Lab บนเครื่องตนเองต้องมี internet สำหรับเชื่อมต่อ AWS services และ MCP servers จะต้องตั้งค่าเพิ่มเองใน `~/.kiro/settings/mcp.json`
+
+---
+
 ## Kiro-LAB Instance Specs
 
 | Property | Value |
