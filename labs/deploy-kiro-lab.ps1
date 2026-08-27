@@ -20,7 +20,11 @@ param(
     [string]$Action = "deploy"
 )
 
-$ErrorActionPreference = "Stop"
+# NOTE: We use "Continue" instead of "Stop" because native commands (aws cli)
+# write diagnostic messages to stderr which PowerShell treats as ErrorRecords.
+# With "Stop", any stderr output becomes a terminating error even when redirected.
+# The script handles errors explicitly via $LASTEXITCODE checks after aws calls.
+$ErrorActionPreference = "Continue"
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 $INSTANCE_NAME = "Kiro-LAB"
@@ -203,7 +207,14 @@ function Install-AWSCLI {
     $msiPath = Join-Path $env:TEMP "AWSCLIV2.msi"
 
     Write-Info "Downloading AWS CLI installer for Windows..."
-    Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath -UseBasicParsing
+    try {
+        Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath -UseBasicParsing -ErrorAction Stop
+    }
+    catch {
+        Write-Err "Failed to download AWS CLI installer: $_"
+        Write-Host "  Please install manually: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
+        exit 1
+    }
 
     Write-Info "Installing AWS CLI via MSI (this may take a minute)..."
     Start-Process msiexec.exe -ArgumentList "/i", $msiPath, "/quiet", "/norestart" -Wait -NoNewWindow
