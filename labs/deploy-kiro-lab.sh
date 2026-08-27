@@ -387,7 +387,7 @@ unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/a
 su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
 cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
-{"mcpServers":{"aws-docs":{"command":"uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false}}}
+{"mcpServers":{"aws-docs":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsiac":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-iac-mcp-server@latest"]},"awsknowledge":{"url":"https://knowledge-mcp.global.api.aws"},"awspricing":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-pricing-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"}}}}
 EOF
 chown -R ubuntu:ubuntu /home/ubuntu/.kiro
 cat >> /home/ubuntu/.bashrc << 'EOF'

@@ -77,6 +77,33 @@ fi
 # ----------------------------
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
 
+# Write MCP config with full path to uvx (Kiro Remote SSH doesn't load .bashrc PATH)
+cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "/home/ubuntu/.local/bin/uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": { "FASTMCP_LOG_LEVEL": "ERROR" },
+      "disabled": false
+    },
+    "awsiac": {
+      "command": "/home/ubuntu/.local/bin/uvx",
+      "args": ["awslabs.aws-iac-mcp-server@latest"]
+    },
+    "awsknowledge": {
+      "url": "https://knowledge-mcp.global.api.aws"
+    },
+    "awspricing": {
+      "command": "/home/ubuntu/.local/bin/uvx",
+      "args": ["awslabs.aws-pricing-mcp-server@latest"],
+      "env": { "FASTMCP_LOG_LEVEL": "ERROR" }
+    }
+  }
+}
+EOF
+chown -R ubuntu:ubuntu /home/ubuntu/.kiro
+
 # ----------------------------
 # Configure shell environment for ubuntu user
 # ----------------------------
