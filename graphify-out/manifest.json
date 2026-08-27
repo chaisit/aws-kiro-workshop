@@ -166,5 +166,239 @@
     "seen": 1787385722.306382,
     "ast_hash": "78f6b641c4445623453dbde835732ecd",
     "semantic_hash": "78f6b641c4445623453dbde835732ecd"
+  },
+  "labs/deploy-kiro-lab.ps1": {
+    "mtime": 1787465320.6635098,
+    "seen": 1787748749.6988597,
+    "ast_hash": "cfaf55bce1037b3fef47dc48731bd137",
+    "semantic_hash": ""
+  },
+  "labs/deploy-kiro-lab.sh": {
+    "mtime": 1787465269.5584695,
+    "seen": 1787748749.6988618,
+    "ast_hash": "51d8128a7ae66a69ea39004ff8620f08",
+    "semantic_hash": ""
+  },
+  "labs/userdata-kiro-lab.sh": {
+    "mtime": 1787464356.083187,
+    "seen": 1787748749.698863,
+    "ast_hash": "ca5fa9b67c639d161ad9e014342578ae",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/SKILL.md": {
+    "mtime": 1787382383.7836447,
+    "seen": 1787748749.6988738,
+    "ast_hash": "63680a48e0c5ee34aee33bbdaa577546",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/aws4-shapes-resources.md": {
+    "mtime": 1787382383.7836447,
+    "seen": 1787748749.698875,
+    "ast_hash": "beabdd0821f377da9329c7af594152ca",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/aws4-shapes-services.md": {
+    "mtime": 1787382383.7835274,
+    "seen": 1787748749.698876,
+    "ast_hash": "18773575cab743c427e2ebddabd99a11",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/cli-export.md": {
+    "mtime": 1787382383.783424,
+    "seen": 1787748749.698877,
+    "ast_hash": "32fd3cd11372c8bf43358b3e727b3e42",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/diagram-templates-advanced.md": {
+    "mtime": 1787382383.78332,
+    "seen": 1787748749.698878,
+    "ast_hash": "674add458b7fc10d919ba5e7cb77d25c",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/diagram-templates-basic.md": {
+    "mtime": 1787382383.7831104,
+    "seen": 1787748749.6988788,
+    "ast_hash": "b9e5de26cf7d5968e61c59c7fbb6dc3e",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/general-icons.md": {
+    "mtime": 1787382383.7820203,
+    "seen": 1787748749.6988795,
+    "ast_hash": "767854a754782af2f08468f76103f3ca",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/group-styles.md": {
+    "mtime": 1787382383.7818863,
+    "seen": 1787748749.6988802,
+    "ast_hash": "3af89fae294b87143c6d7c9cd4db0b36",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/layout-guidelines.md": {
+    "mtime": 1787382383.7817643,
+    "seen": 1787748749.6988814,
+    "ast_hash": "16fa49f5e7fa95c35acac85f9a6b7879",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/post-processing.md": {
+    "mtime": 1787382383.7816272,
+    "seen": 1787748749.698882,
+    "ast_hash": "6a21d0d2161092513f482e3f88f80b77",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/style-guide.md": {
+    "mtime": 1787382383.7814968,
+    "seen": 1787748749.6988828,
+    "ast_hash": "8dfe76a1f4a5e330f9a0414c4b3a343e",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/xml-rules.md": {
+    "mtime": 1787382383.7813501,
+    "seen": 1787748749.6988835,
+    "ast_hash": "a29895cf989f20438ba66331f75fdd2e",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/xml-templates-examples.md": {
+    "mtime": 1787382383.781093,
+    "seen": 1787748749.6988854,
+    "ast_hash": "fa304dc02ea5c445827efbb16a67d4b2",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/aws-architecture-diagram/references/xml-templates-structure.md": {
+    "mtime": 1787382383.781093,
+    "seen": 1787748749.6988862,
+    "ast_hash": "468f20e6985b00dcdb0944e6a62ca3ce",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/deploy/SKILL.md": {
+    "mtime": 1787382383.780197,
+    "seen": 1787748749.6988873,
+    "ast_hash": "68611a0c05391a279587136234f137ee",
+    "semantic_hash": ""
+  },
+  ".kiro/skills/deploy/references/cost-estimation.md": {
+    "mtime": 1787382383.780197,
+    "seen": 1787748749.6988883,
+    "ast_hash": "fd71a44ad3c2b2a2de2e247133be1eb2",
+    "semantic_hash": ""
+  },
+  "deployment/analyze/analyze.md": {
+    "mtime": 1787461233.1051588,
+    "seen": 1787748749.6989079,
+    "ast_hash": "ee15b8018d9e95b1585b666902077f47",
+    "semantic_hash": ""
+  },
+  "deployment/guide/DEPLOYMENT-GUIDE.md": {
+    "mtime": 1787388705.6918838,
+    "seen": 1787748749.6989086,
+    "ast_hash": "1453f69953485a55e9870d66638a1c63",
+    "semantic_hash": ""
+  },
+  "deployment/template/full-stack-with-alb.yaml": {
+    "mtime": 1787461303.6186974,
+    "seen": 1787748749.6989098,
+    "ast_hash": "c38fbd5696a152860da39cfb3ffc7823",
+    "semantic_hash": ""
+  },
+  "deployment/template/phase1-networking.yaml": {
+    "mtime": 1787388612.89404,
+    "seen": 1787748749.6989107,
+    "ast_hash": "546aa2ee3133b68b281774e476763d20",
+    "semantic_hash": ""
+  },
+  "deployment/template/phase2-database.yaml": {
+    "mtime": 1787389975.3797772,
+    "seen": 1787748749.6989117,
+    "ast_hash": "e0e928b2edd009003485c2fbb1b0e50d",
+    "semantic_hash": ""
+  },
+  "deployment/template/phase4-application.yaml": {
+    "mtime": 1787391098.888503,
+    "seen": 1787748749.6989129,
+    "ast_hash": "807e0133be583e92378f7560ad834afa",
+    "semantic_hash": ""
+  },
+  "deployment/template/phase5-alb.yaml": {
+    "mtime": 1787461946.1191192,
+    "seen": 1787748749.6989136,
+    "ast_hash": "1a15ea2dd636dd211f9731e181156f4a",
+    "semantic_hash": ""
+  },
+  "labs/README.md": {
+    "mtime": 1787465360.7061176,
+    "seen": 1787748749.6989143,
+    "ast_hash": "a2bd529ceffda0784c2633ba62e444ed",
+    "semantic_hash": ""
+  },
+  "src/views/404.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.698915,
+    "ast_hash": "c366cc72b76fffc373e17f20f6089a33",
+    "semantic_hash": ""
+  },
+  "src/views/500.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.698916,
+    "ast_hash": "b402f13845a50e2d5958584bcc3a1d31",
+    "semantic_hash": ""
+  },
+  "src/views/footer.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.698917,
+    "ast_hash": "c6567973c737d6d0d82b2fded930fffa",
+    "semantic_hash": ""
+  },
+  "src/views/header.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.6989176,
+    "ast_hash": "14eeb052fb86f650dc2c9559b9c08966",
+    "semantic_hash": ""
+  },
+  "src/views/home.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.6989183,
+    "ast_hash": "206e85703d03901db0521e2dc48a9b6b",
+    "semantic_hash": ""
+  },
+  "src/views/nav.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.698919,
+    "ast_hash": "a679adcbbcdd42ebf9c783c5ba58a92e",
+    "semantic_hash": ""
+  },
+  "src/views/supplier-add.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.69892,
+    "ast_hash": "531ff504c28eeb48eacaa233c70391f5",
+    "semantic_hash": ""
+  },
+  "src/views/supplier-form-fields.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.698921,
+    "ast_hash": "e0ffdff0135c580ec4adab1c3c9d70a4",
+    "semantic_hash": ""
+  },
+  "src/views/supplier-list-all.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.6989217,
+    "ast_hash": "fb9e6365feea9f04da3a58c1de41fee3",
+    "semantic_hash": ""
+  },
+  "src/views/supplier-update.html": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.6989224,
+    "ast_hash": "7c2e7afec7332f423ec9bdba04d6307a",
+    "semantic_hash": ""
+  },
+  "src/public/img/caps.jpeg": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.6989233,
+    "ast_hash": "efdd18e79c8a967f4d0fcd7a0118893c",
+    "semantic_hash": ""
+  },
+  "src/public/img/espresso.jpg": {
+    "mtime": 1778463176.0,
+    "seen": 1787748749.6989243,
+    "ast_hash": "0675cb30eb067fa4376299352e2d29cd",
+    "semantic_hash": ""
   }
 }

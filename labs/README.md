@@ -1,0 +1,136 @@
+# Kiro-LAB: EC2 Instance for Remote SSH Development
+
+สร้าง EC2 instance สำหรับใช้งาน Kiro IDE ผ่าน Remote SSH extension
+
+## สิ่งที่ต้องมีก่อนใช้งาน
+
+- AWS CLI (ถ้ายังไม่มี script จะติดตั้งให้อัตโนมัติ)
+- AWS credentials ที่ configure แล้ว
+- Key pair `vockey` อยู่ใน AWS account
+- ไฟล์ `vockey.pem` (SSH private key)
+
+## Dev Tools ที่ติดตั้งให้
+
+| Tool | Description |
+|------|-------------|
+| Node.js 20 LTS | JavaScript runtime |
+| npm | Node package manager |
+| Bun | Fast JavaScript runtime & bundler |
+| uv / uvx | Python package manager (replaces pip) |
+| graphify | Knowledge graph tool (`uv tool install graphify`) |
+| git | Version control |
+| AWS CLI v2 | AWS command line interface |
+
+## วิธีใช้งาน
+
+### macOS / Linux
+
+```bash
+# Option 1: Run directly
+bash deploy-kiro-lab.sh
+
+# Option 2: curl and run (เปลี่ยน URL เป็นของจริง)
+curl -fsSL https://git.rmutsv.app/kai/aws-academy-kiro-workshop/raw/branch/main/labs/deploy-kiro-lab.sh | bash
+```
+
+### Windows (PowerShell)
+
+```powershell
+# Option 1: Run directly
+.\deploy-kiro-lab.ps1
+
+# Option 2: Download and run (เปลี่ยน URL เป็นของจริง)
+irm https://git.rmutsv.app/kai/aws-academy-kiro-workshop/raw/branch/main/labs/deploy-kiro-lab.ps1 | iex
+```
+
+## Script ทำอะไรบ้าง
+
+1. ตรวจสอบ AWS CLI (ถ้าไม่มี → ติดตั้งให้อัตโนมัติ)
+2. หาไฟล์ SSH key (`vockey.pem`) อัตโนมัติ
+3. หา Ubuntu 26.04 AMI ล่าสุด (fallback เป็น 24.04 ถ้ายังไม่มี)
+4. สร้าง Security Group (SSH inbound only)
+5. สร้าง EC2 instance (t3.medium, 30GB gp3)
+6. รอจนกว่า instance จะ running
+7. ดึง Public DNS name
+8. สร้าง SSH config entry อัตโนมัติ (`~/.ssh/config`)
+
+## เชื่อมต่อ Kiro IDE
+
+หลังจากรัน script สำเร็จ:
+
+1. เปิด **Kiro IDE**
+2. ติดตั้ง extension **Remote - SSH** (ถ้ายังไม่มี)
+3. กด `Ctrl+Shift+P` → พิมพ์ `Remote-SSH: Connect to Host...`
+4. เลือก **`kiro-lab`**
+5. เปิดโฟลเดอร์: `/home/ubuntu/workshop`
+
+หรือใช้คำสั่ง SSH ตรงๆ:
+
+```bash
+ssh kiro-lab
+```
+
+## ตรวจสอบสถานะ
+
+Instance ใช้เวลา ~3-5 นาทีในการติดตั้ง dev tools ทั้งหมด
+
+```bash
+# ดู log การติดตั้ง
+ssh kiro-lab 'tail -f /var/log/userdata-kiro-lab.log'
+
+# ตรวจสอบว่าพร้อมใช้งาน
+ssh kiro-lab 'ls ~/.kiro-lab-ready 2>/dev/null && echo READY || echo NOT READY'
+```
+
+## MCP Server (pre-configured)
+
+Instance มาพร้อม MCP config สำหรับ Kiro:
+
+- **aws-docs** — AWS Documentation MCP Server (ใช้ `uvx` run)
+
+Config อยู่ที่: `~/.kiro/settings/mcp.json`
+
+## EC2 Instance Specs
+
+| Property | Value |
+|----------|-------|
+| Name | Kiro-LAB |
+| Type | t3.medium (2 vCPU, 4 GB RAM) |
+| OS | Ubuntu 26.04 LTS (fallback: 24.04) |
+| Storage | 30 GB gp3 (encrypted) |
+| Key Pair | vockey |
+| IAM Profile | LabInstanceProfile |
+| Security Group | kiro-lab-sg (SSH inbound only) |
+
+## ไฟล์ในโฟลเดอร์นี้
+
+```
+labs/
+├── README.md                 # ไฟล์นี้
+├── deploy-kiro-lab.sh        # Script สำหรับ macOS/Linux
+├── deploy-kiro-lab.ps1       # Script สำหรับ Windows (PowerShell)
+└── userdata-kiro-lab.sh      # EC2 userdata (ติดตั้ง dev tools)
+```
+
+## Cleanup
+
+หากต้องการลบ instance:
+
+```bash
+# ดู instance ID
+aws ec2 describe-instances --filters "Name=tag:Name,Values=Kiro-LAB" \
+  --query 'Reservations[].Instances[].InstanceId' --output text
+
+# Terminate
+aws ec2 terminate-instances --instance-ids <INSTANCE_ID>
+
+# ลบ security group (รอ instance terminate ก่อน)
+aws ec2 delete-security-group --group-name kiro-lab-sg
+```
+
+ลบ SSH config entry:
+
+```bash
+# macOS/Linux - ลบบรรทัดระหว่าง markers
+sed -i '/# >>> Kiro-LAB >>>/,/# <<< Kiro-LAB <<</d' ~/.ssh/config
+```

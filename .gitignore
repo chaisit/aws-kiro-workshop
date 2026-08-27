@@ -1,1 +1,4 @@
 tmp/
+deployment/
+graphify-out/
+aws-credentials/
