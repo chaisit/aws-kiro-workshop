@@ -109,9 +109,9 @@ wsl --install
 2. เปิด WSL terminal แล้วรันคำสั่งเดียวกับ Linux ด้านบน
 
 3. เชื่อมต่อ Kiro IDE ไปยัง WSL:
-   - ติดตั้ง extension [Open Remote - SSH](https://open-vsx.org/vscode/item?itemName=jeanp413.open-remote-ssh) (ดูวิธี activate ในหัวข้อด้านบน)
-   - `Ctrl+Shift+P` → `Remote-SSH: Connect to Host...` → เลือก WSL instance
-   - หรือเปิดโฟลเดอร์ workshop ตรงจาก Kiro IDE ได้เลยถ้าใช้ Linux/macOS
+   - ติดตั้ง extension [Open Remote - WSL](https://open-vsx.org/vscode/item?itemName=jeanp413.open-remote-wsl)
+   - `Ctrl+Shift+P` → `Remote-WSL: Connect to WSL`
+   - เปิดโฟลเดอร์: `~/workshop`
 
 ### ตั้งค่า AWS Credentials
 
