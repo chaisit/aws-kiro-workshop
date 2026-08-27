@@ -6,7 +6,8 @@
 #   irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 #   -- or --
 #   .\deploy-kiro-lab.ps1
-#   .\deploy-kiro-lab.ps1 -Action cleanup
+#   .\deploy-kiro-lab.ps1 -Region us-west-2
+#   .\deploy-kiro-lab.ps1 -Action cleanup -Region us-west-2
 #
 # Prerequisites:
 #   - AWS CLI (will be installed automatically if missing)
@@ -17,7 +18,9 @@
 #Requires -Version 5.1
 param(
     [ValidateSet("deploy", "cleanup", "clean", "destroy", "teardown")]
-    [string]$Action = "deploy"
+    [string]$Action = "deploy",
+
+    [string]$Region = ""
 )
 
 # NOTE: We use "Continue" instead of "Stop" because native commands (aws cli)
@@ -31,7 +34,7 @@ $INSTANCE_NAME = "Kiro-LAB"
 $KEY_NAME = "vockey"
 $INSTANCE_TYPE = "t3.medium"
 $VOLUME_SIZE = 30
-$REGION = if ($env:AWS_DEFAULT_REGION) { $env:AWS_DEFAULT_REGION } else { "us-east-1" }
+$REGION = if ($Region) { $Region } elseif ($env:AWS_DEFAULT_REGION) { $env:AWS_DEFAULT_REGION } else { "us-east-1" }
 $SSH_CONFIG_HOST = "kiro-lab"
 $USERDATA_URL = "https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab.sh"
 $AWS_PROFILE_NAME = "kiro-lab-deploy"

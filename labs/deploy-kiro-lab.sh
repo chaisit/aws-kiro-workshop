@@ -7,7 +7,8 @@
 #   curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
 #   -- or --
 #   bash deploy-kiro-lab.sh
-#   bash deploy-kiro-lab.sh cleanup
+#   bash deploy-kiro-lab.sh --region us-west-2
+#   bash deploy-kiro-lab.sh cleanup --region us-west-2
 #
 # Prerequisites:
 #   - AWS CLI configured with valid credentials
@@ -17,12 +18,34 @@
 
 set -euo pipefail
 
+# ─── Argument Parsing ────────────────────────────────────────────────────────
+ACTION=""
+CLI_REGION=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --region|-r)
+            CLI_REGION="$2"
+            shift 2
+            ;;
+        cleanup|clean|destroy|teardown|deploy)
+            ACTION="$1"
+            shift
+            ;;
+        *)
+            echo "Unknown argument: $1" >&2
+            echo "Usage: bash deploy-kiro-lab.sh [deploy|cleanup] [--region REGION]" >&2
+            exit 1
+            ;;
+    esac
+done
+
 # ─── Configuration ───────────────────────────────────────────────────────────
 INSTANCE_NAME="Kiro-LAB"
 KEY_NAME="vockey"
 INSTANCE_TYPE="t3.medium"
 VOLUME_SIZE=30
-REGION="${AWS_DEFAULT_REGION:-us-east-1}"
+REGION="${CLI_REGION:-${AWS_DEFAULT_REGION:-us-east-1}}"
 SSH_CONFIG_HOST="kiro-lab"
 USERDATA_URL="https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab.sh"
 AWS_PROFILE_NAME="kiro-lab-deploy"
@@ -700,12 +723,12 @@ main() {
 
 # ─── Entry Point ─────────────────────────────────────────────────────────────
 
-case "${1:-}" in
+case "${ACTION:-}" in
     cleanup|clean|destroy|teardown)
         check_prerequisites
         do_cleanup
         ;;
     *)
-        main "$@"
+        main
         ;;
 esac
