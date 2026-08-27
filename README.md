@@ -20,7 +20,23 @@ Kiro IDE จะเชื่อมต่อไปยัง EC2 instance ชื่
 
 ## การเตรียม Lab (Quick Start)
 
-### 1. ติดตั้ง Open Remote - SSH Extension
+### 1. Deploy Kiro-LAB Instance
+
+เปิด Terminal แล้วรันคำสั่งเดียว — script จะจัดการทุกอย่างให้อัตโนมัติ (ติดตั้ง AWS CLI, รับ credentials, สร้าง EC2 instance, ตั้งค่า SSH config + SSH key)
+
+**macOS / Linux:**
+
+```bash
+curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
+```
+
+**Windows (PowerShell):**
+
+```powershell
+irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
+```
+
+### 2. ติดตั้ง Open Remote - SSH Extension
 
 Kiro IDE ต้องใช้ extension [Open Remote - SSH](https://open-vsx.org/vscode/item?itemName=jeanp413.open-remote-ssh) สำหรับเชื่อมต่อไปยัง EC2 instance
 
@@ -39,22 +55,6 @@ Kiro IDE ต้องใช้ extension [Open Remote - SSH](https://open-vsx.or
 ```
 
 แล้ว **restart Kiro IDE**
-
-### 2. Deploy Kiro-LAB Instance
-
-เปิด Terminal แล้วรันคำสั่งเดียว — script จะจัดการทุกอย่างให้อัตโนมัติ (ติดตั้ง AWS CLI, รับ credentials, สร้าง EC2 instance, ตั้งค่า SSH config + SSH key)
-
-**macOS / Linux:**
-
-```bash
-curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
-```
-
-**Windows (PowerShell):**
-
-```powershell
-irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
-```
 
 ### 3. เชื่อมต่อ Kiro IDE ไปยัง Kiro-LAB
 
