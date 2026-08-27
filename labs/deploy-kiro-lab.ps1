@@ -3,7 +3,7 @@
 # Deploys an EC2 instance (Kiro-LAB) for remote SSH development with Kiro IDE
 #
 # Usage:
-#   irm https://raw.githubusercontent.com/YOUR_REPO/labs/deploy-kiro-lab.ps1 | iex
+#   irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 #   -- or --
 #   .\deploy-kiro-lab.ps1
 #
@@ -23,7 +23,7 @@ $INSTANCE_TYPE = "t3.medium"
 $VOLUME_SIZE = 30
 $REGION = if ($env:AWS_DEFAULT_REGION) { $env:AWS_DEFAULT_REGION } else { "us-east-1" }
 $SSH_CONFIG_HOST = "kiro-lab"
-$USERDATA_URL = "https://raw.githubusercontent.com/YOUR_REPO/labs/userdata-kiro-lab.sh"
+$USERDATA_URL = "https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab.sh"
 
 # ─── Functions ───────────────────────────────────────────────────────────────
 
@@ -314,7 +314,7 @@ su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
 su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphify"
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
 unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
-su - ubuntu -c "git clone https://git.rmutsv.app/kai/aws-academy-kiro-workshop.git /home/ubuntu/workshop"
+su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
 cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
 {"mcpServers":{"aws-docs":{"command":"uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false}}}

@@ -5,9 +5,8 @@
 ## สิ่งที่ต้องมีก่อนใช้งาน
 
 - AWS CLI (ถ้ายังไม่มี script จะติดตั้งให้อัตโนมัติ)
-- AWS credentials ที่ configure แล้ว
-- Key pair `vockey` อยู่ใน AWS account
-- ไฟล์ `vockey.pem` (SSH private key)
+- AWS Academy Lab credentials (script จะถามให้กรอก)
+- SSH private key `vockey.pem` จาก AWS Academy Lab (script จะถามให้ paste)
 
 ## Dev Tools ที่ติดตั้งให้
 
@@ -29,8 +28,8 @@
 # Option 1: Run directly
 bash deploy-kiro-lab.sh
 
-# Option 2: curl and run (เปลี่ยน URL เป็นของจริง)
-curl -fsSL https://git.rmutsv.app/kai/aws-academy-kiro-workshop/raw/branch/main/labs/deploy-kiro-lab.sh | bash
+# Option 2: curl and run
+curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
 ```
 
 ### Windows (PowerShell)
@@ -39,20 +38,21 @@ curl -fsSL https://git.rmutsv.app/kai/aws-academy-kiro-workshop/raw/branch/main/
 # Option 1: Run directly
 .\deploy-kiro-lab.ps1
 
-# Option 2: Download and run (เปลี่ยน URL เป็นของจริง)
-irm https://git.rmutsv.app/kai/aws-academy-kiro-workshop/raw/branch/main/labs/deploy-kiro-lab.ps1 | iex
+# Option 2: Download and run
+irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 ```
 
 ## Script ทำอะไรบ้าง
 
 1. ตรวจสอบ AWS CLI (ถ้าไม่มี → ติดตั้งให้อัตโนมัติ)
-2. หาไฟล์ SSH key (`vockey.pem`) อัตโนมัติ
-3. หา Ubuntu 26.04 AMI ล่าสุด (fallback เป็น 24.04 ถ้ายังไม่มี)
-4. สร้าง Security Group (SSH inbound only)
-5. สร้าง EC2 instance (t3.medium, 30GB gp3)
-6. รอจนกว่า instance จะ running
-7. ดึง Public DNS name
-8. สร้าง SSH config entry อัตโนมัติ (`~/.ssh/config`)
+2. ถาม AWS credentials (access key, secret key, session token)
+3. ถาม SSH private key (paste ได้เลย หรือใช้ไฟล์ที่มีอยู่)
+4. หา Ubuntu 26.04 AMI ล่าสุด (fallback เป็น 24.04 ถ้ายังไม่มี)
+5. สร้าง Security Group (SSH inbound only)
+6. สร้าง EC2 instance (t3.medium, 30GB gp3)
+7. รอจนกว่า instance จะ running
+8. ดึง Public DNS name
+9. สร้าง SSH config entry อัตโนมัติ (`~/.ssh/config`)
 
 ## เชื่อมต่อ Kiro IDE
 

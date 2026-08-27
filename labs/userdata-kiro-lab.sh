@@ -48,9 +48,9 @@ ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
 su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
 
 # ----------------------------
-# graphify (via uv tool)
+# graphifyy (via uv tool)
 # ----------------------------
-su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphify"
+su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy"
 
 # ----------------------------
 # AWS CLI v2
@@ -63,7 +63,8 @@ rm -rf /tmp/aws /tmp/awscliv2.zip
 # ----------------------------
 # Clone workshop repository
 # ----------------------------
-su - ubuntu -c "git clone https://git.rmutsv.app/kai/aws-academy-kiro-workshop.git /home/ubuntu/workshop"
+git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop
+chown -R ubuntu:ubuntu /home/ubuntu/workshop
 
 # ----------------------------
 # Setup Kiro MCP support
@@ -72,21 +73,21 @@ su - ubuntu -c "git clone https://git.rmutsv.app/kai/aws-academy-kiro-workshop.g
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
 
 # Create global MCP config with aws-docs server
-cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
-{
-  "mcpServers": {
-    "aws-docs": {
-      "command": "uvx",
-      "args": ["awslabs.aws-documentation-mcp-server@latest"],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false
-    }
-  }
-}
-EOF
-chown -R ubuntu:ubuntu /home/ubuntu/.kiro
+# cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
+# {
+#   "mcpServers": {
+#     "aws-docs": {
+#       "command": "uvx",
+#       "args": ["awslabs.aws-documentation-mcp-server@latest"],
+#       "env": {
+#         "FASTMCP_LOG_LEVEL": "ERROR"
+#       },
+#       "disabled": false
+#     }
+#   }
+# }
+# EOF
+# chown -R ubuntu:ubuntu /home/ubuntu/.kiro
 
 # ----------------------------
 # Configure shell environment for ubuntu user
