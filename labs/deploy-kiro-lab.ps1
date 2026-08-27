@@ -163,22 +163,61 @@ function Collect-SSHKey {
     Write-Ok "SSH key saved: $script:SSH_KEY_PATH"
 }
 
+function Refresh-PathEnvironment {
+    # Reload PATH from registry so newly installed programs are visible in this session
+    $machinePath = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
+    $userPath = [System.Environment]::GetEnvironmentVariable("PATH", "User")
+    $env:PATH = "$machinePath;$userPath"
+}
+
 function Install-AWSCLI {
     Write-Info "AWS CLI not found. Installing..."
 
+    # Try winget first (does not require elevated permissions)
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        Write-Info "Installing AWS CLI via winget..."
+        winget install Amazon.AWSCLI --accept-source-agreements --accept-package-agreements --silent
+        if ($LASTEXITCODE -eq 0) {
+            Write-Info "Refreshing PATH..."
+            Refresh-PathEnvironment
+            if (Get-Command aws -ErrorAction SilentlyContinue) {
+                Write-Ok "AWS CLI installed: $(aws --version)"
+                return
+            }
+            Write-Warn "winget install succeeded but 'aws' not yet in PATH. Trying known install path..."
+            # Add default AWS CLI install location manually
+            $awsCliPath = "C:\Program Files\Amazon\AWSCLIV2"
+            if (Test-Path $awsCliPath) {
+                $env:PATH = "$awsCliPath;$env:PATH"
+            }
+            if (Get-Command aws -ErrorAction SilentlyContinue) {
+                Write-Ok "AWS CLI installed: $(aws --version)"
+                return
+            }
+        }
+        Write-Warn "winget installation did not succeed, trying MSI installer..."
+    }
+
+    # Fallback: MSI installer (may require elevated permissions)
     $msiUrl = "https://awscli.amazonaws.com/AWSCLIV2.msi"
     $msiPath = Join-Path $env:TEMP "AWSCLIV2.msi"
 
     Write-Info "Downloading AWS CLI installer for Windows..."
     Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath -UseBasicParsing
 
-    Write-Info "Installing AWS CLI (this may take a minute)..."
+    Write-Info "Installing AWS CLI via MSI (this may take a minute)..."
     Start-Process msiexec.exe -ArgumentList "/i", $msiPath, "/quiet", "/norestart" -Wait -NoNewWindow
 
     Remove-Item $msiPath -Force -ErrorAction SilentlyContinue
 
     # Refresh PATH
-    $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH", "User")
+    Refresh-PathEnvironment
+
+    # Also try adding the default install location directly
+    $awsCliPath = "C:\Program Files\Amazon\AWSCLIV2"
+    if ((Test-Path $awsCliPath) -and ($env:PATH -notlike "*$awsCliPath*")) {
+        $env:PATH = "$awsCliPath;$env:PATH"
+    }
 
     # Verify
     if (-not (Get-Command aws -ErrorAction SilentlyContinue)) {
