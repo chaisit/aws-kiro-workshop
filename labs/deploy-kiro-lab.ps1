@@ -61,34 +61,51 @@ function Collect-AWSCredentials {
         }
     }
 
-    # Prompt for credentials
-    $awsKeyId = Read-Host "  aws_access_key_id"
-    $awsSecretKey = Read-Host "  aws_secret_access_key"
-    $awsSessionToken = Read-Host "  aws_session_token"
+    # Credential input loop with retry on failure
+    while ($true) {
+        # Prompt for credentials
+        $awsKeyId = Read-Host "  aws_access_key_id"
+        $awsSecretKey = Read-Host "  aws_secret_access_key"
+        $awsSessionToken = Read-Host "  aws_session_token"
 
-    if (-not $awsKeyId -or -not $awsSecretKey -or -not $awsSessionToken) {
-        Write-Err "All three credential fields are required."
-        exit 1
+        if (-not $awsKeyId -or -not $awsSecretKey -or -not $awsSessionToken) {
+            Write-Err "All three credential fields are required."
+            exit 1
+        }
+
+        Write-Host ""
+        Write-Info "Configuring AWS profile and verifying credentials..."
+
+        # Configure dedicated profile
+        aws configure set aws_access_key_id $awsKeyId --profile $AWS_PROFILE_NAME
+        aws configure set aws_secret_access_key $awsSecretKey --profile $AWS_PROFILE_NAME
+        aws configure set aws_session_token $awsSessionToken --profile $AWS_PROFILE_NAME
+        aws configure set region $REGION --profile $AWS_PROFILE_NAME
+
+        # Verify credentials work
+        $null = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --output json 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            $account = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --query "Account" --output text
+            Write-Ok "AWS credentials configured (profile: $AWS_PROFILE_NAME). Account: $account"
+            return
+        }
+
+        # Credentials failed — ask to retry
+        Write-Host ""
+        Write-Err "Credentials are invalid or expired."
+        Write-Host ""
+        Write-Host "  Common causes:"
+        Write-Host "    - Credentials were copied incorrectly (missing characters)"
+        Write-Host "    - AWS Academy Lab session has expired (restart the lab)"
+        Write-Host "    - Wrong credentials were pasted"
+        Write-Host ""
+        $retry = Read-Host "  Do you want to enter new credentials? [Y/n]"
+        if ($retry -match '^[Nn]$') {
+            Write-Err "Cannot proceed without valid AWS credentials."
+            exit 1
+        }
+        Write-Host ""
     }
-
-    Write-Host ""
-    Write-Info "Configuring AWS profile and verifying credentials..."
-
-    # Configure dedicated profile
-    aws configure set aws_access_key_id $awsKeyId --profile $AWS_PROFILE_NAME
-    aws configure set aws_secret_access_key $awsSecretKey --profile $AWS_PROFILE_NAME
-    aws configure set aws_session_token $awsSessionToken --profile $AWS_PROFILE_NAME
-    aws configure set region $REGION --profile $AWS_PROFILE_NAME
-
-    # Verify credentials work
-    $null = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --output json 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        Write-Err "Credentials are invalid or expired. Please check and try again."
-        exit 1
-    }
-
-    $account = aws sts get-caller-identity --profile $AWS_PROFILE_NAME --query "Account" --output text
-    Write-Ok "AWS credentials configured (profile: $AWS_PROFILE_NAME). Account: $account"
 }
 
 function Collect-SSHKey {

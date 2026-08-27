@@ -58,32 +58,49 @@ collect_aws_credentials() {
         fi
     fi
 
-    # Prompt for credentials
-    read -rp "  aws_access_key_id: " aws_key_id
-    read -rp "  aws_secret_access_key: " aws_secret_key
-    read -rp "  aws_session_token: " aws_session_token
+    # Credential input loop with retry on failure
+    while true; do
+        # Prompt for credentials
+        read -rp "  aws_access_key_id: " aws_key_id
+        read -rp "  aws_secret_access_key: " aws_secret_key
+        read -rp "  aws_session_token: " aws_session_token
 
-    if [[ -z "$aws_key_id" || -z "$aws_secret_key" || -z "$aws_session_token" ]]; then
-        error "All three credential fields are required."
-        exit 1
-    fi
+        if [[ -z "$aws_key_id" || -z "$aws_secret_key" || -z "$aws_session_token" ]]; then
+            error "All three credential fields are required."
+            exit 1
+        fi
 
-    echo ""
-    info "Configuring AWS profile and verifying credentials..."
+        echo ""
+        info "Configuring AWS profile and verifying credentials..."
 
-    # Configure dedicated profile
-    aws configure set aws_access_key_id "$aws_key_id" --profile "$AWS_PROFILE_NAME"
-    aws configure set aws_secret_access_key "$aws_secret_key" --profile "$AWS_PROFILE_NAME"
-    aws configure set aws_session_token "$aws_session_token" --profile "$AWS_PROFILE_NAME"
-    aws configure set region "$REGION" --profile "$AWS_PROFILE_NAME"
+        # Configure dedicated profile
+        aws configure set aws_access_key_id "$aws_key_id" --profile "$AWS_PROFILE_NAME"
+        aws configure set aws_secret_access_key "$aws_secret_key" --profile "$AWS_PROFILE_NAME"
+        aws configure set aws_session_token "$aws_session_token" --profile "$AWS_PROFILE_NAME"
+        aws configure set region "$REGION" --profile "$AWS_PROFILE_NAME"
 
-    # Verify credentials work
-    if ! aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" &> /dev/null; then
-        error "Credentials are invalid or expired. Please check and try again."
-        exit 1
-    fi
+        # Verify credentials work
+        if aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" &> /dev/null; then
+            ok "AWS credentials configured (profile: $AWS_PROFILE_NAME). Account: $(aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" --query Account --output text)"
+            return 0
+        fi
 
-    ok "AWS credentials configured (profile: $AWS_PROFILE_NAME). Account: $(aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" --query Account --output text)"
+        # Credentials failed — ask to retry
+        echo ""
+        error "Credentials are invalid or expired."
+        echo ""
+        echo "  Common causes:"
+        echo "    • Credentials were copied incorrectly (missing characters)"
+        echo "    • AWS Academy Lab session has expired (restart the lab)"
+        echo "    • Wrong credentials were pasted"
+        echo ""
+        read -rp "  Do you want to enter new credentials? [Y/n]: " retry
+        if [[ "$retry" =~ ^[Nn]$ ]]; then
+            error "Cannot proceed without valid AWS credentials."
+            exit 1
+        fi
+        echo ""
+    done
 }
 
 collect_ssh_key() {
