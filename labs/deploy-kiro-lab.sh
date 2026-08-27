@@ -52,7 +52,7 @@ collect_aws_credentials() {
     # Check if profile credentials are already valid
     if aws sts get-caller-identity --profile "$AWS_PROFILE_NAME" &> /dev/null; then
         ok "AWS credentials already configured and valid (profile: $AWS_PROFILE_NAME)."
-        read -rp "  Do you want to reconfigure? [y/N]: " reconfigure
+        read -rp "  Do you want to reconfigure? [y/N]: " reconfigure < /dev/tty
         if [[ ! "$reconfigure" =~ ^[Yy]$ ]]; then
             return 0
         fi
@@ -61,9 +61,9 @@ collect_aws_credentials() {
     # Credential input loop with retry on failure
     while true; do
         # Prompt for credentials
-        read -rp "  aws_access_key_id: " aws_key_id
-        read -rp "  aws_secret_access_key: " aws_secret_key
-        read -rp "  aws_session_token: " aws_session_token
+        read -rp "  aws_access_key_id: " aws_key_id < /dev/tty
+        read -rp "  aws_secret_access_key: " aws_secret_key < /dev/tty
+        read -rp "  aws_session_token: " aws_session_token < /dev/tty
 
         if [[ -z "$aws_key_id" || -z "$aws_secret_key" || -z "$aws_session_token" ]]; then
             error "All three credential fields are required."
@@ -94,7 +94,7 @@ collect_aws_credentials() {
         echo "    • AWS Academy Lab session has expired (restart the lab)"
         echo "    • Wrong credentials were pasted"
         echo ""
-        read -rp "  Do you want to enter new credentials? [Y/n]: " retry
+        read -rp "  Do you want to enter new credentials? [Y/n]: " retry < /dev/tty
         if [[ "$retry" =~ ^[Nn]$ ]]; then
             error "Cannot proceed without valid AWS credentials."
             exit 1
@@ -114,7 +114,7 @@ collect_ssh_key() {
     # Check if key already exists
     if [[ -f "$key_file" ]]; then
         ok "SSH key already exists: $key_file"
-        read -rp "  Do you want to replace it? [y/N]: " replace_key
+        read -rp "  Do you want to replace it? [y/N]: " replace_key < /dev/tty
         if [[ ! "$replace_key" =~ ^[Yy]$ ]]; then
             SSH_KEY_PATH="$key_file"
             return 0
@@ -148,7 +148,7 @@ collect_ssh_key() {
     local key_content=""
     local line
 
-    while IFS= read -r line; do
+    while IFS= read -r line < /dev/tty; do
         # Stop on empty line after we have content
         if [[ -z "$line" && -n "$key_content" ]]; then
             break
@@ -243,7 +243,7 @@ check_existing_instance() {
         echo ""
         echo -e "  ${YELLOW}Deploying again will TERMINATE the existing instance and create a new one.${NC}"
         echo ""
-        read -rp "  Do you want to continue? (The old instance will be deleted) [y/N]: " confirm
+        read -rp "  Do you want to continue? (The old instance will be deleted) [y/N]: " confirm < /dev/tty
         if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
             info "Deployment cancelled."
             exit 0
@@ -593,7 +593,7 @@ do_cleanup() {
     echo "  • AWS Profile: '$AWS_PROFILE_NAME' from ~/.aws/credentials and ~/.aws/config"
     echo ""
 
-    read -rp "  Are you sure you want to delete all these resources? [y/N]: " confirm
+    read -rp "  Are you sure you want to delete all these resources? [y/N]: " confirm < /dev/tty
     if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
         info "Cleanup cancelled."
         exit 0
@@ -657,13 +657,13 @@ do_cleanup() {
     if [[ -f "$creds_file" ]] && grep -q "\[$AWS_PROFILE_NAME\]" "$creds_file"; then
         sed -i.bak "/^\[$AWS_PROFILE_NAME\]/,/^\[/{ /^\[${AWS_PROFILE_NAME}\]/d; /^\[/!d; }" "$creds_file"
         # Clean up empty lines
-        sed -i '/^$/N;/^\n$/d' "$creds_file"
+        sed -i.bak '/^$/N;/^\n$/d' "$creds_file" && rm -f "${creds_file}.bak"
     fi
     # Remove from config file
     local config_file="$HOME/.aws/config"
     if [[ -f "$config_file" ]] && grep -q "\[profile $AWS_PROFILE_NAME\]" "$config_file"; then
         sed -i.bak "/^\[profile $AWS_PROFILE_NAME\]/,/^\[/{ /^\[profile ${AWS_PROFILE_NAME}\]/d; /^\[/!d; }" "$config_file"
-        sed -i '/^$/N;/^\n$/d' "$config_file"
+        sed -i.bak '/^$/N;/^\n$/d' "$config_file" && rm -f "${config_file}.bak"
     fi
     ok "AWS profile removed."
 
