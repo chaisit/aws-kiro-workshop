@@ -16,27 +16,55 @@ graph LR
     B --> C[AWS Services<br/>RDS, Secrets Manager, etc.]
 ```
 
-```
-Kiro IDE --(Remote SSH)--> Kiro-LAB (EC2 instance)
-```
-
 Kiro IDE จะเชื่อมต่อไปยัง EC2 instance ชื่อ **Kiro-LAB** ผ่าน Remote SSH extension ทำให้สามารถพัฒนาโค้ดบน cloud instance ได้โดยตรง พร้อมใช้งาน MCP servers และ AI features ของ Kiro ได้เต็มรูปแบบ
 
 ## การเตรียม Lab (Quick Start)
 
-เปิด Terminal แล้วรันคำสั่งเดียว — script จะจัดการทุกอย่างให้อัตโนมัติ (ติดตั้ง AWS CLI, รับ credentials, สร้าง EC2 instance, ตั้งค่า SSH config)
+### 1. ติดตั้ง Open Remote - SSH Extension
 
-### macOS / Linux
+Kiro IDE ต้องใช้ extension [Open Remote - SSH](https://open-vsx.org/vscode/item?itemName=jeanp413.open-remote-ssh) สำหรับเชื่อมต่อไปยัง EC2 instance
+
+หลังติดตั้ง extension แล้ว ให้เปิดไฟล์ `argv.json` ด้วยคำสั่ง:
+
+> `Ctrl+Shift+P` → พิมพ์ `Preferences: Configure Runtime Arguments`
+
+จากนั้นเพิ่ม `jeanp413.open-remote-ssh` ใน `enable-proposed-api`:
+
+```json
+{
+    "enable-proposed-api": [
+        "jeanp413.open-remote-ssh"
+    ]
+}
+```
+
+แล้ว **restart Kiro IDE**
+
+### 2. Deploy Kiro-LAB Instance
+
+เปิด Terminal แล้วรันคำสั่งเดียว — script จะจัดการทุกอย่างให้อัตโนมัติ (ติดตั้ง AWS CLI, รับ credentials, สร้าง EC2 instance, ตั้งค่า SSH config + SSH key)
+
+**macOS / Linux:**
 
 ```bash
 curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
 ```
 
-### Windows (PowerShell)
+**Windows (PowerShell):**
 
 ```powershell
 irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 ```
+
+### 3. เชื่อมต่อ Kiro IDE ไปยัง Kiro-LAB
+
+หลังจากรัน script สำเร็จ (SSH config และ key ถูกตั้งค่าให้แล้ว):
+
+1. `Ctrl+Shift+P` → `Remote-SSH: Connect to Host...`
+2. เลือก **`kiro-lab`**
+3. เปิดโฟลเดอร์: `/home/ubuntu/workshop`
+
+เพียงเท่านี้ก็พร้อมใช้งาน Kiro-LAB ได้เลย
 
 > รายละเอียดเพิ่มเติม: [labs/README.md](./labs/README.md)
 
