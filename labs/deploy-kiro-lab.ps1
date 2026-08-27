@@ -71,6 +71,9 @@ function Collect-AWSCredentials {
         exit 1
     }
 
+    Write-Host ""
+    Write-Info "Configuring AWS profile and verifying credentials..."
+
     # Configure dedicated profile
     aws configure set aws_access_key_id $awsKeyId --profile $AWS_PROFILE_NAME
     aws configure set aws_secret_access_key $awsSecretKey --profile $AWS_PROFILE_NAME
@@ -144,6 +147,9 @@ function Collect-SSHKey {
     }
 
     $keyContent = ($keyLines -join "`n") + "`n"
+
+    Write-Host ""
+    Write-Info "Processing SSH key..."
 
     # Validate it looks like a private key
     if ($keyContent -notmatch "BEGIN.*PRIVATE KEY") {
@@ -272,8 +278,9 @@ function Test-ExistingInstance {
             exit 0
         }
 
+        Write-Host ""
         # Terminate existing instance
-        Write-Info "Terminating existing instance: $existingId ..."
+        Write-Info "Terminating existing instance: $existingId (this may take a moment)..."
         aws ec2 terminate-instances `
             --profile $AWS_PROFILE_NAME `
             --instance-ids $existingId `
@@ -645,6 +652,8 @@ function Invoke-Cleanup {
         exit 0
     }
 
+    Write-Host ""
+    Write-Info "Starting cleanup process..."
     Write-Host ""
 
     # Terminate instances

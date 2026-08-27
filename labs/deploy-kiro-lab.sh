@@ -68,6 +68,9 @@ collect_aws_credentials() {
         exit 1
     fi
 
+    echo ""
+    info "Configuring AWS profile and verifying credentials..."
+
     # Configure dedicated profile
     aws configure set aws_access_key_id "$aws_key_id" --profile "$AWS_PROFILE_NAME"
     aws configure set aws_secret_access_key "$aws_secret_key" --profile "$AWS_PROFILE_NAME"
@@ -135,6 +138,9 @@ collect_ssh_key() {
         fi
         key_content+="$line"$'\n'
     done
+
+    echo ""
+    info "Processing SSH key..."
 
     # Validate it looks like a private key
     if [[ ! "$key_content" == *"BEGIN"*"PRIVATE KEY"* ]]; then
@@ -226,8 +232,9 @@ check_existing_instance() {
             exit 0
         fi
 
+        echo ""
         # Terminate existing instance
-        info "Terminating existing instance: $existing_id ..."
+        info "Terminating existing instance: $existing_id (this may take a moment)..."
         aws ec2 terminate-instances \
             --profile "$AWS_PROFILE_NAME" \
             --instance-ids "$existing_id" \
@@ -575,6 +582,8 @@ do_cleanup() {
         exit 0
     fi
 
+    echo ""
+    info "Starting cleanup process..."
     echo ""
 
     # Terminate instances
