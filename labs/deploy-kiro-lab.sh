@@ -188,6 +188,12 @@ collect_ssh_key() {
         exit 1
     fi
 
+    # Remove existing key file if present (it may be read-only from previous chmod 400)
+    if [[ -f "$key_file" ]]; then
+        chmod 600 "$key_file" 2>/dev/null || true
+        rm -f "$key_file"
+    fi
+
     # Write key file
     echo -n "$key_content" > "$key_file"
     chmod 400 "$key_file"
