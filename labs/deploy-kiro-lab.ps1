@@ -497,10 +497,62 @@ function Start-Instance {
     Write-Ok "Instance is running!"
 }
 
-function Get-InstanceDNS {
-    Write-Info "Getting instance public DNS name..."
+function New-ElasticIP {
+    Write-Info "Allocating Elastic IP..."
 
-    Start-Sleep -Seconds 5
+    # Check if an EIP tagged for Kiro-LAB already exists
+    $script:ALLOCATION_ID = aws ec2 describe-addresses `
+        --profile $AWS_PROFILE_NAME `
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" `
+        --query "Addresses[0].AllocationId" `
+        --region $REGION `
+        --output text 2>$null
+
+    if ($script:ALLOCATION_ID -and $script:ALLOCATION_ID -ne "None") {
+        Write-Ok "Reusing existing Elastic IP allocation: $script:ALLOCATION_ID"
+    } else {
+        # Allocate a new Elastic IP
+        $script:ALLOCATION_ID = aws ec2 allocate-address `
+            --profile $AWS_PROFILE_NAME `
+            --domain vpc `
+            --tag-specifications "ResourceType=elastic-ip,Tags=[{Key=Name,Value=$INSTANCE_NAME}]" `
+            --region $REGION `
+            --query "AllocationId" `
+            --output text
+
+        if ($LASTEXITCODE -ne 0 -or -not $script:ALLOCATION_ID -or $script:ALLOCATION_ID -eq "None") {
+            Write-Err "Failed to allocate Elastic IP."
+            exit 1
+        }
+        Write-Ok "Allocated new Elastic IP: $script:ALLOCATION_ID"
+    }
+
+    # Associate EIP with the instance
+    Write-Info "Associating Elastic IP with instance $($script:INSTANCE_ID)..."
+    aws ec2 associate-address `
+        --profile $AWS_PROFILE_NAME `
+        --allocation-id $script:ALLOCATION_ID `
+        --instance-id $script:INSTANCE_ID `
+        --region $REGION | Out-Null
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err "Failed to associate Elastic IP with instance."
+        exit 1
+    }
+    Write-Ok "Elastic IP associated with instance."
+}
+
+function Get-InstanceDNS {
+    Write-Info "Getting instance Elastic IP address..."
+
+    Start-Sleep -Seconds 3
+
+    $script:PUBLIC_IP = aws ec2 describe-addresses `
+        --profile $AWS_PROFILE_NAME `
+        --allocation-ids $script:ALLOCATION_ID `
+        --query "Addresses[0].PublicIp" `
+        --region $REGION `
+        --output text
 
     $script:PUBLIC_DNS = aws ec2 describe-instances `
         --profile $AWS_PROFILE_NAME `
@@ -509,20 +561,12 @@ function Get-InstanceDNS {
         --region $REGION `
         --output text
 
-    $script:PUBLIC_IP = aws ec2 describe-instances `
-        --profile $AWS_PROFILE_NAME `
-        --instance-ids $script:INSTANCE_ID `
-        --query "Reservations[0].Instances[0].PublicIpAddress" `
-        --region $REGION `
-        --output text
-
     if (-not $script:PUBLIC_DNS -or $script:PUBLIC_DNS -eq "None") {
-        Write-Warn "No public DNS assigned. Using public IP: $script:PUBLIC_IP"
         $script:PUBLIC_DNS = $script:PUBLIC_IP
     }
 
+    Write-Ok "Elastic IP: $script:PUBLIC_IP"
     Write-Ok "Public DNS: $script:PUBLIC_DNS"
-    Write-Ok "Public IP:  $script:PUBLIC_IP"
 }
 
 function Set-SSHConfig {
@@ -577,8 +621,8 @@ function Show-Summary {
     Write-Host "==============================================================" -ForegroundColor Green
     Write-Host ""
     Write-Host "  Instance ID:   $($script:INSTANCE_ID)"
+    Write-Host "  Elastic IP:    $($script:PUBLIC_IP) (persists across lab restarts)"
     Write-Host "  Public DNS:    $($script:PUBLIC_DNS)"
-    Write-Host "  Public IP:     $($script:PUBLIC_IP)"
     Write-Host "  Instance Type: $INSTANCE_TYPE"
     Write-Host "  Region:        $REGION"
     Write-Host "  AWS Profile:   $AWS_PROFILE_NAME"
@@ -661,6 +705,27 @@ function Invoke-Cleanup {
         $sgId = $null
     }
 
+    # Find Elastic IP
+    $eipAllocId = aws ec2 describe-addresses `
+        --profile $AWS_PROFILE_NAME `
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" `
+        --query "Addresses[0].AllocationId" `
+        --region $REGION `
+        --output text 2>$null
+    $eipAddress = aws ec2 describe-addresses `
+        --profile $AWS_PROFILE_NAME `
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" `
+        --query "Addresses[0].PublicIp" `
+        --region $REGION `
+        --output text 2>$null
+
+    if ($eipAllocId -and $eipAllocId -ne "None") {
+        Write-Host "  * Elastic IP: $eipAddress ($eipAllocId)"
+    } else {
+        Write-Host "  * Elastic IP: (none found)"
+        $eipAllocId = $null
+    }
+
     $sshConfig = Join-Path $env:USERPROFILE ".ssh\config"
     Write-Host "  * SSH Config: 'kiro-lab' entry in $sshConfig"
     Write-Host "  * AWS Profile: '$AWS_PROFILE_NAME' from ~/.aws/credentials and ~/.aws/config"
@@ -689,6 +754,34 @@ function Invoke-Cleanup {
             --instance-ids $instanceIds `
             --region $REGION 2>$null
         Write-Ok "Instance(s) terminated."
+    }
+
+    # Release Elastic IP
+    if ($eipAllocId) {
+        Write-Info "Releasing Elastic IP: $eipAddress ($eipAllocId) ..."
+        # Disassociate first if still associated
+        $assocId = aws ec2 describe-addresses `
+            --profile $AWS_PROFILE_NAME `
+            --allocation-ids $eipAllocId `
+            --query "Addresses[0].AssociationId" `
+            --region $REGION `
+            --output text 2>$null
+        if ($assocId -and $assocId -ne "None") {
+            aws ec2 disassociate-address `
+                --profile $AWS_PROFILE_NAME `
+                --association-id $assocId `
+                --region $REGION 2>$null | Out-Null
+        }
+        aws ec2 release-address `
+            --profile $AWS_PROFILE_NAME `
+            --allocation-id $eipAllocId `
+            --region $REGION 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Ok "Elastic IP released."
+        } else {
+            Write-Warn "Could not release Elastic IP. You can release it manually:"
+            Write-Warn "  aws ec2 release-address --allocation-id $eipAllocId --region $REGION --profile $AWS_PROFILE_NAME"
+        }
     }
 
     # Delete security group (may need retry as ENIs detach)
@@ -798,6 +891,7 @@ function Main {
     New-SecurityGroup
     Get-Userdata
     Start-Instance
+    New-ElasticIP
     Get-InstanceDNS
     Set-SSHConfig
     Show-Summary

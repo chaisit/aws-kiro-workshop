@@ -451,11 +451,54 @@ launch_instance() {
     ok "Instance is running!"
 }
 
-get_instance_dns() {
-    info "Getting instance public DNS name..."
+allocate_elastic_ip() {
+    info "Allocating Elastic IP..."
 
-    # Wait a moment for DNS to propagate
-    sleep 5
+    # Check if an EIP tagged for Kiro-LAB already exists
+    ALLOCATION_ID=$(aws ec2 describe-addresses \
+        --profile "$AWS_PROFILE_NAME" \
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" \
+        --query 'Addresses[0].AllocationId' \
+        --region "$REGION" \
+        --output text 2>/dev/null || echo "None")
+
+    if [[ "$ALLOCATION_ID" != "None" && -n "$ALLOCATION_ID" ]]; then
+        ok "Reusing existing Elastic IP allocation: $ALLOCATION_ID"
+    else
+        # Allocate a new Elastic IP
+        ALLOCATION_ID=$(aws ec2 allocate-address \
+            --profile "$AWS_PROFILE_NAME" \
+            --domain vpc \
+            --tag-specifications "ResourceType=elastic-ip,Tags=[{Key=Name,Value=$INSTANCE_NAME}]" \
+            --region "$REGION" \
+            --query 'AllocationId' \
+            --output text)
+        ok "Allocated new Elastic IP: $ALLOCATION_ID"
+    fi
+
+    # Associate EIP with the instance
+    info "Associating Elastic IP with instance $INSTANCE_ID..."
+    aws ec2 associate-address \
+        --profile "$AWS_PROFILE_NAME" \
+        --allocation-id "$ALLOCATION_ID" \
+        --instance-id "$INSTANCE_ID" \
+        --region "$REGION" > /dev/null
+
+    ok "Elastic IP associated with instance."
+}
+
+get_instance_dns() {
+    info "Getting instance Elastic IP address..."
+
+    # Wait a moment for association to propagate
+    sleep 3
+
+    PUBLIC_IP=$(aws ec2 describe-addresses \
+        --profile "$AWS_PROFILE_NAME" \
+        --allocation-ids "$ALLOCATION_ID" \
+        --query 'Addresses[0].PublicIp' \
+        --region "$REGION" \
+        --output text)
 
     PUBLIC_DNS=$(aws ec2 describe-instances \
         --profile "$AWS_PROFILE_NAME" \
@@ -464,20 +507,12 @@ get_instance_dns() {
         --region "$REGION" \
         --output text)
 
-    PUBLIC_IP=$(aws ec2 describe-instances \
-        --profile "$AWS_PROFILE_NAME" \
-        --instance-ids "$INSTANCE_ID" \
-        --query 'Reservations[0].Instances[0].PublicIpAddress' \
-        --region "$REGION" \
-        --output text)
-
     if [[ -z "$PUBLIC_DNS" || "$PUBLIC_DNS" == "None" ]]; then
-        warn "No public DNS assigned. Using public IP: $PUBLIC_IP"
         PUBLIC_DNS="$PUBLIC_IP"
     fi
 
+    ok "Elastic IP: $PUBLIC_IP"
     ok "Public DNS: $PUBLIC_DNS"
-    ok "Public IP:  $PUBLIC_IP"
 }
 
 configure_ssh() {
@@ -528,8 +563,8 @@ print_summary() {
     echo -e "${GREEN}══════════════════════════════════════════════════════════════${NC}"
     echo ""
     echo "  Instance ID:   $INSTANCE_ID"
+    echo "  Elastic IP:    $PUBLIC_IP (persists across lab restarts)"
     echo "  Public DNS:    $PUBLIC_DNS"
-    echo "  Public IP:     $PUBLIC_IP"
     echo "  Instance Type: $INSTANCE_TYPE"
     echo "  Region:        $REGION"
     echo "  AWS Profile:   $AWS_PROFILE_NAME"
@@ -612,6 +647,27 @@ do_cleanup() {
         echo "  • Security Group: (none found)"
     fi
 
+    # Find Elastic IP
+    local eip_alloc_id eip_address
+    eip_alloc_id=$(aws ec2 describe-addresses \
+        --profile "$AWS_PROFILE_NAME" \
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" \
+        --query 'Addresses[0].AllocationId' \
+        --region "$REGION" \
+        --output text 2>/dev/null || echo "None")
+    eip_address=$(aws ec2 describe-addresses \
+        --profile "$AWS_PROFILE_NAME" \
+        --filters "Name=tag:Name,Values=$INSTANCE_NAME" \
+        --query 'Addresses[0].PublicIp' \
+        --region "$REGION" \
+        --output text 2>/dev/null || echo "None")
+
+    if [[ "$eip_alloc_id" != "None" && -n "$eip_alloc_id" ]]; then
+        echo "  • Elastic IP: $eip_address ($eip_alloc_id)"
+    else
+        echo "  • Elastic IP: (none found)"
+    fi
+
     echo "  • SSH Config: 'kiro-lab' entry in ~/.ssh/config"
     echo "  • AWS Profile: '$AWS_PROFILE_NAME' from ~/.aws/credentials and ~/.aws/config"
     echo ""
@@ -639,6 +695,30 @@ do_cleanup() {
             --instance-ids $instance_ids \
             --region "$REGION" 2>/dev/null || true
         ok "Instance(s) terminated."
+    fi
+
+    # Release Elastic IP
+    if [[ "$eip_alloc_id" != "None" && -n "$eip_alloc_id" ]]; then
+        info "Releasing Elastic IP: $eip_address ($eip_alloc_id) ..."
+        # Disassociate first if still associated
+        local assoc_id
+        assoc_id=$(aws ec2 describe-addresses \
+            --profile "$AWS_PROFILE_NAME" \
+            --allocation-ids "$eip_alloc_id" \
+            --query 'Addresses[0].AssociationId' \
+            --region "$REGION" \
+            --output text 2>/dev/null || echo "None")
+        if [[ "$assoc_id" != "None" && -n "$assoc_id" ]]; then
+            aws ec2 disassociate-address \
+                --profile "$AWS_PROFILE_NAME" \
+                --association-id "$assoc_id" \
+                --region "$REGION" 2>/dev/null || true
+        fi
+        aws ec2 release-address \
+            --profile "$AWS_PROFILE_NAME" \
+            --allocation-id "$eip_alloc_id" \
+            --region "$REGION" 2>/dev/null
+        ok "Elastic IP released."
     fi
 
     # Delete security group (may need retry as ENIs detach)
@@ -716,6 +796,7 @@ main() {
     create_security_group
     get_userdata
     launch_instance
+    allocate_elastic_ip
     get_instance_dns
     configure_ssh
     print_summary

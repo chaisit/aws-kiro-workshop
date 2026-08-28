@@ -51,8 +51,22 @@ irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy
 5. สร้าง Security Group (SSH inbound only)
 6. สร้าง EC2 instance (t3.medium, 30GB gp3)
 7. รอจนกว่า instance จะ running
-8. ดึง Public DNS name
+8. จัดสรร Elastic IP และ associate กับ instance
 9. สร้าง SSH config entry อัตโนมัติ (`~/.ssh/config`)
+
+## Elastic IP (Static IP)
+
+Script จะจัดสรร **Elastic IP** ให้กับ instance โดยอัตโนมัติ เพื่อแก้ปัญหา public IP เปลี่ยนเมื่อ AWS Academy Lab session หยุดแล้ว start ใหม่
+
+**ข้อดี:**
+- IP address คงที่ ไม่เปลี่ยนเมื่อ instance stop/start
+- ไม่ต้องแก้ SSH config ทุกครั้งที่ Lab restart
+- Kiro IDE Remote SSH เชื่อมต่อได้ทันทีหลัง Lab start ใหม่
+
+**พฤติกรรม:**
+- Deploy ครั้งแรก: จัดสรร EIP ใหม่ (tagged ชื่อ `Kiro-LAB`)
+- Deploy ซ้ำ: ใช้ EIP เดิมที่มีอยู่ (ไม่จัดสรรใหม่)
+- Cleanup: ปล่อย EIP คืน (release) โดยอัตโนมัติ
 
 ## เชื่อมต่อ Kiro IDE
 
@@ -101,6 +115,7 @@ Config อยู่ที่: `~/.kiro/settings/mcp.json`
 | Key Pair | vockey |
 | IAM Profile | LabInstanceProfile |
 | Security Group | kiro-lab-sg (SSH inbound only) |
+| Elastic IP | Yes (static IP, persists across stop/start) |
 
 ## ไฟล์ในโฟลเดอร์นี้
 
@@ -114,7 +129,14 @@ labs/
 
 ## Cleanup
 
-หากต้องการลบ instance:
+หากต้องการลบ instance และ resources ทั้งหมด:
+
+```bash
+# ใช้ built-in cleanup command (แนะนำ — ลบ instance, EIP, security group, SSH config, AWS profile)
+bash deploy-kiro-lab.sh cleanup
+```
+
+หรือลบ manual:
 
 ```bash
 # ดู instance ID
@@ -123,6 +145,11 @@ aws ec2 describe-instances --filters "Name=tag:Name,Values=Kiro-LAB" \
 
 # Terminate
 aws ec2 terminate-instances --instance-ids <INSTANCE_ID>
+
+# Release Elastic IP
+aws ec2 describe-addresses --filters "Name=tag:Name,Values=Kiro-LAB" \
+  --query 'Addresses[].AllocationId' --output text
+aws ec2 release-address --allocation-id <ALLOCATION_ID>
 
 # ลบ security group (รอ instance terminate ก่อน)
 aws ec2 delete-security-group --group-name kiro-lab-sg
