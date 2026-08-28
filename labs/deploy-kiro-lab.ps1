@@ -179,42 +179,30 @@ function Collect-SSHKey {
 
     # Remove existing key file if present (it may have restrictive ACL from previous run)
     if (Test-Path $keyFile) {
-        try {
-            # Grant current user full control so we can delete it
-            $currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-            $acl = New-Object System.Security.AccessControl.FileSecurity
-            $acl.SetAccessRuleProtection($true, $false)
-            $rule = New-Object System.Security.AccessControl.FileSystemAccessRule($currentUser, "FullControl", "Allow")
-            $acl.AddAccessRule($rule)
-            Set-Acl -Path $keyFile -AclObject $acl -ErrorAction SilentlyContinue
-        }
-        catch {
-            # If Set-Acl fails (privilege issue), try icacls as fallback
-            icacls $keyFile /grant "${currentUser}:F" /C /Q 2>$null | Out-Null
-        }
+        # Use icacls to grant full control — does not require SeSecurityPrivilege
+        icacls $keyFile /grant "${env:USERNAME}:(F)" /C /Q 2>$null | Out-Null
         Remove-Item -Path $keyFile -Force -ErrorAction SilentlyContinue
+
+        # If Remove-Item still failed, try .NET File.Delete as last resort
+        if (Test-Path $keyFile) {
+            try { [System.IO.File]::SetAttributes($keyFile, 'Normal') } catch {}
+            try { [System.IO.File]::Delete($keyFile) } catch {}
+        }
+
+        if (Test-Path $keyFile) {
+            Write-Err "Cannot remove existing key file: $keyFile"
+            Write-Host "  Try running PowerShell as Administrator, or delete the file manually."
+            exit 1
+        }
     }
 
     # Write key file
     Set-Content -Path $keyFile -Value $keyContent -Encoding ASCII -NoNewline
 
     # Set restrictive permissions (Windows equivalent of chmod 400)
-    try {
-        $acl = Get-Acl $keyFile
-        $acl.SetAccessRuleProtection($true, $false)
-        $acl.Access | ForEach-Object { $acl.RemoveAccessRule($_) } | Out-Null
-        $currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-        $rule = New-Object System.Security.AccessControl.FileSystemAccessRule($currentUser, "Read", "Allow")
-        $acl.AddAccessRule($rule)
-        Set-Acl -Path $keyFile -AclObject $acl
-    }
-    catch {
-        # Fallback: use icacls if Set-Acl fails due to privilege issues
-        icacls $keyFile /inheritance:r /grant:r "${currentUser}:R" /C /Q 2>$null | Out-Null
-        if ($LASTEXITCODE -ne 0) {
-            Write-Warn "Could not set restrictive permissions on key file. SSH may show a warning."
-        }
-    }
+    # Use icacls as primary method — it works without SeSecurityPrivilege
+    icacls $keyFile /inheritance:r /C /Q 2>$null | Out-Null
+    icacls $keyFile /grant:r "${env:USERNAME}:(R)" /C /Q 2>$null | Out-Null
 
     $script:SSH_KEY_PATH = $keyFile
     Write-Ok "SSH key saved: $script:SSH_KEY_PATH"
