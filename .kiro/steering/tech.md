@@ -1,7 +1,7 @@
 # Tech Stack
 
 ## Runtime
-- Node.js (no specific version pinned; deployed on Ubuntu via apt)
+- Node.js (v22.x on Ubuntu 26.04)
 - npm for package management
 
 ## Framework & Libraries
