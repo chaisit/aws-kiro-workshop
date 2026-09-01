@@ -460,6 +460,10 @@ curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/a
 unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
 su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
+cat > /home/ubuntu/.kiro/settings/mcp.json << 'MCPEOF'
+{"mcpServers":{"aws-docs":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsiac":{"command":"/home/ubuntu/.local/bin/uvx","args":["--from","awslabs.aws-iac-mcp-server@latest","--with","fastmcp>=3.2.0,<4.0","awslabs.aws-iac-mcp-server"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsknowledge":{"url":"https://knowledge-mcp.global.api.aws"},"awspricing":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-pricing-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"}}}}
+MCPEOF
+chown -R ubuntu:ubuntu /home/ubuntu/.kiro
 cat >> /home/ubuntu/.bashrc << 'EOF'
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
 EOF

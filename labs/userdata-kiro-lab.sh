@@ -89,7 +89,15 @@ cat > /home/ubuntu/.kiro/settings/mcp.json << 'EOF'
     },
     "awsiac": {
       "command": "/home/ubuntu/.local/bin/uvx",
-      "args": ["awslabs.aws-iac-mcp-server@latest"]
+      "args": [
+        "--from",
+        "awslabs.aws-iac-mcp-server@latest",
+        "--with",
+        "fastmcp>=3.2.0,<4.0",
+        "awslabs.aws-iac-mcp-server"
+      ],
+      "env": { "FASTMCP_LOG_LEVEL": "ERROR" },
+      "disabled": false
     },
     "awsknowledge": {
       "url": "https://knowledge-mcp.global.api.aws"
