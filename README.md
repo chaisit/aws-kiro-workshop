@@ -12,11 +12,26 @@ Hands-on workshop สำหรับเรียนรู้การใช้�
 
 ```mermaid
 graph LR
-    A[Kiro IDE<br/>Local Machine] -->|Remote SSH| B[Kiro-LAB<br/>EC2 Instance]
-    B -->|Lab Deploy| C[AWS Services<br/>EC2, RDS, ALB, Secrets Manager<br> etc.]
+    subgraph LOCAL[Local Machine]
+        A[Kiro IDE]
+        S["Setup Script<br/>deploy-kiro-lab.sh / .ps1<br/>(awscli + aws access key)"]
+    end
+
+    S -.->|"① Provision ครั้งแรกครั้งเดียว<br/>สร้าง SG + EC2 + Elastic IP<br/>+ ตั้งค่า SSH config/key"| B
+    A -->|"② Remote SSH<br/>(vockey)"| B[Kiro-LAB<br/>EC2 Instance]
+    B -->|"③ Lab Deploy<br/>(aws access key)"| C[AWS Services<br/>EC2, RDS, ALB, Secrets Manager<br/>etc.]
+
+    style S fill:#fff3cd,stroke:#e0a800,color:#000
+    style A fill:#d1e7dd,stroke:#0f5132,color:#000
+    style B fill:#cfe2ff,stroke:#084298,color:#000
+    style C fill:#e2e3e5,stroke:#41464b,color:#000
 ```
 
-Kiro IDE จะเชื่อมต่อไปยัง EC2 instance ชื่อ **Kiro-LAB** ผ่าน Remote SSH extension ทำให้สามารถพัฒนาโค้ดบน cloud instance ได้โดยตรง พร้อมใช้งาน MCP servers และ AI features ของ Kiro ได้เต็มรูปแบบ
+**ขั้นตอนการทำงาน:**
+
+1. **Setup Script (ครั้งแรกครั้งเดียว)** — รัน `deploy-kiro-lab.sh` (macOS/Linux) หรือ `deploy-kiro-lab.ps1` (Windows) บนเครื่อง local โดยใช้ **AWS CLI + AWS access key** จาก AWS Academy Lab เพื่อ provision resources ทั้งหมด: Security Group, EC2 instance (**Kiro-LAB**), Elastic IP และตั้งค่า SSH config + SSH key ให้อัตโนมัติ ขั้นตอนนี้ทำครั้งเดียวก็พอ (ยกเว้นต้องการสร้าง instance ใหม่ — script จะ terminate ตัวเดิมแล้วสร้างใหม่ให้)
+2. **Remote SSH** — Kiro IDE เชื่อมต่อไปยัง **Kiro-LAB** ผ่าน Remote SSH extension (ใช้ key `vockey`) ทำให้พัฒนาโค้ดบน cloud instance ได้โดยตรง พร้อมใช้งาน MCP servers และ AI features ของ Kiro ได้เต็มรูปแบบ
+3. **Lab Deploy** — จากบน Kiro-LAB ใช้ aws credentials ในการ deploy Web Application ไปยัง AWS Services ต่างๆ (EC2, RDS, ALB, Secrets Manager ฯลฯ)
 
 ## การเตรียม Lab (Quick Start)
 
