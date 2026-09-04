@@ -1,16 +1,16 @@
-# Graph Report - AWS_Academy_Kiro-Workshop  (2026-08-26)
+# Graph Report - AWS_Academy_Kiro-Workshop  (2026-09-04)
 
 ## Corpus Check
-- 50 files · ~42,344 words
+- 53 files · ~47,699 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 473 nodes · 613 edges · 36 communities (27 shown, 9 thin omitted)
-- Extraction: 82% EXTRACTED · 18% INFERRED · 0% AMBIGUOUS · INFERRED: 108 edges (avg confidence: 0.92)
+- 477 nodes · 655 edges · 36 communities (27 shown, 9 thin omitted)
+- Extraction: 84% EXTRACTED · 16% INFERRED · 0% AMBIGUOUS · INFERRED: 108 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0c766eee`
+- Built from commit: `e8c322a4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - aws-architecture-diagram skill
 - supplier.controller.js
 - footer.html
-- Application Analysis & AWS Architecture Recommendation
+- diagrams.md
 - mcp.json
 - UserdataScript.sh
 - Amazon DocumentDB Serverless
@@ -37,7 +37,7 @@
 - deploy-kiro-lab.sh
 - deploy-kiro-lab.ps1
 - Kiro-LAB: EC2 Instance for Remote SSH Development
-- Deployment Guide: Student Management Web Application
+- userdata-kiro-lab-al2023.sh
 - Technology to Shape Mapping
 - AWS Reference Architecture Style Guide
 - Layout Guidelines
@@ -54,15 +54,15 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `Graphify Skill` - 16 edges
-2. `AWS Group and Edge Style Templates` - 13 edges
-3. `Deployment Guide: Student Management Web Application` - 12 edges
-4. `main()` - 11 edges
-5. `AWS Reference Architecture Style Guide` - 11 edges
-6. `Kiro-LAB: EC2 Instance for Remote SSH Development` - 11 edges
-7. `Write-Info()` - 10 edges
-8. `Main()` - 10 edges
-9. `info()` - 10 edges
-10. `se()` - 10 edges
+2. `info()` - 14 edges
+3. `main()` - 14 edges
+4. `Write-Info()` - 14 edges
+5. `Write-Ok()` - 14 edges
+6. `AWS Group and Edge Style Templates` - 13 edges
+7. `ok()` - 13 edges
+8. `Main()` - 13 edges
+9. `Kiro-LAB: EC2 Instance for Remote SSH Development` - 12 edges
+10. `AWS Reference Architecture Style Guide` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `o()` --indirect_call--> `me()`  [INFERRED]
@@ -73,8 +73,8 @@
   .kiro/skills/graphify/references/hooks.md → .kiro/skills/graphify/references/update.md
 - `Graphify Query Steering` --references--> `Graphify Skill`  [INFERRED]
   .kiro/steering/graphify.md → .kiro/skills/graphify/SKILL.md
-- `b()` --indirect_call--> `i()`  [INFERRED]
-  src/public/js/jquery-3.6.0.min.js → src/public/js/bootstrap.min.js
+- `a()` --indirect_call--> `It()`  [INFERRED]
+  src/public/js/bootstrap.min.js → src/public/js/jquery-3.6.0.min.js
 
 ## Import Cycles
 - None detected.
@@ -119,10 +119,6 @@ Nodes (12): config, {body, validationResult}, Supplier, dbConfig, mysql, app, bo
 Cohesion: 0.20
 Nodes (18): base.css, Bootstrap CSS, Bootstrap JS, jQuery 3.6.0, Mustache Partials, caps.jpeg, espresso.jpg, 404.html (+10 more)
 
-### Community 7 - "Application Analysis & AWS Architecture Recommendation"
-Cohesion: 0.09
-Nodes (21): 1. Application Summary, 2. Recommended AWS Architecture, 3. Cost Estimate (Monthly, us-east-1, On-Demand), 4. Security Considerations, 5. Deployment Steps (Overview), 6. Deployment Issues & Fixes, 7. File Structure Reference, 8. Next Steps (+13 more)
-
 ### Community 8 - "mcp.json"
 Cohesion: 0.43
 Nodes (6): FASTMCP_LOG_LEVEL, aws-docs, awsiac, awsknowledge, awspricing, uvx
@@ -144,20 +140,20 @@ Cohesion: 0.11
 Nodes (17): Account, Auto Scaling Group, Availability Zone, AWS Cloud, AWS Group and Edge Style Templates, Bidirectional, Dashed (async/optional), Edge Styles (+9 more)
 
 ### Community 19 - "deploy-kiro-lab.sh"
-Cohesion: 0.38
-Nodes (16): check_prerequisites(), configure_ssh(), create_security_group(), error(), find_ssh_key(), get_instance_dns(), get_ubuntu_ami(), info() (+8 more)
+Cohesion: 0.33
+Nodes (20): allocate_elastic_ip(), check_existing_instance(), check_prerequisites(), collect_aws_credentials(), collect_ssh_key(), configure_ssh(), create_security_group(), do_cleanup() (+12 more)
 
 ### Community 20 - "deploy-kiro-lab.ps1"
-Cohesion: 0.42
-Nodes (15): Find-SSHKey(), Get-InstanceDNS(), Get-UbuntuAMI(), Install-AWSCLI(), New-SecurityGroup(), Get-Userdata(), Main(), Set-SSHConfig() (+7 more)
+Cohesion: 0.35
+Nodes (20): Collect-AWSCredentials(), Collect-SSHKey(), Get-InstanceDNS(), Get-UbuntuAMI(), Get-Userdata(), Install-AWSCLI(), Invoke-Cleanup(), Main() (+12 more)
 
 ### Community 21 - "Kiro-LAB: EC2 Instance for Remote SSH Development"
-Cohesion: 0.14
-Nodes (13): Cleanup, Dev Tools ที่ติดตั้งให้, EC2 Instance Specs, Kiro-LAB: EC2 Instance for Remote SSH Development, macOS / Linux, MCP Server (pre-configured), Script ทำอะไรบ้าง, Windows (PowerShell) (+5 more)
+Cohesion: 0.06
+Nodes (29): Cleanup, Dev Tools ที่ติดตั้งให้, EC2 Instance Specs, Elastic IP (Static IP), Kiro-LAB: EC2 Instance for Remote SSH Development, macOS / Linux, MCP Server (pre-configured), Script ทำอะไรบ้าง (+21 more)
 
-### Community 22 - "Deployment Guide: Student Management Web Application"
-Cohesion: 0.15
-Nodes (12): Cost Estimate (Monthly, us-east-1), Deployment Guide: Student Management Web Application, File Structure, Phase 0: Upload Application Code to S3, Phase 1: Networking, Phase 2: Database (Aurora MySQL), Phase 3: Secrets Manager, Phase 4: Application Server (EC2) (+4 more)
+### Community 22 - "userdata-kiro-lab-al2023.sh"
+Cohesion: 0.53
+Nodes (5): as_user(), dnf_retry(), HOME, userdata-kiro-lab-al2023.sh script, wait_for_network()
 
 ### Community 23 - "Technology to Shape Mapping"
 Cohesion: 0.15
@@ -199,8 +195,12 @@ Nodes (4): AWS4 Sub-Resource and Misc Shapes, Misc Shapes, Other Sub-Resource Ic
 Cohesion: 0.40
 Nodes (4): Diagram Templates — Advanced, Hybrid Architecture (On-Premises + AWS), Multi-Region Active-Active, Sizing Guidelines for Templates
 
+### Community 35 - "userdata-kiro-lab.sh"
+Cohesion: 0.43
+Nodes (6): apt_retry(), DEBIAN_FRONTEND, HOME, userdata-kiro-lab.sh script, wait_for_apt_lock(), wait_for_network()
+
 ## Knowledge Gaps
-- **229 isolated node(s):** `awsknowledge`, `UserdataScript.sh script`, `APP_DB_HOST`, `APP_DB_USER`, `APP_DB_PASSWORD` (+224 more)
+- **218 isolated node(s):** `HOME`, `Amazon DocumentDB Serverless Pricing`, `Aurora Serverless v2 Pricing`, `Elastic Beanstalk Pricing`, `Fargate Pricing` (+213 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -209,10 +209,8 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Elastic Beanstalk Skill` connect `Security Defaults` to `Cost Estimation Patterns`?**
   _High betweenness centrality (0.012) - this node is a cross-community bridge._
-- **Are the 14 inferred relationships involving `aws-architecture-diagram skill` (e.g. with `AWS4 Service Icon Shapes Reference` and `draw.io CLI Export Reference`) actually correct?**
-  _`aws-architecture-diagram skill` has 14 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `awsknowledge`, `UserdataScript.sh script`, `APP_DB_HOST` to the rest of the system?**
-  _229 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `HOME`, `Amazon DocumentDB Serverless Pricing`, `Aurora Serverless v2 Pricing` to the rest of the system?**
+  _218 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `jquery-3.6.0.min.js` be split into smaller, more focused modules?**
   _Cohesion score 0.0670762928827445 - nodes in this community are weakly interconnected._
 - **Should `Security Defaults` be split into smaller, more focused modules?**
@@ -221,3 +219,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
+- **Should `supplier.controller.js` be split into smaller, more focused modules?**
+  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._

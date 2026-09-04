@@ -14,7 +14,7 @@ Hands-on workshop สำหรับเรียนรู้การใช้�
 graph LR
     subgraph LOCAL[Local Machine]
         A[Kiro IDE]
-        S["Setup Script<br/>deploy-kiro-lab.sh / .ps1<br/>(awscli + aws access key)"]
+        S["Setup Script<br/>deploy-kiro-lab[-al2023].sh / .ps1<br/>(awscli + aws access key)"]
     end
 
     S -.->|"① Provision ครั้งแรกครั้งเดียว<br/>สร้าง SG + EC2 + Elastic IP<br/>+ ตั้งค่า SSH config/key"| B
@@ -29,7 +29,7 @@ graph LR
 
 **ขั้นตอนการทำงาน:**
 
-1. **Setup Script (ครั้งแรกครั้งเดียว)** — รัน `deploy-kiro-lab.sh` (macOS/Linux) หรือ `deploy-kiro-lab.ps1` (Windows) บนเครื่อง local โดยใช้ **AWS CLI + AWS access key** จาก AWS Academy Lab เพื่อ provision resources ทั้งหมด: Security Group, EC2 instance (**Kiro-LAB**), Elastic IP และตั้งค่า SSH config + SSH key ให้อัตโนมัติ ขั้นตอนนี้ทำครั้งเดียวก็พอ (ยกเว้นต้องการสร้าง instance ใหม่ — script จะ terminate ตัวเดิมแล้วสร้างใหม่ให้)
+1. **Setup Script (ครั้งแรกครั้งเดียว)** — รัน setup script บนเครื่อง local โดยใช้ **AWS CLI + AWS access key** จาก AWS Academy Lab เพื่อ provision resources ทั้งหมด: Security Group, EC2 instance (**Kiro-LAB**), Elastic IP และตั้งค่า SSH config + SSH key ให้อัตโนมัติ มีให้เลือก 2 ชุด — **Amazon Linux 2023** (`deploy-kiro-lab-al2023.sh` / `.ps1`, แนะนำเพราะ setup เร็วกว่า) หรือ **Ubuntu** (`deploy-kiro-lab.sh` / `.ps1`) ขั้นตอนนี้ทำครั้งเดียวก็พอ (ยกเว้นต้องการสร้าง instance ใหม่ — script จะ terminate ตัวเดิมแล้วสร้างใหม่ให้)
 2. **Remote SSH** — Kiro IDE เชื่อมต่อไปยัง **Kiro-LAB** ผ่าน Remote SSH extension (ใช้ key `vockey`) ทำให้พัฒนาโค้ดบน cloud instance ได้โดยตรง พร้อมใช้งาน MCP servers และ AI features ของ Kiro ได้เต็มรูปแบบ
 3. **Lab Deploy** — จากบน Kiro-LAB ใช้ aws credentials ในการ deploy Web Application ไปยัง AWS Services ต่างๆ (EC2, RDS, ALB, Secrets Manager ฯลฯ)
 
@@ -39,15 +39,25 @@ graph LR
 
 เปิด Terminal แล้วรันคำสั่งเดียว — script จะจัดการทุกอย่างให้อัตโนมัติ (ติดตั้ง AWS CLI, รับ credentials, สร้าง EC2 instance, ตั้งค่า SSH config + SSH key)
 
+เลือกใช้ชุดใดชุดหนึ่ง — **Amazon Linux 2023** แนะนำเพราะ setup เร็วกว่า (`dnf` ไม่ติดปัญหา `apt update` ช้าบน AWS)
+
 **macOS / Linux:**
 
 ```bash
+# Amazon Linux 2023 (แนะนำ)
+curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.sh | bash
+
+# Ubuntu
 curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
+# Amazon Linux 2023 (แนะนำ)
+irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.ps1 | iex
+
+# Ubuntu
 irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 ```
 
@@ -77,7 +87,7 @@ Kiro IDE ต้องใช้ extension [Open Remote - SSH](https://open-vsx.or
 
 1. `Ctrl+Shift+P` → `Remote-SSH: Connect to Host...`
 2. เลือก **`kiro-lab`**
-3. เปิดโฟลเดอร์: `/home/ubuntu/workshop`
+3. เปิดโฟลเดอร์: `/home/ec2-user/workshop` (Amazon Linux) หรือ `/home/ubuntu/workshop` (Ubuntu)
 
 เพียงเท่านี้ก็พร้อมใช้งาน Kiro-LAB ได้เลย
 
@@ -101,8 +111,8 @@ curl -fsSL https://bun.sh/install | bash
 # uv / uvx (Python package manager)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# graphify
-uv tool install graphifyy
+# graphify (PyPI package is "graphifyy"; CLI command is "graphify")
+uv tool install graphifyyy
 
 # AWS CLI v2
 curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
@@ -147,7 +157,7 @@ aws configure
 | Property | Value |
 |----------|-------|
 | Instance Type | t3.medium (2 vCPU, 4 GB RAM) |
-| OS | Ubuntu 26.04 LTS |
+| OS | Amazon Linux 2023 หรือ Ubuntu 26.04 LTS (แล้วแต่ชุด script) |
 | Storage | 30 GB gp3 (encrypted) |
 | Key Pair | vockey |
 | IAM Profile | LabInstanceProfile |

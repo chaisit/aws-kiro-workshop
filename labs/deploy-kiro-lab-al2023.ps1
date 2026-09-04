@@ -1,13 +1,14 @@
 # =============================================================================
-# deploy-kiro-lab.ps1
+# deploy-kiro-lab-al2023.ps1
 # Deploys an EC2 instance (Kiro-LAB) for remote SSH development with Kiro IDE
+# using Amazon Linux 2023 (dnf-based, avoids the slow apt update seen on Ubuntu).
 #
 # Usage:
-#   irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
+#   irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.ps1 | iex
 #   -- or --
-#   .\deploy-kiro-lab.ps1
-#   .\deploy-kiro-lab.ps1 -Region us-west-2
-#   .\deploy-kiro-lab.ps1 -Action cleanup -Region us-west-2
+#   .\deploy-kiro-lab-al2023.ps1
+#   .\deploy-kiro-lab-al2023.ps1 -Region us-west-2
+#   .\deploy-kiro-lab-al2023.ps1 -Action cleanup -Region us-west-2
 #
 # Prerequisites:
 #   - AWS CLI (will be installed automatically if missing)
@@ -36,8 +37,10 @@ $INSTANCE_TYPE = "t3.medium"
 $VOLUME_SIZE = 30
 $REGION = if ($Region) { $Region } elseif ($env:AWS_DEFAULT_REGION) { $env:AWS_DEFAULT_REGION } else { "us-east-1" }
 $SSH_CONFIG_HOST = "kiro-lab"
-$USERDATA_URL = "https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab.sh"
+$USERDATA_URL = "https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/userdata-kiro-lab-al2023.sh"
 $AWS_PROFILE_NAME = "kiro-lab-deploy"
+# Amazon Linux 2023 default login user (Ubuntu uses "ubuntu")
+$SSH_USER = "ec2-user"
 
 # ─── Functions ───────────────────────────────────────────────────────────────
 
@@ -328,51 +331,30 @@ function Test-ExistingInstance {
     }
 }
 
-function Get-UbuntuAMI {
-    Write-Info "Finding latest Ubuntu 26.04 AMI in $REGION..."
+function Get-AL2023AMI {
+    Write-Info "Finding latest Amazon Linux 2023 AMI in $REGION..."
 
-    # Try SSM parameter for Ubuntu 26.04
+    # Public SSM parameter that always points to the latest AL2023 x86_64 AMI
     $script:AMI_ID = aws ssm get-parameters `
         --profile $AWS_PROFILE_NAME `
-        --names "/aws/service/canonical/ubuntu/server/26.04/stable/current/amd64/hvm/ebs-gp3/ami-id" `
+        --names "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64" `
         --region $REGION `
         --query "Parameters[0].Value" `
         --output text 2>$null
 
     if (-not $script:AMI_ID -or $script:AMI_ID -eq "None") {
-        # Fallback: search by name pattern
+        # Fallback: search by name pattern (Amazon owns account 137112412989)
         $script:AMI_ID = aws ec2 describe-images `
             --profile $AWS_PROFILE_NAME `
-            --owners 099720109477 `
-            --filters "Name=name,Values=ubuntu/images/hvm-ssd-gp3/ubuntu-*-26.04-amd64-server-*" `
+            --owners amazon `
+            --filters "Name=name,Values=al2023-ami-2023.*-kernel-*-x86_64" "Name=state,Values=available" `
             --query "Images | sort_by(@, &CreationDate) | [-1].ImageId" `
             --region $REGION `
             --output text 2>$null
     }
 
     if (-not $script:AMI_ID -or $script:AMI_ID -eq "None") {
-        # Fallback: Ubuntu 24.04 if 26.04 not available yet
-        Write-Warn "Ubuntu 26.04 not found, falling back to 24.04..."
-        $script:AMI_ID = aws ssm get-parameters `
-            --profile $AWS_PROFILE_NAME `
-            --names "/aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id" `
-            --region $REGION `
-            --query "Parameters[0].Value" `
-            --output text 2>$null
-
-        if (-not $script:AMI_ID -or $script:AMI_ID -eq "None") {
-            $script:AMI_ID = aws ec2 describe-images `
-                --profile $AWS_PROFILE_NAME `
-                --owners 099720109477 `
-                --filters "Name=name,Values=ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*" `
-                --query "Images | sort_by(@, &CreationDate) | [-1].ImageId" `
-                --region $REGION `
-                --output text 2>$null
-        }
-    }
-
-    if (-not $script:AMI_ID -or $script:AMI_ID -eq "None") {
-        Write-Err "Could not find Ubuntu AMI in region $REGION"
+        Write-Err "Could not find Amazon Linux 2023 AMI in region $REGION"
         exit 1
     }
 
@@ -422,7 +404,7 @@ function Get-Userdata {
 
     # Check for local file (only when running as a script file, not via irm | iex)
     if ($PSScriptRoot) {
-        $localPath = Join-Path $PSScriptRoot "userdata-kiro-lab.sh"
+        $localPath = Join-Path $PSScriptRoot "userdata-kiro-lab-al2023.sh"
         if (Test-Path $localPath) {
             $script:USERDATA_PATH = $localPath
             Write-Info "Using local userdata script"
@@ -442,60 +424,53 @@ function Get-Userdata {
         $embeddedUserdata = @'
 #!/bin/bash -x
 export HOME="${HOME:-/root}"
-export DEBIAN_FRONTEND=noninteractive
 exec > /var/log/userdata-kiro-lab.log 2>&1
+LAB_USER="ec2-user"
+LAB_HOME="/home/ec2-user"
 wait_for_network() {
   for i in $(seq 1 30); do
-    if curl -fsSL --max-time 10 http://archive.ubuntu.com >/dev/null 2>&1; then return 0; fi
+    if curl -fsSL --max-time 10 https://amazonlinux.default.amazonaws.com >/dev/null 2>&1; then return 0; fi
     echo "network not ready ($i/30), retrying in 5s..."; sleep 5
   done
   echo "WARNING: network not confirmed; continuing anyway."
 }
-wait_for_apt_lock() {
-  for i in $(seq 1 60); do
-    if ! fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 \
-      && ! fuser /var/lib/apt/lists/lock >/dev/null 2>&1 \
-      && ! fuser /var/lib/dpkg/lock >/dev/null 2>&1; then return 0; fi
-    echo "apt/dpkg locked ($i/60), waiting 5s..."; sleep 5
-  done
-  echo "WARNING: apt/dpkg still locked; continuing anyway."
-}
-apt_retry() {
+dnf_retry() {
   for attempt in 1 2 3 4 5; do
-    wait_for_apt_lock
-    if timeout 600 apt-get -o Acquire::Retries=3 -y "$@"; then return 0; fi
-    echo "apt-get $* failed ($attempt/5), retrying in 15s..."; sleep 15
+    if timeout 600 dnf -y "$@"; then return 0; fi
+    echo "dnf $* failed ($attempt/5), retrying in 15s..."; sleep 15
   done
-  echo "ERROR: apt-get $* failed after 5 attempts."; return 1
+  echo "ERROR: dnf $* failed after 5 attempts."; return 1
 }
 wait_for_network
-apt_retry update
-apt_retry upgrade
-apt_retry install build-essential curl wget unzip git python3 python3-pip python3-venv
-curl -fsSL --retry 3 --retry-delay 5 https://deb.nodesource.com/setup_22.x | bash -
-apt_retry install nodejs
+dnf_retry upgrade --releasever=latest
+dnf_retry groupinstall "Development Tools"
+dnf_retry install curl wget unzip git tar gzip python3 python3-pip
+curl -fsSL --retry 3 --retry-delay 5 https://rpm.nodesource.com/setup_22.x | bash -
+dnf_retry install nodejs
 npm install -g npm@latest || true
-su - ubuntu -c "export BUN_INSTALL=/home/ubuntu/.bun && curl -fsSL --retry 3 --retry-delay 5 https://bun.sh/install | bash" || true
-ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bun 2>/dev/null || true
-ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bunx 2>/dev/null || true
+su - "$LAB_USER" -c "export BUN_INSTALL=$LAB_HOME/.bun && curl -fsSL --retry 3 --retry-delay 5 https://bun.sh/install | bash" || true
+ln -sf $LAB_HOME/.bun/bin/bun /usr/local/bin/bun 2>/dev/null || true
+ln -sf $LAB_HOME/.bun/bin/bun /usr/local/bin/bunx 2>/dev/null || true
 curl -LsSf --retry 3 --retry-delay 5 https://astral.sh/uv/install.sh | sh || true
 ln -sf /root/.local/bin/uv /usr/local/bin/uv 2>/dev/null || true
 ln -sf /root/.local/bin/uvx /usr/local/bin/uvx 2>/dev/null || true
-su - ubuntu -c "curl -LsSf --retry 3 --retry-delay 5 https://astral.sh/uv/install.sh | sh" || true
-su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy" || true
-curl -fsSL --retry 3 --retry-delay 5 "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
-unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
-su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
-su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
-cat > /home/ubuntu/.kiro/settings/mcp.json << 'MCPEOF'
-{"mcpServers":{"aws-docs":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsiac":{"command":"/home/ubuntu/.local/bin/uvx","args":["--from","awslabs.aws-iac-mcp-server@latest","--with","fastmcp>=3.2.0,<4.0","awslabs.aws-iac-mcp-server"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsknowledge":{"url":"https://knowledge-mcp.global.api.aws"},"awspricing":{"command":"/home/ubuntu/.local/bin/uvx","args":["awslabs.aws-pricing-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"}}}}
+su - "$LAB_USER" -c "curl -LsSf --retry 3 --retry-delay 5 https://astral.sh/uv/install.sh | sh" || true
+su - "$LAB_USER" -c "$LAB_HOME/.local/bin/uv tool install graphifyy" || true
+if ! command -v aws >/dev/null 2>&1; then
+  curl -fsSL --retry 3 --retry-delay 5 "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+  unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
+fi
+su - "$LAB_USER" -c "git clone https://github.com/chaisit/aws-kiro-workshop.git $LAB_HOME/workshop"
+su - "$LAB_USER" -c "mkdir -p $LAB_HOME/.kiro/settings"
+cat > $LAB_HOME/.kiro/settings/mcp.json << MCPEOF
+{"mcpServers":{"aws-docs":{"command":"$LAB_HOME/.local/bin/uvx","args":["awslabs.aws-documentation-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsiac":{"command":"$LAB_HOME/.local/bin/uvx","args":["--from","awslabs.aws-iac-mcp-server@latest","--with","fastmcp>=3.2.0,<4.0","awslabs.aws-iac-mcp-server"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"},"disabled":false},"awsknowledge":{"url":"https://knowledge-mcp.global.api.aws"},"awspricing":{"command":"$LAB_HOME/.local/bin/uvx","args":["awslabs.aws-pricing-mcp-server@latest"],"env":{"FASTMCP_LOG_LEVEL":"ERROR"}}}}
 MCPEOF
-chown -R ubuntu:ubuntu /home/ubuntu/.kiro
-cat >> /home/ubuntu/.bashrc << 'EOF'
+chown -R "$LAB_USER":"$LAB_USER" $LAB_HOME/.kiro
+cat >> $LAB_HOME/.bashrc << 'EOF'
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
 EOF
 hostnamectl set-hostname kiro-lab
-touch /home/ubuntu/.kiro-lab-ready && chown ubuntu:ubuntu /home/ubuntu/.kiro-lab-ready
+touch $LAB_HOME/.kiro-lab-ready && chown "$LAB_USER":"$LAB_USER" $LAB_HOME/.kiro-lab-ready
 '@
         # Normalize to LF line endings (Linux userdata must not contain CRLF)
         $embeddedUserdata = $embeddedUserdata -replace "`r`n", "`n"
@@ -641,7 +616,7 @@ function Set-SSHConfig {
 # >>> Kiro-LAB >>>
 Host $SSH_CONFIG_HOST
     HostName $($script:PUBLIC_DNS)
-    User ubuntu
+    User $SSH_USER
     IdentityFile "$sshKeyPath"
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
@@ -691,7 +666,7 @@ function Show-Summary {
     Write-Host "  2. Install 'Remote - SSH' extension (if not already)"
     Write-Host "  3. Ctrl+Shift+P -> 'Remote-SSH: Connect to Host...'"
     Write-Host "  4. Select '$SSH_CONFIG_HOST'"
-    Write-Host "  5. Open folder: /home/ubuntu/workshop"
+    Write-Host "  5. Open folder: /home/$SSH_USER/workshop"
     Write-Host ""
     Write-Host "  To clean up all resources later:" -ForegroundColor Cyan
     Write-Host "    .\deploy-kiro-lab.ps1 -Action cleanup"
@@ -939,7 +914,7 @@ function Main {
     Collect-AWSCredentials
     Test-ExistingInstance
     Collect-SSHKey
-    Get-UbuntuAMI
+    Get-AL2023AMI
     New-SecurityGroup
     Get-Userdata
     Start-Instance

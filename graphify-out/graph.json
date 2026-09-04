@@ -1626,6 +1626,36 @@
       "source_location": "L25"
     },
     {
+      "id": "labs_deploy_kiro_lab_allocate_elastic_ip",
+      "label": "allocate_elastic_ip()",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "deploy-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "allocate_elastic_ip()",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L460"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_check_existing_instance",
+      "label": "check_existing_instance()",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "deploy-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "check_existing_instance()",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L259"
+    },
+    {
       "id": "labs_deploy_kiro_lab_check_prerequisites",
       "label": "check_prerequisites()",
       "_origin": "ast",
@@ -1638,7 +1668,37 @@
       },
       "norm_label": "check_prerequisites()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L84"
+      "source_location": "L247"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_collect_aws_credentials",
+      "label": "collect_aws_credentials()",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "deploy-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "collect_aws_credentials()",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L67"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_collect_ssh_key",
+      "label": "collect_ssh_key()",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "deploy-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "collect_ssh_key()",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L129"
     },
     {
       "id": "labs_deploy_kiro_lab_configure_ssh",
@@ -1653,7 +1713,7 @@
       },
       "norm_label": "configure_ssh()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L319"
+      "source_location": "L524"
     },
     {
       "id": "labs_deploy_kiro_lab_create_security_group",
@@ -1668,7 +1728,22 @@
       },
       "norm_label": "create_security_group()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L186"
+      "source_location": "L347"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_do_cleanup",
+      "label": "do_cleanup()",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "deploy-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "do_cleanup()",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L600"
     },
     {
       "id": "labs_deploy_kiro_lab_error",
@@ -1683,22 +1758,7 @@
       },
       "norm_label": "error()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L40"
-    },
-    {
-      "id": "labs_deploy_kiro_lab_find_ssh_key",
-      "label": "find_ssh_key()",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": "deploy-kiro-lab.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_function"
-      },
-      "norm_label": "find_ssh_key()",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L105"
+      "source_location": "L65"
     },
     {
       "id": "labs_deploy_kiro_lab_get_instance_dns",
@@ -1713,7 +1773,7 @@
       },
       "norm_label": "get_instance_dns()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L292"
+      "source_location": "L496"
     },
     {
       "id": "labs_deploy_kiro_lab_get_ubuntu_ami",
@@ -1728,7 +1788,7 @@
       },
       "norm_label": "get_ubuntu_ami()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L139"
+      "source_location": "L296"
     },
     {
       "id": "labs_deploy_kiro_lab_info",
@@ -1743,7 +1803,7 @@
       },
       "norm_label": "info()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L37"
+      "source_location": "L62"
     },
     {
       "id": "labs_deploy_kiro_lab_install_aws_cli",
@@ -1758,7 +1818,7 @@
       },
       "norm_label": "install_aws_cli()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L42"
+      "source_location": "L205"
     },
     {
       "id": "labs_deploy_kiro_lab_launch_instance",
@@ -1773,7 +1833,7 @@
       },
       "norm_label": "launch_instance()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L269"
+      "source_location": "L433"
     },
     {
       "id": "labs_deploy_kiro_lab_ok",
@@ -1788,7 +1848,7 @@
       },
       "norm_label": "ok()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L38"
+      "source_location": "L63"
     },
     {
       "id": "labs_deploy_kiro_lab_print_summary",
@@ -1803,7 +1863,7 @@
       },
       "norm_label": "print_summary()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L360"
+      "source_location": "L565"
     },
     {
       "id": "labs_deploy_kiro_lab_sh__entry",
@@ -1848,7 +1908,7 @@
       },
       "norm_label": "get_userdata()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L221"
+      "source_location": "L385"
     },
     {
       "id": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
@@ -1863,7 +1923,7 @@
       },
       "norm_label": "main()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L391"
+      "source_location": "L790"
     },
     {
       "id": "labs_deploy_kiro_lab_warn",
@@ -1878,65 +1938,10 @@
       },
       "norm_label": "warn()",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L39"
+      "source_location": "L64"
     },
     {
-      "id": "labs_deploy_kiro_lab_find_sshkey",
-      "label": "Find-SSHKey()",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy-kiro-lab.ps1",
-      "file_type": "code",
-      "norm_label": "find-sshkey()",
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L86"
-    },
-    {
-      "id": "labs_deploy_kiro_lab_get_instancedns",
-      "label": "Get-InstanceDNS()",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy-kiro-lab.ps1",
-      "file_type": "code",
-      "norm_label": "get-instancedns()",
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L279"
-    },
-    {
-      "id": "labs_deploy_kiro_lab_get_ubuntuami",
-      "label": "Get-UbuntuAMI()",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy-kiro-lab.ps1",
-      "file_type": "code",
-      "norm_label": "get-ubuntuami()",
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L119"
-    },
-    {
-      "id": "labs_deploy_kiro_lab_install_awscli",
-      "label": "Install-AWSCLI()",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy-kiro-lab.ps1",
-      "file_type": "code",
-      "norm_label": "install-awscli()",
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L35"
-    },
-    {
-      "id": "labs_deploy_kiro_lab_new_securitygroup",
-      "label": "New-SecurityGroup()",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "deploy-kiro-lab.ps1",
-      "file_type": "code",
-      "norm_label": "new-securitygroup()",
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L166"
-    },
-    {
-      "id": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
+      "id": "labs_deploy_kiro_lab",
       "label": "deploy-kiro-lab.ps1",
       "_origin": "ast",
       "community": 20,
@@ -1947,7 +1952,51 @@
       "source_location": "L1"
     },
     {
-      "id": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_get_userdata",
+      "id": "labs_deploy_kiro_lab_collect_awscredentials",
+      "label": "Collect-AWSCredentials()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "collect-awscredentials()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L49"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_collect_sshkey",
+      "label": "Collect-SSHKey()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "collect-sshkey()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L114"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_get_instancedns",
+      "label": "Get-InstanceDNS()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "get-instancedns()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L597"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_get_ubuntuami",
+      "label": "Get-UbuntuAMI()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "get-ubuntuami()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L331"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_get_userdata",
       "label": "Get-Userdata()",
       "_origin": "ast",
       "community": 20,
@@ -1955,10 +2004,32 @@
       "file_type": "code",
       "norm_label": "get-userdata()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L199"
+      "source_location": "L418"
     },
     {
-      "id": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "id": "labs_deploy_kiro_lab_install_awscli",
+      "label": "Install-AWSCLI()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "install-awscli()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L218"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_invoke_cleanup",
+      "label": "Invoke-Cleanup()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "invoke-cleanup()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L704"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_main",
       "label": "Main()",
       "_origin": "ast",
       "community": 20,
@@ -1966,7 +2037,40 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L381"
+      "source_location": "L931"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_new_elasticip",
+      "label": "New-ElasticIP()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "new-elasticip()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L552"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_new_securitygroup",
+      "label": "New-SecurityGroup()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "new-securitygroup()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L382"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_refresh_pathenvironment",
+      "label": "Refresh-PathEnvironment()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "refresh-pathenvironment()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L211"
     },
     {
       "id": "labs_deploy_kiro_lab_set_sshconfig",
@@ -1977,7 +2081,7 @@
       "file_type": "code",
       "norm_label": "set-sshconfig()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L305"
+      "source_location": "L624"
     },
     {
       "id": "labs_deploy_kiro_lab_show_summary",
@@ -1988,7 +2092,7 @@
       "file_type": "code",
       "norm_label": "show-summary()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L350"
+      "source_location": "L669"
     },
     {
       "id": "labs_deploy_kiro_lab_start_instance",
@@ -1999,7 +2103,18 @@
       "file_type": "code",
       "norm_label": "start-instance()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L256"
+      "source_location": "L518"
+    },
+    {
+      "id": "labs_deploy_kiro_lab_test_existinginstance",
+      "label": "Test-ExistingInstance()",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "deploy-kiro-lab.ps1",
+      "file_type": "code",
+      "norm_label": "test-existinginstance()",
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L296"
     },
     {
       "id": "labs_deploy_kiro_lab_test_prerequisites",
@@ -2010,7 +2125,7 @@
       "file_type": "code",
       "norm_label": "test-prerequisites()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L62"
+      "source_location": "L284"
     },
     {
       "id": "labs_deploy_kiro_lab_write_err",
@@ -2021,7 +2136,7 @@
       "file_type": "code",
       "norm_label": "write-err()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L33"
+      "source_location": "L47"
     },
     {
       "id": "labs_deploy_kiro_lab_write_info",
@@ -2032,7 +2147,7 @@
       "file_type": "code",
       "norm_label": "write-info()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L30"
+      "source_location": "L44"
     },
     {
       "id": "labs_deploy_kiro_lab_write_ok",
@@ -2043,7 +2158,7 @@
       "file_type": "code",
       "norm_label": "write-ok()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L31"
+      "source_location": "L45"
     },
     {
       "id": "labs_deploy_kiro_lab_write_warn",
@@ -2054,17 +2169,17 @@
       "file_type": "code",
       "norm_label": "write-warn()",
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L32"
+      "source_location": "L46"
     },
     {
       "id": "labs_readme",
-      "label": "README.md",
+      "label": "labs/README.md",
       "_origin": "ast",
       "community": 21,
       "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "page",
-      "norm_label": "readme.md",
+      "norm_label": "labs/readme.md",
       "source_file": "labs/README.md",
       "source_location": "L1"
     },
@@ -2078,7 +2193,7 @@
       "node_kind": "heading",
       "norm_label": "cleanup",
       "source_file": "labs/README.md",
-      "source_location": "L115"
+      "source_location": "L130"
     },
     {
       "id": "labs_readme_dev_tools_\u0e17_\u0e15_\u0e14\u0e15_\u0e07\u0e43\u0e2b",
@@ -2090,7 +2205,7 @@
       "node_kind": "heading",
       "norm_label": "dev tools \u0e17\u0e35\u0e15\u0e34\u0e14\u0e15\u0e31\u0e07\u0e43\u0e2b",
       "source_file": "labs/README.md",
-      "source_location": "L12"
+      "source_location": "L11"
     },
     {
       "id": "labs_readme_ec2_instance_specs",
@@ -2102,7 +2217,19 @@
       "node_kind": "heading",
       "norm_label": "ec2 instance specs",
       "source_file": "labs/README.md",
-      "source_location": "L93"
+      "source_location": "L107"
+    },
+    {
+      "id": "labs_readme_elastic_ip_static_ip",
+      "label": "Elastic IP (Static IP)",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "elastic ip (static ip)",
+      "source_file": "labs/README.md",
+      "source_location": "L57"
     },
     {
       "id": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
@@ -2126,7 +2253,7 @@
       "node_kind": "heading",
       "norm_label": "macos / linux",
       "source_file": "labs/README.md",
-      "source_location": "L26"
+      "source_location": "L25"
     },
     {
       "id": "labs_readme_mcp_server_pre_configured",
@@ -2138,7 +2265,7 @@
       "node_kind": "heading",
       "norm_label": "mcp server (pre-configured)",
       "source_file": "labs/README.md",
-      "source_location": "L85"
+      "source_location": "L99"
     },
     {
       "id": "labs_readme_script_\u0e17_\u0e32\u0e2d\u0e30\u0e44\u0e23\u0e1a_\u0e32\u0e07",
@@ -2150,7 +2277,7 @@
       "node_kind": "heading",
       "norm_label": "script \u0e17\u0e4d\u0e32\u0e2d\u0e30\u0e44\u0e23\u0e1a\u0e32\u0e07",
       "source_file": "labs/README.md",
-      "source_location": "L46"
+      "source_location": "L45"
     },
     {
       "id": "labs_readme_windows_powershell",
@@ -2162,7 +2289,7 @@
       "node_kind": "heading",
       "norm_label": "windows (powershell)",
       "source_file": "labs/README.md",
-      "source_location": "L36"
+      "source_location": "L35"
     },
     {
       "id": "labs_readme_\u0e15\u0e23\u0e27\u0e08\u0e2a\u0e2d\u0e1a\u0e2a\u0e16\u0e32\u0e19\u0e30",
@@ -2174,7 +2301,7 @@
       "node_kind": "heading",
       "norm_label": "\u0e15\u0e23\u0e27\u0e08\u0e2a\u0e2d\u0e1a\u0e2a\u0e16\u0e32\u0e19\u0e30",
       "source_file": "labs/README.md",
-      "source_location": "L73"
+      "source_location": "L87"
     },
     {
       "id": "labs_readme_\u0e27_\u0e18_\u0e43\u0e0a_\u0e07\u0e32\u0e19",
@@ -2186,7 +2313,7 @@
       "node_kind": "heading",
       "norm_label": "\u0e27\u0e34\u0e18\u0e35\u0e43\u0e0a\u0e07\u0e32\u0e19",
       "source_file": "labs/README.md",
-      "source_location": "L24"
+      "source_location": "L23"
     },
     {
       "id": "labs_readme_\u0e2a_\u0e07\u0e17_\u0e15_\u0e2d\u0e07\u0e21_\u0e01_\u0e2d\u0e19\u0e43\u0e0a_\u0e07\u0e32\u0e19",
@@ -2210,7 +2337,7 @@
       "node_kind": "heading",
       "norm_label": "\u0e40\u0e0a\u0e37\u0e2d\u0e21\u0e15\u0e2d kiro ide",
       "source_file": "labs/README.md",
-      "source_location": "L57"
+      "source_location": "L71"
     },
     {
       "id": "labs_readme_\u0e44\u0e1f\u0e25_\u0e43\u0e19\u0e42\u0e1f\u0e25\u0e40\u0e14\u0e2d\u0e23_\u0e19",
@@ -2222,163 +2349,289 @@
       "node_kind": "heading",
       "norm_label": "\u0e44\u0e1f\u0e25\u0e4c\u0e43\u0e19\u0e42\u0e1f\u0e25\u0e40\u0e14\u0e2d\u0e23\u0e4c\u0e19\u0e35",
       "source_file": "labs/README.md",
-      "source_location": "L105"
+      "source_location": "L120"
     },
     {
-      "id": "deployment_guide_deployment_guide",
-      "label": "DEPLOYMENT-GUIDE.md",
+      "id": "readme",
+      "label": "README.md",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "page",
-      "norm_label": "deployment-guide.md",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
+      "norm_label": "readme.md",
+      "source_file": "README.md",
       "source_location": "L1"
     },
     {
-      "id": "deployment_guide_deployment_guide_cost_estimate_monthly_us_east_1",
-      "label": "Cost Estimate (Monthly, us-east-1)",
+      "id": "readme_1_deploy_kiro_lab_instance",
+      "label": "1. Deploy Kiro-LAB Instance",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "cost estimate (monthly, us-east-1)",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L329"
+      "norm_label": "1. deploy kiro-lab instance",
+      "source_file": "README.md",
+      "source_location": "L38"
     },
     {
-      "id": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "label": "Deployment Guide: Student Management Web Application",
+      "id": "readme_2_\u0e15_\u0e14\u0e15_\u0e07_open_remote_ssh_extension",
+      "label": "2. \u0e15\u0e34\u0e14\u0e15\u0e31\u0e49\u0e07 Open Remote - SSH Extension",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "deployment guide: student management web application",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
+      "norm_label": "2. \u0e15\u0e34\u0e14\u0e15\u0e31\u0e07 open remote - ssh extension",
+      "source_file": "README.md",
+      "source_location": "L54"
+    },
+    {
+      "id": "readme_3_\u0e40\u0e0a_\u0e2d\u0e21\u0e15_\u0e2d_kiro_ide_\u0e44\u0e1b\u0e22_\u0e07_kiro_lab",
+      "label": "3. \u0e40\u0e0a\u0e37\u0e48\u0e2d\u0e21\u0e15\u0e48\u0e2d Kiro IDE \u0e44\u0e1b\u0e22\u0e31\u0e07 Kiro-LAB",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. \u0e40\u0e0a\u0e37\u0e2d\u0e21\u0e15\u0e2d kiro ide \u0e44\u0e1b\u0e22\u0e31\u0e07 kiro-lab",
+      "source_file": "README.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "readme_aws_academy_kiro_workshop",
+      "label": "AWS Academy Kiro Workshop",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "aws academy kiro workshop",
+      "source_file": "README.md",
       "source_location": "L1"
     },
     {
-      "id": "deployment_guide_deployment_guide_file_structure",
-      "label": "File Structure",
+      "id": "readme_kiro_lab_instance_specs",
+      "label": "Kiro-LAB Instance Specs",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "file structure",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L342"
+      "norm_label": "kiro-lab instance specs",
+      "source_file": "README.md",
+      "source_location": "L145"
     },
     {
-      "id": "deployment_guide_deployment_guide_phase_0_upload_application_code_to_s3",
-      "label": "Phase 0: Upload Application Code to S3",
+      "id": "readme_lab_architecture",
+      "label": "Lab Architecture",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 0: upload application code to s3",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L15"
+      "norm_label": "lab architecture",
+      "source_file": "README.md",
+      "source_location": "L11"
     },
     {
-      "id": "deployment_guide_deployment_guide_phase_1_networking",
-      "label": "Phase 1: Networking",
+      "id": "readme_linux_macos",
+      "label": "Linux / macOS",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 1: networking",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L35"
+      "norm_label": "linux / macos",
+      "source_file": "README.md",
+      "source_location": "L90"
     },
     {
-      "id": "deployment_guide_deployment_guide_phase_2_database_aurora_mysql",
-      "label": "Phase 2: Database (Aurora MySQL)",
+      "id": "readme_pre_installed_dev_tools",
+      "label": "Pre-installed Dev Tools",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 2: database (aurora mysql)",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L85"
+      "norm_label": "pre-installed dev tools",
+      "source_file": "README.md",
+      "source_location": "L155"
     },
     {
-      "id": "deployment_guide_deployment_guide_phase_3_secrets_manager",
-      "label": "Phase 3: Secrets Manager",
+      "id": "readme_windows_wsl",
+      "label": "Windows (WSL)",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 3: secrets manager",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L144"
+      "norm_label": "windows (wsl)",
+      "source_file": "README.md",
+      "source_location": "L116"
     },
     {
-      "id": "deployment_guide_deployment_guide_phase_4_application_server_ec2",
-      "label": "Phase 4: Application Server (EC2)",
+      "id": "readme_\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23_\u0e22\u0e21_lab_quick_start",
+      "label": "\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23\u0e35\u0e22\u0e21 Lab (Quick Start)",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 4: application server (ec2)",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L205"
+      "norm_label": "\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23\u0e35\u0e22\u0e21 lab (quick start)",
+      "source_file": "README.md",
+      "source_location": "L36"
     },
     {
-      "id": "deployment_guide_deployment_guide_prerequisites",
-      "label": "Prerequisites",
+      "id": "readme_\u0e08_\u0e14\u0e17_\u0e32\u0e42\u0e14\u0e22",
+      "label": "\u0e08\u0e31\u0e14\u0e17\u0e33\u0e42\u0e14\u0e22",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "prerequisites",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
+      "norm_label": "\u0e08\u0e31\u0e14\u0e17\u0e4d\u0e32\u0e42\u0e14\u0e22",
+      "source_file": "README.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "readme_\u0e15_\u0e07\u0e04_\u0e32_aws_credentials",
+      "label": "\u0e15\u0e31\u0e49\u0e07\u0e04\u0e48\u0e32 AWS Credentials",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u0e15\u0e31\u0e07\u0e04\u0e32 aws credentials",
+      "source_file": "README.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "readme_\u0e17\u0e32\u0e07\u0e40\u0e25_\u0e2d\u0e01_\u0e17_\u0e32_lab_\u0e1a\u0e19\u0e40\u0e04\u0e23_\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07_local_machine",
+      "label": "\u0e17\u0e32\u0e07\u0e40\u0e25\u0e37\u0e2d\u0e01: \u0e17\u0e33 Lab \u0e1a\u0e19\u0e40\u0e04\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07 (Local Machine)",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u0e17\u0e32\u0e07\u0e40\u0e25\u0e37\u0e2d\u0e01: \u0e17\u0e4d\u0e32 lab \u0e1a\u0e19\u0e40\u0e04\u0e23\u0e37\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07 (local machine)",
+      "source_file": "README.md",
+      "source_location": "L86"
+    },
+    {
+      "id": "readme_\u0e27_\u0e15\u0e16_\u0e1b\u0e23\u0e30\u0e2a\u0e07\u0e04",
+      "label": "\u0e27\u0e31\u0e15\u0e16\u0e38\u0e1b\u0e23\u0e30\u0e2a\u0e07\u0e04\u0e4c",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u0e27\u0e31\u0e15\u0e16\u0e1b\u0e23\u0e30\u0e2a\u0e07\u0e04\u0e4c",
+      "source_file": "README.md",
       "source_location": "L5"
     },
     {
-      "id": "deployment_guide_deployment_guide_rollback_strategy",
-      "label": "Rollback Strategy",
+      "id": "readme_\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23_\u0e32\u0e07\u0e42\u0e1b\u0e23\u0e40\u0e08\u0e04",
+      "label": "\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e42\u0e1b\u0e23\u0e40\u0e08\u0e04",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
+      "community": 21,
+      "community_name": "Kiro-LAB: EC2 Instance for Remote SSH Development",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "rollback strategy",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L303"
+      "norm_label": "\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e32\u0e07\u0e42\u0e1b\u0e23\u0e40\u0e08\u0e04",
+      "source_file": "README.md",
+      "source_location": "L164"
     },
     {
-      "id": "deployment_guide_deployment_guide_security_notes",
-      "label": "Security Notes",
+      "id": "labs_userdata_kiro_lab_al2023",
+      "label": "userdata-kiro-lab-al2023.sh",
       "_origin": "ast",
       "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "security notes",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L361"
+      "community_name": "userdata-kiro-lab-al2023.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "norm_label": "userdata-kiro-lab-al2023.sh",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L1"
     },
     {
-      "id": "deployment_guide_deployment_guide_\u0e2a\u0e23_\u0e1b_stack_dependencies",
-      "label": "\u0e2a\u0e23\u0e38\u0e1b Stack Dependencies",
+      "id": "labs_userdata_kiro_lab_al2023_as_user",
+      "label": "as_user()",
       "_origin": "ast",
       "community": 22,
-      "community_name": "Deployment Guide: Student Management Web Application",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u0e2a\u0e23\u0e1b stack dependencies",
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L291"
+      "community_name": "userdata-kiro-lab-al2023.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "as_user()",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L55"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_al2023_dnf_retry",
+      "label": "dnf_retry()",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "userdata-kiro-lab-al2023.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "dnf_retry()",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L40"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_al2023_home",
+      "label": "HOME",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "userdata-kiro-lab-al2023.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "code"
+      },
+      "norm_label": "home",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L8"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_al2023_sh__entry",
+      "label": "userdata-kiro-lab-al2023.sh script",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "userdata-kiro-lab-al2023.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "norm_label": "userdata-kiro-lab-al2023.sh script",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L1"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_al2023_wait_for_network",
+      "label": "wait_for_network()",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "userdata-kiro-lab-al2023.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "wait_for_network()",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L24"
     },
     {
       "id": "kiro_skills_aws_architecture_diagram_references_general_icons",
@@ -3752,6 +4005,51 @@
       "source_location": "L1"
     },
     {
+      "id": "labs_userdata_kiro_lab_apt_retry",
+      "label": "apt_retry()",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "userdata-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "apt_retry()",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L54"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_debian_frontend",
+      "label": "DEBIAN_FRONTEND",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "userdata-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "code"
+      },
+      "norm_label": "debian_frontend",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L11"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_home",
+      "label": "HOME",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "userdata-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "code"
+      },
+      "norm_label": "home",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L8"
+    },
+    {
       "id": "labs_userdata_kiro_lab_sh__entry",
       "label": "userdata-kiro-lab.sh script",
       "_origin": "ast",
@@ -3765,6 +4063,36 @@
       "norm_label": "userdata-kiro-lab.sh script",
       "source_file": "labs/userdata-kiro-lab.sh",
       "source_location": "L1"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_wait_for_apt_lock",
+      "label": "wait_for_apt_lock()",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "userdata-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "wait_for_apt_lock()",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L38"
+    },
+    {
+      "id": "labs_userdata_kiro_lab_wait_for_network",
+      "label": "wait_for_network()",
+      "_origin": "ast",
+      "community": 35,
+      "community_name": "userdata-kiro-lab.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "wait_for_network()",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L22"
     },
     {
       "id": "src_app_config_config",
@@ -3943,268 +4271,28 @@
       "source_location": "L4"
     },
     {
-      "id": "deployment_analyze_analyze",
-      "label": "analyze.md",
+      "id": "kiro_steering_diagrams",
+      "label": "diagrams.md",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
+      "community_name": "diagrams.md",
       "file_type": "document",
       "node_kind": "page",
-      "norm_label": "analyze.md",
-      "source_file": "deployment/analyze/analyze.md",
+      "norm_label": "diagrams.md",
+      "source_file": ".kiro/steering/diagrams.md",
       "source_location": "L1"
     },
     {
-      "id": "deployment_analyze_analyze_1_application_summary",
-      "label": "1. Application Summary",
+      "id": "kiro_steering_diagrams_diagram_standards",
+      "label": "Diagram Standards",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
+      "community_name": "diagrams.md",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "1. application summary",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L3"
-    },
-    {
-      "id": "deployment_analyze_analyze_2_recommended_aws_architecture",
-      "label": "2. Recommended AWS Architecture",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. recommended aws architecture",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "deployment_analyze_analyze_3_cost_estimate_monthly_us_east_1_on_demand",
-      "label": "3. Cost Estimate (Monthly, us-east-1, On-Demand)",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. cost estimate (monthly, us-east-1, on-demand)",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L89"
-    },
-    {
-      "id": "deployment_analyze_analyze_4_security_considerations",
-      "label": "4. Security Considerations",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. security considerations",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L109"
-    },
-    {
-      "id": "deployment_analyze_analyze_5_deployment_steps_overview",
-      "label": "5. Deployment Steps (Overview)",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "5. deployment steps (overview)",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L122"
-    },
-    {
-      "id": "deployment_analyze_analyze_6_deployment_issues_fixes",
-      "label": "6. Deployment Issues & Fixes",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "6. deployment issues & fixes",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L134"
-    },
-    {
-      "id": "deployment_analyze_analyze_7_file_structure_reference",
-      "label": "7. File Structure Reference",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7. file structure reference",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L154"
-    },
-    {
-      "id": "deployment_analyze_analyze_8_next_steps",
-      "label": "8. Next Steps",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "8. next steps",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L170"
-    },
-    {
-      "id": "deployment_analyze_analyze_9_alb_https_consideration",
-      "label": "9. ALB + HTTPS Consideration",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "9. alb + https consideration",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L179"
-    },
-    {
-      "id": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "label": "Application Analysis & AWS Architecture Recommendation",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "application analysis & aws architecture recommendation",
-      "source_file": "deployment/analyze/analyze.md",
+      "norm_label": "diagram standards",
+      "source_file": ".kiro/steering/diagrams.md",
       "source_location": "L1"
-    },
-    {
-      "id": "deployment_analyze_analyze_architecture_\u0e40\u0e21_\u0e2d\u0e40\u0e1e_\u0e21_alb",
-      "label": "Architecture \u0e40\u0e21\u0e37\u0e48\u0e2d\u0e40\u0e1e\u0e34\u0e48\u0e21 ALB",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "architecture \u0e40\u0e21\u0e37\u0e2d\u0e40\u0e1e\u0e34\u0e21 alb",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L190"
-    },
-    {
-      "id": "deployment_analyze_analyze_dependencies",
-      "label": "Dependencies",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "dependencies",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L15"
-    },
-    {
-      "id": "deployment_analyze_analyze_functionality",
-      "label": "Functionality",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "functionality",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L28"
-    },
-    {
-      "id": "deployment_analyze_analyze_lessons_learned",
-      "label": "Lessons Learned",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "lessons learned",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L145"
-    },
-    {
-      "id": "deployment_analyze_analyze_prerequisites_\u0e2a_\u0e32\u0e2b\u0e23_\u0e1a_https",
-      "label": "Prerequisites \u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a HTTPS",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "prerequisites \u0e2a\u0e4d\u0e32\u0e2b\u0e23\u0e31\u0e1a https",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L220"
-    },
-    {
-      "id": "deployment_analyze_analyze_service_selection",
-      "label": "Service Selection",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "service selection",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L67"
-    },
-    {
-      "id": "deployment_analyze_analyze_template_\u0e1e\u0e23_\u0e2d\u0e21\u0e43\u0e0a",
-      "label": "Template \u0e1e\u0e23\u0e49\u0e2d\u0e21\u0e43\u0e0a\u0e49",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "template \u0e1e\u0e23\u0e2d\u0e21\u0e43\u0e0a",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L234"
-    },
-    {
-      "id": "deployment_analyze_analyze_why_not_other_services",
-      "label": "Why NOT Other Services",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "why not other services",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L78"
-    },
-    {
-      "id": "deployment_analyze_analyze_\u0e04_\u0e32\u0e43\u0e0a_\u0e08_\u0e32\u0e22\u0e40\u0e1e_\u0e21\u0e40\u0e15_\u0e21\u0e16_\u0e32\u0e43\u0e0a_alb",
-      "label": "\u0e04\u0e48\u0e32\u0e43\u0e0a\u0e49\u0e08\u0e48\u0e32\u0e22\u0e40\u0e1e\u0e34\u0e48\u0e21\u0e40\u0e15\u0e34\u0e21\u0e16\u0e49\u0e32\u0e43\u0e0a\u0e49 ALB",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u0e04\u0e32\u0e43\u0e0a\u0e08\u0e32\u0e22\u0e40\u0e1e\u0e34\u0e21\u0e40\u0e15\u0e34\u0e21\u0e16\u0e32\u0e43\u0e0a alb",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L211"
-    },
-    {
-      "id": "deployment_analyze_analyze_\u0e2a_\u0e07\u0e17_\u0e15_\u0e2d\u0e07\u0e40\u0e1b\u0e25_\u0e22\u0e19\u0e43\u0e19_architecture",
-      "label": "\u0e2a\u0e34\u0e48\u0e07\u0e17\u0e35\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e43\u0e19 architecture",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u0e2a\u0e34\u0e07\u0e17\u0e35\u0e15\u0e2d\u0e07\u0e40\u0e1b\u0e25\u0e35\u0e22\u0e19\u0e43\u0e19 architecture",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L226"
-    },
-    {
-      "id": "deployment_analyze_analyze_\u0e40\u0e21_\u0e2d\u0e44\u0e2b\u0e23_\u0e04\u0e27\u0e23\u0e40\u0e1e_\u0e21_alb",
-      "label": "\u0e40\u0e21\u0e37\u0e48\u0e2d\u0e44\u0e2b\u0e23\u0e48\u0e04\u0e27\u0e23\u0e40\u0e1e\u0e34\u0e48\u0e21 ALB",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "Application Analysis & AWS Architecture Recommendation",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u0e40\u0e21\u0e37\u0e2d\u0e44\u0e2b\u0e23\u0e04\u0e27\u0e23\u0e40\u0e1e\u0e34\u0e21 alb",
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L181"
     },
     {
       "id": "env_var_fastmcp_log_level",
@@ -6204,6 +6292,66 @@
   ],
   "links": [
     {
+      "source": "labs_deploy_kiro_lab_allocate_elastic_ip",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L461",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_allocate_elastic_ip",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_check_existing_instance",
+      "target": "labs_deploy_kiro_lab_warn",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L271",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_check_existing_instance",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L277",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_check_existing_instance",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L292",
+      "weight": 1.0
+    },
+    {
       "source": "labs_deploy_kiro_lab_check_prerequisites",
       "target": "labs_deploy_kiro_lab_info",
       "relation": "calls",
@@ -6212,7 +6360,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L85",
+      "source_location": "L248",
       "weight": 1.0
     },
     {
@@ -6224,7 +6372,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L89",
+      "source_location": "L252",
       "weight": 1.0
     },
     {
@@ -6236,216 +6384,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L91",
+      "source_location": "L254",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_check_prerequisites",
-      "target": "labs_deploy_kiro_lab_error",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L96",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_configure_ssh",
+      "source": "labs_deploy_kiro_lab_collect_aws_credentials",
       "target": "labs_deploy_kiro_lab_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L320",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_configure_ssh",
-      "target": "labs_deploy_kiro_lab_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L355",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_create_security_group",
-      "target": "labs_deploy_kiro_lab_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L187",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_create_security_group",
-      "target": "labs_deploy_kiro_lab_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L199",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_ssh_key",
-      "target": "labs_deploy_kiro_lab_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L106",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_ssh_key",
-      "target": "labs_deploy_kiro_lab_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L120",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_ssh_key",
-      "target": "labs_deploy_kiro_lab_warn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L127",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_ssh_key",
-      "target": "labs_deploy_kiro_lab_error",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L131",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_instance_dns",
-      "target": "labs_deploy_kiro_lab_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L293",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_instance_dns",
-      "target": "labs_deploy_kiro_lab_warn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L311",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_instance_dns",
-      "target": "labs_deploy_kiro_lab_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L315",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
-      "target": "labs_deploy_kiro_lab_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L140",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
-      "target": "labs_deploy_kiro_lab_warn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L161",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
-      "target": "labs_deploy_kiro_lab_error",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L179",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
-      "target": "labs_deploy_kiro_lab_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L183",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_install_aws_cli",
-      "target": "labs_deploy_kiro_lab_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L43",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_install_aws_cli",
-      "target": "labs_deploy_kiro_lab_error",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6456,6 +6400,258 @@
       "weight": 1.0
     },
     {
+      "source": "labs_deploy_kiro_lab_collect_aws_credentials",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_aws_credentials",
+      "target": "labs_deploy_kiro_lab_error",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_ssh_key",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_ssh_key",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_ssh_key",
+      "target": "labs_deploy_kiro_lab_error",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_configure_ssh",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L525",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_configure_ssh",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L560",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_create_security_group",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L348",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_create_security_group",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L361",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_do_cleanup",
+      "target": "labs_deploy_kiro_lab_error",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L609",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_do_cleanup",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L622",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_do_cleanup",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L703",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_do_cleanup",
+      "target": "labs_deploy_kiro_lab_warn",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L744",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_instance_dns",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L497",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_instance_dns",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L520",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L297",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
+      "target": "labs_deploy_kiro_lab_warn",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L320",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
+      "target": "labs_deploy_kiro_lab_error",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_ubuntu_ami",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_aws_cli",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_aws_cli",
+      "target": "labs_deploy_kiro_lab_error",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L232",
+      "weight": 1.0
+    },
+    {
       "source": "labs_deploy_kiro_lab_install_aws_cli",
       "target": "labs_deploy_kiro_lab_ok",
       "relation": "calls",
@@ -6464,7 +6660,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L81",
+      "source_location": "L244",
       "weight": 1.0
     },
     {
@@ -6476,7 +6672,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L270",
+      "source_location": "L434",
       "weight": 1.0
     },
     {
@@ -6488,7 +6684,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L285",
+      "source_location": "L450",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh__entry",
+      "target": "labs_deploy_kiro_lab_check_prerequisites",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L815",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh__entry",
+      "target": "labs_deploy_kiro_lab_do_cleanup",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L816",
       "weight": 1.0
     },
     {
@@ -6500,7 +6720,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L409",
+      "source_location": "L819",
       "weight": 1.0
     },
     {
@@ -6512,7 +6732,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L227",
+      "source_location": "L391",
       "weight": 1.0
     },
     {
@@ -6524,7 +6744,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L232",
+      "source_location": "L396",
       "weight": 1.0
     },
     {
@@ -6536,19 +6756,43 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L398",
+      "source_location": "L797",
       "weight": 1.0
     },
     {
       "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
-      "target": "labs_deploy_kiro_lab_find_ssh_key",
+      "target": "labs_deploy_kiro_lab_collect_aws_credentials",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L399",
+      "source_location": "L798",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_check_existing_instance",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L799",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_collect_ssh_key",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L800",
       "weight": 1.0
     },
     {
@@ -6560,7 +6804,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L400",
+      "source_location": "L801",
       "weight": 1.0
     },
     {
@@ -6572,7 +6816,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L401",
+      "source_location": "L802",
       "weight": 1.0
     },
     {
@@ -6584,7 +6828,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L402",
+      "source_location": "L803",
       "weight": 1.0
     },
     {
@@ -6596,7 +6840,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L403",
+      "source_location": "L804",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_allocate_elastic_ip",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L805",
       "weight": 1.0
     },
     {
@@ -6608,7 +6864,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L404",
+      "source_location": "L806",
       "weight": 1.0
     },
     {
@@ -6620,7 +6876,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L405",
+      "source_location": "L807",
       "weight": 1.0
     },
     {
@@ -6632,7 +6888,79 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L406",
+      "source_location": "L808",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023_sh__entry",
+      "target": "labs_userdata_kiro_lab_al2023_wait_for_network",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023_sh__entry",
+      "target": "labs_userdata_kiro_lab_al2023_dnf_retry",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023_sh__entry",
+      "target": "labs_userdata_kiro_lab_al2023_as_user",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_apt_retry",
+      "target": "labs_userdata_kiro_lab_wait_for_apt_lock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_sh__entry",
+      "target": "labs_userdata_kiro_lab_wait_for_network",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_sh__entry",
+      "target": "labs_userdata_kiro_lab_apt_retry",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -7236,47 +7564,69 @@
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_find_sshkey",
-      "target": "labs_deploy_kiro_lab_write_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L100",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_sshkey",
-      "target": "labs_deploy_kiro_lab_write_warn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L107",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_sshkey",
-      "target": "labs_deploy_kiro_lab_write_err",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L111",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_find_sshkey",
+      "source": "labs_deploy_kiro_lab_collect_awscredentials",
       "target": "labs_deploy_kiro_lab_write_info",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L87",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_awscredentials",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_awscredentials",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_sshkey",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_sshkey",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_collect_sshkey",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L176",
       "weight": 1.0
     },
     {
@@ -7287,18 +7637,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L280",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_get_instancedns",
-      "target": "labs_deploy_kiro_lab_write_warn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L297",
+      "source_location": "L598",
       "weight": 1.0
     },
     {
@@ -7309,7 +7648,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L301",
+      "source_location": "L620",
       "weight": 1.0
     },
     {
@@ -7320,7 +7659,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L120",
+      "source_location": "L332",
       "weight": 1.0
     },
     {
@@ -7331,7 +7670,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L141",
+      "source_location": "L355",
       "weight": 1.0
     },
     {
@@ -7342,7 +7681,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L159",
+      "source_location": "L375",
       "weight": 1.0
     },
     {
@@ -7353,177 +7692,331 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L163",
+      "source_location": "L379",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_install_awscli",
+      "source": "labs_deploy_kiro_lab_get_userdata",
       "target": "labs_deploy_kiro_lab_write_info",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L36",
+      "source_location": "L419",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_install_awscli",
-      "target": "labs_deploy_kiro_lab_write_err",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L54",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_install_awscli",
-      "target": "labs_deploy_kiro_lab_write_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L59",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_new_securitygroup",
-      "target": "labs_deploy_kiro_lab_write_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L167",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_new_securitygroup",
-      "target": "labs_deploy_kiro_lab_write_ok",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L179",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_get_userdata",
-      "target": "labs_deploy_kiro_lab_write_info",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L200",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_get_userdata",
+      "source": "labs_deploy_kiro_lab_get_userdata",
       "target": "labs_deploy_kiro_lab_write_warn",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L218",
+      "source_location": "L441",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_get_userdata",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L512",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_get_userdata",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L515",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_awscli",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_awscli",
+      "target": "labs_deploy_kiro_lab_refresh_pathenvironment",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L227",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_awscli",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_awscli",
+      "target": "labs_deploy_kiro_lab_write_warn",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L232",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_install_awscli",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_invoke_cleanup",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L713",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_invoke_cleanup",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L727",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_invoke_cleanup",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L808",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_invoke_cleanup",
+      "target": "labs_deploy_kiro_lab_write_warn",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L834",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_test_prerequisites",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L388",
+      "source_location": "L938",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
-      "target": "labs_deploy_kiro_lab_find_sshkey",
+      "source": "labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_collect_awscredentials",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L389",
+      "source_location": "L939",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_test_existinginstance",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L940",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_collect_sshkey",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L941",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_get_ubuntuami",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L390",
+      "source_location": "L942",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_new_securitygroup",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L391",
+      "source_location": "L943",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
-      "target": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_get_userdata",
+      "source": "labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_get_userdata",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L392",
+      "source_location": "L944",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_start_instance",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L393",
+      "source_location": "L945",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_main",
+      "target": "labs_deploy_kiro_lab_new_elasticip",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L946",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_get_instancedns",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L394",
+      "source_location": "L947",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_set_sshconfig",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L395",
+      "source_location": "L948",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
+      "source": "labs_deploy_kiro_lab_main",
       "target": "labs_deploy_kiro_lab_show_summary",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L949",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_new_elasticip",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L553",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_new_elasticip",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L564",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_new_elasticip",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L576",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_new_securitygroup",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L383",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_new_securitygroup",
+      "target": "labs_deploy_kiro_lab_write_ok",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -7540,7 +8033,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L306",
+      "source_location": "L625",
       "weight": 1.0
     },
     {
@@ -7551,7 +8044,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L345",
+      "source_location": "L664",
       "weight": 1.0
     },
     {
@@ -7562,7 +8055,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L257",
+      "source_location": "L519",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_start_instance",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L536",
       "weight": 1.0
     },
     {
@@ -7573,7 +8077,40 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L272",
+      "source_location": "L540",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_test_existinginstance",
+      "target": "labs_deploy_kiro_lab_write_warn",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L306",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_test_existinginstance",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L312",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_test_existinginstance",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -7584,7 +8121,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L63",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -7595,7 +8132,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L67",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -7606,381 +8143,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L70",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_test_prerequisites",
-      "target": "labs_deploy_kiro_lab_write_err",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L79",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze",
-      "target": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_1_application_summary",
-      "target": "deployment_analyze_analyze_dependencies",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_1_application_summary",
-      "target": "deployment_analyze_analyze_functionality",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L28",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_2_recommended_aws_architecture",
-      "target": "deployment_analyze_analyze_service_selection",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L67",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_2_recommended_aws_architecture",
-      "target": "deployment_analyze_analyze_why_not_other_services",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L78",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_6_deployment_issues_fixes",
-      "target": "deployment_analyze_analyze_lessons_learned",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L145",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_9_alb_https_consideration",
-      "target": "deployment_analyze_analyze_\u0e40\u0e21_\u0e2d\u0e44\u0e2b\u0e23_\u0e04\u0e27\u0e23\u0e40\u0e1e_\u0e21_alb",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L181",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_9_alb_https_consideration",
-      "target": "deployment_analyze_analyze_architecture_\u0e40\u0e21_\u0e2d\u0e40\u0e1e_\u0e21_alb",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L190",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_9_alb_https_consideration",
-      "target": "deployment_analyze_analyze_\u0e04_\u0e32\u0e43\u0e0a_\u0e08_\u0e32\u0e22\u0e40\u0e1e_\u0e21\u0e40\u0e15_\u0e21\u0e16_\u0e32\u0e43\u0e0a_alb",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L211",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_9_alb_https_consideration",
-      "target": "deployment_analyze_analyze_prerequisites_\u0e2a_\u0e32\u0e2b\u0e23_\u0e1a_https",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L220",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_9_alb_https_consideration",
-      "target": "deployment_analyze_analyze_\u0e2a_\u0e07\u0e17_\u0e15_\u0e2d\u0e07\u0e40\u0e1b\u0e25_\u0e22\u0e19\u0e43\u0e19_architecture",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L226",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_9_alb_https_consideration",
-      "target": "deployment_analyze_analyze_template_\u0e1e\u0e23_\u0e2d\u0e21\u0e43\u0e0a",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L234",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_4_security_considerations",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L109",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_5_deployment_steps_overview",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L122",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_6_deployment_issues_fixes",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L134",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_7_file_structure_reference",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L154",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_8_next_steps",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L170",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_9_alb_https_consideration",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L179",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_1_application_summary",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_2_recommended_aws_architecture",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L36",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_analyze_analyze_application_analysis_aws_architecture_recommendation",
-      "target": "deployment_analyze_analyze_3_cost_estimate_monthly_us_east_1_on_demand",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/analyze/analyze.md",
-      "source_location": "L89",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide",
-      "target": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_phase_3_secrets_manager",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L144",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_phase_0_upload_application_code_to_s3",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_phase_4_application_server_ec2",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L205",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_\u0e2a\u0e23_\u0e1b_stack_dependencies",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L291",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_rollback_strategy",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L303",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_cost_estimate_monthly_us_east_1",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L329",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_file_structure",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L342",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_phase_1_networking",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L35",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_security_notes",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L361",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_prerequisites",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "deployment_guide_deployment_guide_deployment_guide_student_management_web_application",
-      "target": "deployment_guide_deployment_guide_phase_2_database_aurora_mysql",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "deployment/guide/DEPLOYMENT-GUIDE.md",
-      "source_location": "L85",
+      "source_location": "L292",
       "weight": 1.0
     },
     {
@@ -9491,168 +9654,234 @@
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_get_ubuntuami",
+      "source": "kiro_steering_diagrams",
+      "target": "kiro_steering_diagrams_diagram_standards",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".kiro/steering/diagrams.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_collect_sshkey",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L119",
+      "source_location": "L114",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_new_securitygroup",
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_refresh_pathenvironment",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L166",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_get_userdata",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L199",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_start_instance",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L256",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_get_instancedns",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L279",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_write_info",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L30",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_set_sshconfig",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L305",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_write_ok",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L31",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_write_warn",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L32",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_write_err",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L33",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
+      "source": "labs_deploy_kiro_lab",
       "target": "labs_deploy_kiro_lab_install_awscli",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L35",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_show_summary",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L350",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab_main",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L381",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
+      "source": "labs_deploy_kiro_lab",
       "target": "labs_deploy_kiro_lab_test_prerequisites",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L62",
+      "source_location": "L284",
       "weight": 1.0
     },
     {
-      "source": "labs_deploy_kiro_lab_ps1_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_find_sshkey",
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_test_existinginstance",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.ps1",
-      "source_location": "L86",
+      "source_location": "L296",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_get_ubuntuami",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L331",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_new_securitygroup",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L382",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_get_userdata",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L418",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_write_info",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_write_ok",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_write_warn",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_write_err",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_collect_awscredentials",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_start_instance",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L518",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_new_elasticip",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L552",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_get_instancedns",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L597",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_set_sshconfig",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L624",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_show_summary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L669",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_invoke_cleanup",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L704",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.ps1",
+      "source_location": "L931",
       "weight": 1.0
     },
     {
@@ -9679,24 +9908,13 @@
     },
     {
       "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
-      "target": "labs_readme_\u0e44\u0e1f\u0e25_\u0e43\u0e19\u0e42\u0e1f\u0e25\u0e40\u0e14\u0e2d\u0e23_\u0e19",
+      "target": "labs_readme_ec2_instance_specs",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L105",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
-      "target": "labs_readme_cleanup",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/README.md",
-      "source_location": "L115",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -9707,7 +9925,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L12",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
+      "target": "labs_readme_\u0e44\u0e1f\u0e25_\u0e43\u0e19\u0e42\u0e1f\u0e25\u0e40\u0e14\u0e2d\u0e23_\u0e19",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/README.md",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
+      "target": "labs_readme_cleanup",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/README.md",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -9718,7 +9958,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L24",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -9729,7 +9969,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L46",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -9745,7 +9985,7 @@
     },
     {
       "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
-      "target": "labs_readme_\u0e40\u0e0a_\u0e2d\u0e21\u0e15_\u0e2d_kiro_ide",
+      "target": "labs_readme_elastic_ip_static_ip",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9756,13 +9996,24 @@
     },
     {
       "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
+      "target": "labs_readme_\u0e40\u0e0a_\u0e2d\u0e21\u0e15_\u0e2d_kiro_ide",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/README.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
       "target": "labs_readme_\u0e15\u0e23\u0e27\u0e08\u0e2a\u0e2d\u0e1a\u0e2a\u0e16\u0e32\u0e19\u0e30",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L73",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -9773,18 +10024,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L85",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_readme_kiro_lab_ec2_instance_for_remote_ssh_development",
-      "target": "labs_readme_ec2_instance_specs",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/README.md",
-      "source_location": "L93",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -9795,7 +10035,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L26",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -9806,7 +10046,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/README.md",
-      "source_location": "L36",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -9818,6 +10058,182 @@
       "confidence_score": 1.0,
       "source_file": "labs/userdata-kiro-lab.sh",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023",
+      "target": "labs_userdata_kiro_lab_al2023_sh__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme",
+      "target": "readme_aws_academy_kiro_workshop",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_lab_architecture",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_kiro_lab_instance_specs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_pre_installed_dev_tools",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23_\u0e32\u0e07\u0e42\u0e1b\u0e23\u0e40\u0e08\u0e04",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_\u0e08_\u0e14\u0e17_\u0e32\u0e42\u0e14\u0e22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23_\u0e22\u0e21_lab_quick_start",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_\u0e27_\u0e15\u0e16_\u0e1b\u0e23\u0e30\u0e2a\u0e07\u0e04",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_aws_academy_kiro_workshop",
+      "target": "readme_\u0e17\u0e32\u0e07\u0e40\u0e25_\u0e2d\u0e01_\u0e17_\u0e32_lab_\u0e1a\u0e19\u0e40\u0e04\u0e23_\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07_local_machine",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23_\u0e22\u0e21_lab_quick_start",
+      "target": "readme_1_deploy_kiro_lab_instance",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23_\u0e22\u0e21_lab_quick_start",
+      "target": "readme_2_\u0e15_\u0e14\u0e15_\u0e07_open_remote_ssh_extension",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_\u0e01\u0e32\u0e23\u0e40\u0e15\u0e23_\u0e22\u0e21_lab_quick_start",
+      "target": "readme_3_\u0e40\u0e0a_\u0e2d\u0e21\u0e15_\u0e2d_kiro_ide_\u0e44\u0e1b\u0e22_\u0e07_kiro_lab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_\u0e17\u0e32\u0e07\u0e40\u0e25_\u0e2d\u0e01_\u0e17_\u0e32_lab_\u0e1a\u0e19\u0e40\u0e04\u0e23_\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07_local_machine",
+      "target": "readme_windows_wsl",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_\u0e17\u0e32\u0e07\u0e40\u0e25_\u0e2d\u0e01_\u0e17_\u0e32_lab_\u0e1a\u0e19\u0e40\u0e04\u0e23_\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07_local_machine",
+      "target": "readme_\u0e15_\u0e07\u0e04_\u0e32_aws_credentials",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_\u0e17\u0e32\u0e07\u0e40\u0e25_\u0e2d\u0e01_\u0e17_\u0e32_lab_\u0e1a\u0e19\u0e40\u0e04\u0e23_\u0e2d\u0e07\u0e15\u0e19\u0e40\u0e2d\u0e07_local_machine",
+      "target": "readme_linux_macos",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -10856,145 +11272,13 @@
     },
     {
       "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_find_ssh_key",
+      "target": "labs_deploy_kiro_lab_collect_ssh_key",
       "relation": "defines",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L105",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_get_ubuntu_ami",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L139",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_create_security_group",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L186",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_get_userdata",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L221",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_launch_instance",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L269",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_get_instance_dns",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L292",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_configure_ssh",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L319",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_print_summary",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L360",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_info",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L37",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_ok",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L38",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_warn",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L39",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L391",
-      "weight": 1.0
-    },
-    {
-      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
-      "target": "labs_deploy_kiro_lab_error",
-      "relation": "defines",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L40",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -11005,7 +11289,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L42",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -11016,7 +11300,282 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "labs/deploy-kiro-lab.sh",
-      "source_location": "L84",
+      "source_location": "L247",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_check_existing_instance",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L259",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_get_ubuntu_ami",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L296",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_create_security_group",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_get_userdata",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L385",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_launch_instance",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L433",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_allocate_elastic_ip",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L460",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_get_instance_dns",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L496",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_configure_ssh",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L524",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_print_summary",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L565",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_do_cleanup",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L600",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_info",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_ok",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_warn",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_error",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_collect_aws_credentials",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab",
+      "target": "labs_deploy_kiro_lab_sh_labs_deploy_kiro_lab_main",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/deploy-kiro-lab.sh",
+      "source_location": "L790",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab",
+      "target": "labs_userdata_kiro_lab_debian_frontend",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab",
+      "target": "labs_userdata_kiro_lab_wait_for_network",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab",
+      "target": "labs_userdata_kiro_lab_wait_for_apt_lock",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab",
+      "target": "labs_userdata_kiro_lab_apt_retry",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab",
+      "target": "labs_userdata_kiro_lab_home",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab.sh",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023",
+      "target": "labs_userdata_kiro_lab_al2023_wait_for_network",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023",
+      "target": "labs_userdata_kiro_lab_al2023_dnf_retry",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023",
+      "target": "labs_userdata_kiro_lab_al2023_as_user",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "labs_userdata_kiro_lab_al2023",
+      "target": "labs_userdata_kiro_lab_al2023_home",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "labs/userdata-kiro-lab-al2023.sh",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -11094,6 +11653,17 @@
       "confidence_score": 1.0,
       "source_file": ".kiro/skills/deploy/SKILL.md",
       "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "readme",
+      "target": "labs_readme",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -13103,5 +13673,5 @@
       "description": "View templates implementing the student CRUD interface - list, add, update with shared form fields"
     }
   ],
-  "built_at_commit": "0c766eee9d7635c9c51575cab21e1d139e494593"
+  "built_at_commit": "e8c322a42bae48945e7d02387bcb6bb42add27f3"
 }

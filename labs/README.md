@@ -2,6 +2,17 @@
 
 สร้าง EC2 instance สำหรับใช้งาน Kiro IDE ผ่าน Remote SSH extension
 
+## เลือกชุด Script (Ubuntu หรือ Amazon Linux)
+
+มี deploy script ให้เลือก 2 ชุด ทำงานเหมือนกันทุกอย่าง (Dev tools, MCP config, Elastic IP, วิธีเชื่อมต่อ Kiro IDE) ต่างกันแค่ OS ของ instance:
+
+| ชุด | OS | Package Manager | Default User | Root Device | เหมาะกับ |
+|-----|-----|-----------------|--------------|-------------|----------|
+| `deploy-kiro-lab.{sh,ps1}` | Ubuntu 26.04 (fallback 24.04) | `apt` | `ubuntu` | `/dev/sda1` | ค่าเริ่มต้นเดิมของ workshop |
+| `deploy-kiro-lab-al2023.{sh,ps1}` | Amazon Linux 2023 | `dnf` | `ec2-user` | `/dev/xvda` | **แนะนำ** — เลี่ยงปัญหา `apt update` ช้าบน AWS |
+
+> **ทำไมถึงมีชุด Amazon Linux:** บางครั้ง `apt update`/`apt upgrade` บน Ubuntu ของ AWS ทำงานช้าหรือค้างระหว่าง userdata setup ทำให้ instance ใช้เวลานานกว่าจะพร้อม Amazon Linux 2023 ใช้ `dnf` ซึ่งเร็วกว่าและไม่มีปัญหา package-manager lock ตอน boot แบบ apt ทั้งสองชุดใส่ retry/timeout ให้ทนต่อ network ที่ไม่เสถียรไว้แล้ว
+
 ## สิ่งที่ต้องมีก่อนใช้งาน
 
 - AWS CLI (ถ้ายังไม่มี script จะติดตั้งให้อัตโนมัติ)
@@ -16,29 +27,33 @@
 | npm | Node package manager |
 | Bun | Fast JavaScript runtime & bundler |
 | uv / uvx | Python package manager (replaces pip) |
-| graphify | Knowledge graph tool (`uv tool install graphify`) |
+| graphify | Knowledge graph tool (`uv tool install graphifyy`) |
 | git | Version control |
 | AWS CLI v2 | AWS command line interface |
 
 ## วิธีใช้งาน
 
+เลือกใช้ชุดใดชุดหนึ่ง — Amazon Linux (`-al2023`) แนะนำเพราะ setup เร็วกว่า
+
 ### macOS / Linux
 
 ```bash
-# Option 1: Run directly
-bash deploy-kiro-lab.sh
-
-# Option 2: curl and run
+# Amazon Linux 2023 (แนะนำ)
+curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.sh | bash
+```
+```bash
+# Ubuntu
 curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
 ```
 
 ### Windows (PowerShell)
 
 ```powershell
-# Option 1: Run directly
-.\deploy-kiro-lab.ps1
-
-# Option 2: Download and run
+# Amazon Linux 2023 (แนะนำ)
+irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.ps1 | iex
+```
+```powershell
+# Ubuntu
 irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
 ```
 
@@ -47,7 +62,7 @@ irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy
 1. ตรวจสอบ AWS CLI (ถ้าไม่มี → ติดตั้งให้อัตโนมัติ)
 2. ถาม AWS credentials (access key, secret key, session token)
 3. ถาม SSH private key (paste ได้เลย หรือใช้ไฟล์ที่มีอยู่)
-4. หา Ubuntu 26.04 AMI ล่าสุด (fallback เป็น 24.04 ถ้ายังไม่มี)
+4. หา AMI ล่าสุด (Ubuntu 26.04 fallback 24.04 / หรือ Amazon Linux 2023 แล้วแต่ชุดที่เลือก)
 5. สร้าง Security Group (SSH inbound only)
 6. สร้าง EC2 instance (t3.medium, 30GB gp3)
 7. รอจนกว่า instance จะ running
@@ -76,7 +91,7 @@ Script จะจัดสรร **Elastic IP** ให้กับ instance โ�
 2. ติดตั้ง extension **Remote - SSH** (ถ้ายังไม่มี)
 3. กด `Ctrl+Shift+P` → พิมพ์ `Remote-SSH: Connect to Host...`
 4. เลือก **`kiro-lab`**
-5. เปิดโฟลเดอร์: `/home/ubuntu/workshop`
+5. เปิดโฟลเดอร์: `/home/ubuntu/workshop` (Ubuntu) หรือ `/home/ec2-user/workshop` (Amazon Linux)
 
 หรือใช้คำสั่ง SSH ตรงๆ:
 
@@ -110,7 +125,7 @@ Config อยู่ที่: `~/.kiro/settings/mcp.json`
 |----------|-------|
 | Name | Kiro-LAB |
 | Type | t3.medium (2 vCPU, 4 GB RAM) |
-| OS | Ubuntu 26.04 LTS (fallback: 24.04) |
+| OS | Ubuntu 26.04 LTS (fallback: 24.04) หรือ Amazon Linux 2023 |
 | Storage | 30 GB gp3 (encrypted) |
 | Key Pair | vockey |
 | IAM Profile | LabInstanceProfile |
@@ -121,10 +136,13 @@ Config อยู่ที่: `~/.kiro/settings/mcp.json`
 
 ```
 labs/
-├── README.md                 # ไฟล์นี้
-├── deploy-kiro-lab.sh        # Script สำหรับ macOS/Linux
-├── deploy-kiro-lab.ps1       # Script สำหรับ Windows (PowerShell)
-└── userdata-kiro-lab.sh      # EC2 userdata (ติดตั้ง dev tools)
+├── README.md                        # ไฟล์นี้
+├── deploy-kiro-lab.sh               # Ubuntu — Script สำหรับ macOS/Linux
+├── deploy-kiro-lab.ps1              # Ubuntu — Script สำหรับ Windows (PowerShell)
+├── userdata-kiro-lab.sh             # Ubuntu — EC2 userdata (apt)
+├── deploy-kiro-lab-al2023.sh        # Amazon Linux 2023 — Script สำหรับ macOS/Linux
+├── deploy-kiro-lab-al2023.ps1       # Amazon Linux 2023 — Script สำหรับ Windows (PowerShell)
+└── userdata-kiro-lab-al2023.sh      # Amazon Linux 2023 — EC2 userdata (dnf)
 ```
 
 ## Cleanup
@@ -133,7 +151,9 @@ labs/
 
 ```bash
 # ใช้ built-in cleanup command (แนะนำ — ลบ instance, EIP, security group, SSH config, AWS profile)
+# ใช้ชุดไหน deploy ก็ cleanup ด้วยชุดนั้น (ทั้งสองชุดลบ resource ชื่อ Kiro-LAB เหมือนกัน)
 bash deploy-kiro-lab.sh cleanup
+bash deploy-kiro-lab-al2023.sh cleanup
 ```
 
 หรือลบ manual:

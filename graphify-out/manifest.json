@@ -1,9 +1,9 @@
 {
   ".kiro/settings/mcp.json": {
-    "mtime": 1787382383.784963,
-    "seen": 1787385722.3063521,
-    "ast_hash": "05b48f77af95d9692d211993c9304e8d",
-    "semantic_hash": "05b48f77af95d9692d211993c9304e8d"
+    "mtime": 1787852757.2421372,
+    "seen": 1787853610.449248,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
   },
   "UserdataScript.sh": {
     "mtime": 1778488437.0,
@@ -162,27 +162,27 @@
     "semantic_hash": "86083ea16e056e784d08717f7971fa17"
   },
   ".kiro/steering/tech.md": {
-    "mtime": 1787280649.6402206,
-    "seen": 1787385722.306382,
-    "ast_hash": "78f6b641c4445623453dbde835732ecd",
-    "semantic_hash": "78f6b641c4445623453dbde835732ecd"
+    "mtime": 1788189824.1976042,
+    "seen": 1788190851.3204725,
+    "ast_hash": "bb398e7c37eae0b5bd39090d65d6ad02",
+    "semantic_hash": ""
   },
   "labs/deploy-kiro-lab.ps1": {
-    "mtime": 1787465320.6635098,
-    "seen": 1787748749.6988597,
-    "ast_hash": "cfaf55bce1037b3fef47dc48731bd137",
+    "mtime": 1788517898.5378346,
+    "seen": 1788517915.2597773,
+    "ast_hash": "54b607078ca3e892c3f19796555f0595",
     "semantic_hash": ""
   },
   "labs/deploy-kiro-lab.sh": {
-    "mtime": 1787465269.5584695,
-    "seen": 1787748749.6988618,
-    "ast_hash": "51d8128a7ae66a69ea39004ff8620f08",
+    "mtime": 1788250320.9930801,
+    "seen": 1788252653.7713885,
+    "ast_hash": "776aabd5480713b67f117ca3a89f4b8f",
     "semantic_hash": ""
   },
   "labs/userdata-kiro-lab.sh": {
-    "mtime": 1787464356.083187,
-    "seen": 1787748749.698863,
-    "ast_hash": "ca5fa9b67c639d161ad9e014342578ae",
+    "mtime": 1788501855.8891418,
+    "seen": 1788517915.2597806,
+    "ast_hash": "e8b55d7ee6661eb87fa5f1fe54b47edf",
     "semantic_hash": ""
   },
   ".kiro/skills/aws-architecture-diagram/SKILL.md": {
@@ -281,52 +281,10 @@
     "ast_hash": "fd71a44ad3c2b2a2de2e247133be1eb2",
     "semantic_hash": ""
   },
-  "deployment/analyze/analyze.md": {
-    "mtime": 1787461233.1051588,
-    "seen": 1787748749.6989079,
-    "ast_hash": "ee15b8018d9e95b1585b666902077f47",
-    "semantic_hash": ""
-  },
-  "deployment/guide/DEPLOYMENT-GUIDE.md": {
-    "mtime": 1787388705.6918838,
-    "seen": 1787748749.6989086,
-    "ast_hash": "1453f69953485a55e9870d66638a1c63",
-    "semantic_hash": ""
-  },
-  "deployment/template/full-stack-with-alb.yaml": {
-    "mtime": 1787461303.6186974,
-    "seen": 1787748749.6989098,
-    "ast_hash": "c38fbd5696a152860da39cfb3ffc7823",
-    "semantic_hash": ""
-  },
-  "deployment/template/phase1-networking.yaml": {
-    "mtime": 1787388612.89404,
-    "seen": 1787748749.6989107,
-    "ast_hash": "546aa2ee3133b68b281774e476763d20",
-    "semantic_hash": ""
-  },
-  "deployment/template/phase2-database.yaml": {
-    "mtime": 1787389975.3797772,
-    "seen": 1787748749.6989117,
-    "ast_hash": "e0e928b2edd009003485c2fbb1b0e50d",
-    "semantic_hash": ""
-  },
-  "deployment/template/phase4-application.yaml": {
-    "mtime": 1787391098.888503,
-    "seen": 1787748749.6989129,
-    "ast_hash": "807e0133be583e92378f7560ad834afa",
-    "semantic_hash": ""
-  },
-  "deployment/template/phase5-alb.yaml": {
-    "mtime": 1787461946.1191192,
-    "seen": 1787748749.6989136,
-    "ast_hash": "1a15ea2dd636dd211f9731e181156f4a",
-    "semantic_hash": ""
-  },
   "labs/README.md": {
-    "mtime": 1787465360.7061176,
-    "seen": 1787748749.6989143,
-    "ast_hash": "a2bd529ceffda0784c2633ba62e444ed",
+    "mtime": 1787899119.781203,
+    "seen": 1787899670.9469912,
+    "ast_hash": "a41fb083c9752f8393105088af7820c4",
     "semantic_hash": ""
   },
   "src/views/404.html": {
@@ -399,6 +357,42 @@
     "mtime": 1778463176.0,
     "seen": 1787748749.6989243,
     "ast_hash": "0675cb30eb067fa4376299352e2d29cd",
+    "semantic_hash": ""
+  },
+  ".kiro/steering/diagrams.md": {
+    "mtime": 1787852647.4901795,
+    "seen": 1787852724.8782213,
+    "ast_hash": "8637117a85ea23f866802c62120c76c4",
+    "semantic_hash": ""
+  },
+  ".kiro/settings/mcp-example.json": {
+    "mtime": 1787854664.6186974,
+    "seen": 1787854810.1002636,
+    "ast_hash": "05b48f77af95d9692d211993c9304e8d",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1788450150.8560321,
+    "seen": 1788450539.6624508,
+    "ast_hash": "f96b46d91c14a59e1357f3b7baccc6fa",
+    "semantic_hash": ""
+  },
+  "labs/windows-2025-stack.yaml": {
+    "mtime": 1788448082.624219,
+    "seen": 1788450539.6624541,
+    "ast_hash": "9e73d6067f46242110e331017b876019",
+    "semantic_hash": ""
+  },
+  "labs/deploy-kiro-lab-al2023.ps1": {
+    "mtime": 1788518326.8737986,
+    "seen": 1788519734.7710602,
+    "ast_hash": "75a7fbcb899f6feea679364d091accf9",
+    "semantic_hash": ""
+  },
+  "labs/userdata-kiro-lab-al2023.sh": {
+    "mtime": 1788518013.3976452,
+    "seen": 1788519734.7710652,
+    "ast_hash": "ab1c86438a81c2d29070e29ff78ad00f",
     "semantic_hash": ""
   }
 }

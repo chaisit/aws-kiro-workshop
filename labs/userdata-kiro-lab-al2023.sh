@@ -106,7 +106,7 @@ as_user "curl -LsSf --retry 3 --retry-delay 5 https://astral.sh/uv/install.sh | 
 # ----------------------------
 # graphify (via uv tool)
 # ----------------------------
-as_user "${LAB_HOME}/.local/bin/uv tool install graphify" || true
+as_user "${LAB_HOME}/.local/bin/uv tool install graphifyy" || true
 
 # ----------------------------
 # AWS CLI v2 (pre-installed on Amazon Linux 2023, install only if missing)
