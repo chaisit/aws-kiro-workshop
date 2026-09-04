@@ -1,5 +1,7 @@
 # AWS Academy Kiro Workshop
 
+🇹🇭 **ภาษาไทย** | [🇬🇧 English](./README.en.md)
+
 Hands-on workshop สำหรับเรียนรู้การใช้งาน **Kiro IDE** ร่วมกับ AWS Cloud ผ่านคอร์ส **"AWS Academy Lab Project - Cloud Web Application Builder"** ของโครงการ AWS Academy [Lab with Kiro](https://d2wc53952r2oxa.cloudfront.net/kiroworkshopv1/en/00-Workshop%20Structure.html?dark=0)
 
 ## วัตถุประสงค์

@@ -1,5 +1,7 @@
 # Kiro-LAB: EC2 Instance for Remote SSH Development
 
+🇹🇭 **ภาษาไทย** | [🇬🇧 English](./README.en.md)
+
 สร้าง EC2 instance สำหรับใช้งาน Kiro IDE ผ่าน Remote SSH extension
 
 ## เลือกชุด Script (Ubuntu หรือ Amazon Linux)
