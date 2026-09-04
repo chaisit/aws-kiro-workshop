@@ -19,14 +19,20 @@ graph LR
         S["Setup Script<br/>deploy-kiro-lab[-al2023].sh / .ps1<br/>(awscli + aws access key)"]
     end
 
+    subgraph AWS["☁️ AWS Academy Lab Project — AWS Cloud Environment"]
+        B[Kiro-LAB<br/>EC2 Instance]
+        C[AWS Services<br/>EC2, RDS, ALB, Secrets Manager<br/>etc.]
+    end
+
     S -.->|"① Provision ครั้งแรกครั้งเดียว<br/>สร้าง SG + EC2 + Elastic IP<br/>+ ตั้งค่า SSH config/key"| B
-    A -->|"② Remote SSH<br/>(vockey)"| B[Kiro-LAB<br/>EC2 Instance]
-    B -->|"③ Lab Deploy<br/>(aws access key)"| C[AWS Services<br/>EC2, RDS, ALB, Secrets Manager<br/>etc.]
+    A -->|"② Remote SSH<br/>(vockey)"| B
+    B -->|"③ Lab Deploy<br/>(aws access key)"| C
 
     style S fill:#fff3cd,stroke:#e0a800,color:#000
     style A fill:#d1e7dd,stroke:#0f5132,color:#000
     style B fill:#cfe2ff,stroke:#084298,color:#000
     style C fill:#e2e3e5,stroke:#41464b,color:#000
+    style AWS fill:#fff8ec,stroke:#ff9900,stroke-width:2px,color:#000
 ```
 
 **ขั้นตอนการทำงาน:**
