@@ -41,6 +41,7 @@
 # Amazon Linux 2023 (แนะนำ)
 curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.sh | bash
 ```
+หรือ
 ```bash
 # Ubuntu
 curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.sh | bash
@@ -52,6 +53,7 @@ curl -fsSL https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs
 # Amazon Linux 2023 (แนะนำ)
 irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab-al2023.ps1 | iex
 ```
+หรือ
 ```powershell
 # Ubuntu
 irm https://github.com/chaisit/aws-kiro-workshop/raw/refs/heads/main/labs/deploy-kiro-lab.ps1 | iex
