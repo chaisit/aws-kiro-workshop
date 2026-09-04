@@ -442,21 +442,48 @@ function Get-Userdata {
         $embeddedUserdata = @'
 #!/bin/bash -x
 export HOME="${HOME:-/root}"
+export DEBIAN_FRONTEND=noninteractive
 exec > /var/log/userdata-kiro-lab.log 2>&1
-apt update -y && apt upgrade -y
-apt install -y build-essential curl wget unzip git python3 python3-pip python3-venv
-curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-apt install -y nodejs
+wait_for_network() {
+  for i in $(seq 1 30); do
+    if curl -fsSL --max-time 10 http://archive.ubuntu.com >/dev/null 2>&1; then return 0; fi
+    echo "network not ready ($i/30), retrying in 5s..."; sleep 5
+  done
+  echo "WARNING: network not confirmed; continuing anyway."
+}
+wait_for_apt_lock() {
+  for i in $(seq 1 60); do
+    if ! fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 \
+      && ! fuser /var/lib/apt/lists/lock >/dev/null 2>&1 \
+      && ! fuser /var/lib/dpkg/lock >/dev/null 2>&1; then return 0; fi
+    echo "apt/dpkg locked ($i/60), waiting 5s..."; sleep 5
+  done
+  echo "WARNING: apt/dpkg still locked; continuing anyway."
+}
+apt_retry() {
+  for attempt in 1 2 3 4 5; do
+    wait_for_apt_lock
+    if timeout 600 apt-get -o Acquire::Retries=3 -y "$@"; then return 0; fi
+    echo "apt-get $* failed ($attempt/5), retrying in 15s..."; sleep 15
+  done
+  echo "ERROR: apt-get $* failed after 5 attempts."; return 1
+}
+wait_for_network
+apt_retry update
+apt_retry upgrade
+apt_retry install build-essential curl wget unzip git python3 python3-pip python3-venv
+curl -fsSL --retry 3 --retry-delay 5 https://deb.nodesource.com/setup_22.x | bash -
+apt_retry install nodejs
 npm install -g npm@latest || true
-su - ubuntu -c "export BUN_INSTALL=/home/ubuntu/.bun && curl -fsSL https://bun.sh/install | bash" || true
+su - ubuntu -c "export BUN_INSTALL=/home/ubuntu/.bun && curl -fsSL --retry 3 --retry-delay 5 https://bun.sh/install | bash" || true
 ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bun 2>/dev/null || true
 ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bunx 2>/dev/null || true
-curl -LsSf https://astral.sh/uv/install.sh | sh || true
+curl -LsSf --retry 3 --retry-delay 5 https://astral.sh/uv/install.sh | sh || true
 ln -sf /root/.local/bin/uv /usr/local/bin/uv 2>/dev/null || true
 ln -sf /root/.local/bin/uvx /usr/local/bin/uvx 2>/dev/null || true
-su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh" || true
-su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphifyy" || true
-curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+su - ubuntu -c "curl -LsSf --retry 3 --retry-delay 5 https://astral.sh/uv/install.sh | sh" || true
+su - ubuntu -c "/home/ubuntu/.local/bin/uv tool install graphify" || true
+curl -fsSL --retry 3 --retry-delay 5 "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
 unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip
 su - ubuntu -c "git clone https://github.com/chaisit/aws-kiro-workshop.git /home/ubuntu/workshop"
 su - ubuntu -c "mkdir -p /home/ubuntu/.kiro/settings"
@@ -470,8 +497,14 @@ EOF
 hostnamectl set-hostname kiro-lab
 touch /home/ubuntu/.kiro-lab-ready && chown ubuntu:ubuntu /home/ubuntu/.kiro-lab-ready
 '@
-            Set-Content -Path $tempPath -Value $embeddedUserdata -Encoding UTF8 -NoNewline
-            $script:USERDATA_PATH = $tempPath
+        # Normalize to LF line endings (Linux userdata must not contain CRLF)
+        $embeddedUserdata = $embeddedUserdata -replace "`r`n", "`n"
+        # Write WITHOUT BOM and WITHOUT CRLF (UTF8Encoding($false) = no BOM).
+        # Set-Content -Encoding UTF8 on Windows PowerShell 5.1 adds a BOM and CRLF,
+        # which breaks the shebang / commands when the script runs on Linux.
+        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText($tempPath, $embeddedUserdata, $utf8NoBom)
+        $script:USERDATA_PATH = $tempPath
     }
 
     # Final validation
