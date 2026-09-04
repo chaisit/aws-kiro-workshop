@@ -9,7 +9,7 @@ This is a **Student Management Web Application** built as part of an AWS Academy
 - Delete students
 
 ## Deployment Context
-- Designed to run on an AWS EC2 instance (Ubuntu 26.04)
+- Designed to run on an AWS EC2 instance (Amazon Linux 2023)
 - Uses AWS Aurora MySQL as the backing database (table: `students` in database `STUDENTS`)
 - Database credentials are sourced from AWS Secrets Manager (`Mydbsecret`) with local fallback defaults
 - The app runs on port 80 in production (configurable via `APP_PORT` env var, defaults to 3000 locally)

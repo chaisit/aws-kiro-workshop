@@ -1,7 +1,7 @@
 # Tech Stack
 
 ## Runtime
-- Node.js (v22.x on Ubuntu 26.04)
+- Node.js (v22.x on Amazon Linux 2023)
 - npm for package management
 
 ## Framework & Libraries

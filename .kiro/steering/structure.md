@@ -36,6 +36,4 @@ src/             # Main application directory
 - **Routes**: Defined directly in `index.js` (no separate router files).
 
 ## Workspace-level Files
-- `UserdataScript.sh` — EC2 userdata script for provisioning the server (installs deps, creates DB, starts app)
 - `aws-credentials/` — Contains AWS access keys and SSH key pair for workshop use
-- `tmp/code.zip` — Archived source code
