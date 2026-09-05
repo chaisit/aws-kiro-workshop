@@ -425,6 +425,9 @@ chown -R "$LAB_USER":"$LAB_USER" $LAB_HOME/.kiro
 cat >> $LAB_HOME/.bashrc << 'EOF'
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:$PATH"
 EOF
+mkdir -p /etc/ssh/sshd_config.d
+printf 'AllowTcpForwarding yes\n' > /etc/ssh/sshd_config.d/60-kiro-lab.conf
+systemctl restart sshd 2>/dev/null || systemctl restart ssh 2>/dev/null || true
 hostnamectl set-hostname kiro-lab
 touch $LAB_HOME/.kiro-lab-ready && chown "$LAB_USER":"$LAB_USER" $LAB_HOME/.kiro-lab-ready
 USERDATA

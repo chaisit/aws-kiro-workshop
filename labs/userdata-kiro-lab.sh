@@ -188,6 +188,16 @@ EOF
 fi
 
 # ----------------------------
+# Enable SSH TCP forwarding (required for Kiro Remote-SSH port forwarding)
+# Use a drop-in file so it survives sshd_config updates and stays idempotent.
+# ----------------------------
+mkdir -p /etc/ssh/sshd_config.d
+cat > /etc/ssh/sshd_config.d/60-kiro-lab.conf << 'EOF'
+AllowTcpForwarding yes
+EOF
+systemctl restart ssh 2>/dev/null || systemctl restart sshd 2>/dev/null || true
+
+# ----------------------------
 # Set hostname
 # ----------------------------
 hostnamectl set-hostname kiro-lab
